@@ -2,6 +2,7 @@
 // Geen dependencies nodig. Gebruik: node scripts/build.mjs
 import { readdir, readFile, writeFile, mkdir, cp, rm } from 'node:fs/promises';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const out = path.join(root, '_site');
@@ -83,4 +84,16 @@ await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 await cp(path.join(root, 'site'), out, { recursive: true });
 await writeFile(path.join(out, 'recepten.json'), JSON.stringify({ versie: 1, recepten }));
+
+// Service worker: lijst van alle bestanden (voor offline gebruik) en een versie die verandert zodra er iets wijzigt.
+const alle = (await readdir(out, { recursive: true, withFileTypes: true }))
+  .filter(d => d.isFile()).map(d => path.relative(out, path.join(d.parentPath, d.name)).split(path.sep).join('/'))
+  .filter(f => f !== 'sw.js' && f !== 'index.html' && f !== 'app/icoon.svg').sort();
+const hash = createHash('sha256');
+for (const f of ['index.html', 'sw.js', ...alle]) hash.update(f).update(await readFile(path.join(out, f)));
+const sw = (await readFile(path.join(out, 'sw.js'), 'utf8'))
+  .replace('__VERSIE__', hash.digest('hex').slice(0, 10))
+  .replace("['__BESTANDEN__']", JSON.stringify(['./', ...alle]));
+await writeFile(path.join(out, 'sw.js'), sw);
+
 console.log(`${recepten.length} recepten gebouwd naar _site/`);

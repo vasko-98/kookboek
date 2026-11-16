@@ -1,0 +1,19 @@
+{
+  "name": "Kookboek",
+  "short_name": "Kookboek",
+  "description": "Mijn recepten en boodschappenlijstje",
+  "lang": "nl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FFF8EF",
+  "theme_color": "#FFF8EF",
+  "icons": [
+    { "src": "app/icoon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "app/icoon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "app/icoon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Boodschappen", "url": "./#boodschappen", "icons": [{ "src": "app/icoon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ]
+}

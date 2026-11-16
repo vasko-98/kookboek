@@ -6,6 +6,8 @@
 <meta name="theme-color" content="#FFF8EF">
 <title>Kookboek</title>
 <link rel="icon" href="iconen/_standaard.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="app/icoon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
@@ -36,12 +38,12 @@
   .wrap { max-width: 960px; margin: 0 auto; padding: 24px 20px 64px; }
 
   /* ---------- Overzicht ---------- */
-  .top { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 20px; }
-  .kicker { display: block; font-size: 15px; color: var(--muted); margin-bottom: 2px; }
-  .top h1 { font-size: clamp(42px, 8vw, 60px); letter-spacing: -0.03em; }
+  .top { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 14px; }
+  .kicker { display: block; font-size: 14px; color: var(--muted); margin-bottom: 2px; }
+  .top h1 { font-size: clamp(34px, 7vw, 56px); letter-spacing: -0.03em; }
   .pill-dark { background: var(--ink); color: var(--cream); border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 600; white-space: nowrap; }
 
-  .search { display: flex; align-items: center; gap: 10px; background: var(--white); border: var(--line); border-radius: 16px; padding: 12px 16px; }
+  .search { display: flex; align-items: center; gap: 10px; background: var(--white); border: var(--line); border-radius: 16px; padding: 9px 14px; }
   .search input { border: 0; background: transparent; font: inherit; font-size: 16px; color: var(--ink); flex: 1; outline: none; min-width: 0; }
 
   .chips { display: flex; gap: 8px; overflow-x: auto; padding: 16px 2px 6px; margin: 0 -2px; scrollbar-width: none; }
@@ -49,9 +51,8 @@
   @media (min-width: 700px) { .chips { flex-wrap: wrap; overflow: visible; } }
   .chip { flex: none; min-height: 44px; border-radius: 999px; border: var(--line); background: var(--white); padding: 0 16px; font-weight: 600; }
   .chip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
-  .top-rechts { display: flex; gap: 8px; align-items: center; }
-  @media (max-width: 440px) { .top-rechts .count { display: none; } }
-  a.pill-dark { text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; }
+  a.pill-dark { text-decoration: none; display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; }
   .lrecept { background: var(--white); border: var(--line); border-radius: 14px; padding: 10px 14px; margin-bottom: 8px; }
   .lkop { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
   .lrij { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
@@ -66,35 +67,39 @@
   .r-acties { display: flex; gap: 6px; }
   .r-acties .btn { white-space: nowrap; }
   @media (max-width: 460px) { .r-acties .btn { padding: 0 11px; font-size: 14px; gap: 5px; } }
-  .filters { margin-top: 6px; }
-  .filters summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: var(--line); border-radius: 999px; background: var(--white); font-weight: 600; user-select: none; }
-  .filters summary::-webkit-details-marker { display: none; }
-  .filters summary::after { content: ''; width: 8px; height: 8px; border-right: 2.5px solid currentColor; border-bottom: 2.5px solid currentColor; transform: translateY(-2px) rotate(45deg); margin-left: 2px; }
-  .filters[open] summary::after { transform: translateY(2px) rotate(-135deg); }
-  .filters.actief summary { background: var(--ink); color: var(--cream); }
+  .balk { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+  .balk .chip.aan { background: var(--ink); color: var(--cream); }
+  .balk .pijl { width: 8px; height: 8px; border-right: 2.5px solid currentColor; border-bottom: 2.5px solid currentColor; transform: translateY(-2px) rotate(45deg); margin-left: 2px; }
+  .balk [aria-expanded="true"] .pijl { transform: translateY(2px) rotate(-135deg); }
+  @media (max-width: 440px) { .balk .lbl { display: none; } .balk .chip { padding: 0 13px; } .wrap { padding-left: 16px; padding-right: 16px; } }
+  .sorteer { margin-left: auto; flex: none; min-height: 44px; border: var(--line); border-radius: 999px; background: var(--white); padding: 0 12px; font: inherit; font-weight: 600; color: var(--ink); }
+  .paneel { margin-top: 4px; }
   .cat-naam { display: block; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; margin-top: 10px; }
-  .filters .chips { padding-top: 6px; }
+  .paneel .chips { padding: 6px 2px 2px; }
 
-  .featured { display: flex; flex-direction: column; gap: 14px; margin: 18px 0 8px; padding: 20px; border: var(--line); border-radius: 24px; text-decoration: none; box-shadow: 4px 4px 0 var(--ink); transition: transform .12s, box-shadow .12s; }
-  .featured:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
-  .featured .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-  .featured h2 { font-size: clamp(26px, 5vw, 34px); }
-  .tag-cream { background: var(--cream); border-radius: 999px; padding: 4px 10px; font-size: 13px; font-weight: 600; }
-  .meta { font-size: 14px; font-weight: 600; }
+  .featured { display: flex; align-items: center; gap: 14px; margin-top: 14px; padding: 12px 16px; border: var(--line); border-radius: 20px; text-decoration: none; box-shadow: 3px 3px 0 var(--ink); transition: transform .12s, box-shadow .12s; }
+  .featured:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink); }
+  .featured .body, .card .body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .featured .label { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
+  .featured h2 { font-size: clamp(20px, 4.5vw, 26px); text-wrap: balance; }
+  .meta { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-  .list-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin: 26px 0 12px; }
-  .list-head h2 { font-size: 24px; }
-  .seg { display: flex; border: var(--line); border-radius: 999px; background: var(--white); padding: 2px; }
-  .seg button { min-height: 40px; border: 0; border-radius: 999px; background: transparent; padding: 0 14px; font-size: 14px; font-weight: 600; }
-  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+  .lijstkop { display: flex; align-items: center; gap: 10px; margin: 16px 0 8px; font-size: 15px; font-weight: 800; letter-spacing: 0; }
+  .lijstkop button { border: 0; background: none; padding: 8px 0; font-size: 14px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
-  .card { display: flex; flex-direction: column; gap: 12px; min-height: 190px; padding: 16px; border: var(--line); border-radius: 24px; text-decoration: none; transition: transform .12s, box-shadow .12s; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 10px; margin-top: 14px; }
+  .lijstkop + .grid { margin-top: 0; }
+  .card { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: var(--line); border-radius: 18px; text-decoration: none; transition: transform .12s, box-shadow .12s; }
   .card:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
-  .card h3 { font-size: 18px; line-height: 1.12; letter-spacing: -0.01em; }
-  .card .meta { margin-top: auto; font-size: 13px; }
-  .disc { flex: none; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--cream); border: var(--line); }
-  .disc img { width: 52px; height: 52px; display: block; }
+  .card h3 { font-size: 17px; line-height: 1.15; letter-spacing: -0.01em; text-wrap: balance; overflow-wrap: break-word; }
+  .card .meta { font-size: 12.5px; }
+  .disc { position: relative; flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--cream); border: var(--line); }
+  .disc img { width: 42px; height: 42px; display: block; }
+  .featured .disc { width: 64px; height: 64px; }
+  .featured .disc img { width: 52px; height: 52px; }
+  .disc .fav { position: absolute; right: -5px; bottom: -4px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: var(--cream); }
+  .disc .fav svg { width: 12px; height: 12px; vertical-align: 0 !important; }
   .disc.big { width: 104px; height: 104px; }
   .disc.big img { width: 84px; height: 84px; }
   .empty { padding: 40px 0; text-align: center; color: var(--muted); }
@@ -248,44 +253,38 @@
     const favoriet = favs.length ? favs[Math.floor(Date.now() / 864e5) % favs.length] : null;
     const toonFav = favoriet && !actief && !zoek;
     const sorts = [['snel', 'Snelst'], ['lang', 'Langst'], ['fav', 'Favoriet']];
+    const kaart = r => `
+        <a class="card" href="#${esc(r.id)}" style="background:${kleur(r, recepten.indexOf(r))}">
+          <span class="disc">${icoon(r)}${r.favoriet ? `<span class="fav" role="img" aria-label="Favoriet">${svg.hart}</span>` : ''}</span>
+          <span class="body"><h3>${esc(r.titel)}</h3><span class="meta">${esc(meta(r))}</span></span>
+        </a>`;
 
     app.innerHTML = `<main class="wrap">
       <header class="top">
         <div><span class="kicker">Wat eten we vandaag?</span><h1>Kookboek</h1></div>
-        <div class="top-rechts">
-          <span class="pill-dark count">${recepten.length} recepten</span>
-          <a class="pill-dark" href="#boodschappen" aria-label="Boodschappenlijst">${svg.mand}${Object.keys(lijst).length ? ' ' + Object.keys(lijst).length : ''}</a>
-        </div>
+        <a class="pill-dark" href="#boodschappen" aria-label="Boodschappenlijst">${svg.mand}${Object.keys(lijst).length ? ' ' + Object.keys(lijst).length : ''}</a>
       </header>
       <label class="search">${svg.zoek}<input id="zoek" type="search" placeholder="Zoek op recept of ingrediënt" aria-label="Zoeken" value="${esc(zoek)}"></label>
-      <div class="chips" role="group" aria-label="Snelfilter">
-        <button class="chip" data-reset="1" aria-pressed="${!actief}">Alles</button>
-        ${favs.length ? `<button class="chip" data-fav="1" aria-pressed="${favFilter}">${svg.hart} Favorieten</button>` : ''}
+      <div class="balk">
+        ${favs.length ? `<button class="chip hart" data-fav="1" aria-pressed="${favFilter}" aria-label="Alleen favorieten">${svg.hart}<span class="lbl">Favorieten</span></button>` : ''}
+        <button class="chip${aantal ? ' aan' : ''}" id="filterknop" aria-expanded="${filtersOpen}" aria-controls="paneel">${svg.filter} Filters${aantal ? ' (' + aantal + ')' : ''}<span class="pijl"></span></button>
+        <select class="sorteer" id="sorteer" aria-label="Sorteren">${sorts.map(([k, l]) => `<option value="${k}"${sort === k ? ' selected' : ''}>${l}</option>`).join('')}</select>
       </div>
-      <details class="filters${aantal ? ' actief' : ''}" ${filtersOpen ? 'open' : ''}>
-        <summary>${svg.filter} Filters${aantal ? ' (' + aantal + ')' : ''}</summary>
+      <div class="paneel" id="paneel"${filtersOpen ? '' : ' hidden'}>
         ${CATEGORIEEN.map(c => `<div class="cat"><span class="cat-naam">${c.label}</span>
           <div class="chips" role="group" aria-label="${c.label}">${waarden(c).map(v =>
             `<button class="chip" data-cat="${c.k}" data-w="${esc(v)}" aria-pressed="${filters[c.k] === v}">${esc(c.toon ? c.toon(v) : cap(v))}</button>`).join('')}</div></div>`).join('')}
-      </details>
+      </div>
       ${toonFav ? `
       <a class="featured" href="#${esc(favoriet.id)}" style="background:${kleur(favoriet, recepten.indexOf(favoriet))}">
-        <div class="row"><span class="tag-cream">${svg.hart} ${favs.length > 1 ? 'Favoriet van vandaag' : 'Favoriet'}</span><span class="disc big">${icoon(favoriet)}</span></div>
-        <h2>${esc(favoriet.titel)}</h2>
-        <span class="meta">${esc(meta(favoriet))}</span>
+        <span class="disc">${icoon(favoriet)}</span>
+        <span class="body"><span class="label">${svg.hart} ${favs.length > 1 ? 'Favoriet van vandaag' : 'Favoriet'}</span>
+          <h2>${esc(favoriet.titel)}</h2><span class="meta">${esc(meta(favoriet))}</span></span>
       </a>` : ''}
-      <div class="list-head">
-        <h2>${actief || zoek ? zichtbaar.length + (zichtbaar.length === 1 ? ' recept' : ' recepten') : 'Alle recepten'}</h2>
-        <div class="seg" role="group" aria-label="Sorteren">
-          ${sorts.map(([k, l]) => `<button data-sort="${k}" aria-pressed="${sort === k}">${l}</button>`).join('')}
-        </div>
-      </div>
-      ${zichtbaar.length ? `<div class="grid">${zichtbaar.map(r => `
-        <a class="card" href="#${esc(r.id)}" style="background:${kleur(r, recepten.indexOf(r))}">
-          <span class="disc">${icoon(r)}</span>
-          <h3>${esc(r.titel)}</h3>
-          <span class="meta">${esc(meta(r))}${r.favoriet ? ' · ' + svg.hart : ''}</span>
-        </a>`).join('')}</div>` : '<p class="empty">Geen recepten gevonden.</p>'}
+      ${actief || zoek
+        ? `<h2 class="lijstkop">${zichtbaar.length} ${zichtbaar.length === 1 ? 'recept' : 'recepten'}<button id="wisfilters">Wis filters</button></h2>`
+        : `<h2 class="sr">Alle recepten (${recepten.length})</h2>`}
+      ${zichtbaar.length ? `<div class="grid">${zichtbaar.map(kaart).join('')}</div>` : '<p class="empty">Geen recepten gevonden.</p>'}
     </main>`;
 
     const z = document.getElementById('zoek');
@@ -294,8 +293,9 @@
       renderOverzicht();
       const nz = document.getElementById('zoek'); nz.focus(); nz.setSelectionRange(pos, pos);
     });
-    app.querySelector('details.filters').addEventListener('toggle', e => { filtersOpen = e.target.open; });
-    app.querySelector('[data-reset]').onclick = () => { filters = {}; favFilter = false; renderOverzicht(); };
+    document.getElementById('filterknop').onclick = () => { filtersOpen = !filtersOpen; renderOverzicht(); document.getElementById('filterknop').focus(); };
+    const wis = document.getElementById('wisfilters');
+    if (wis) wis.onclick = () => { filters = {}; favFilter = false; zoek = ''; renderOverzicht(); };
     const fb = app.querySelector('[data-fav]');
     if (fb) fb.onclick = () => { favFilter = !favFilter; renderOverzicht(); };
     app.querySelectorAll('[data-cat]').forEach(b => b.onclick = () => {
@@ -303,12 +303,29 @@
       if (filters[k] === w) delete filters[k]; else filters[k] = w;
       renderOverzicht();
     });
-    app.querySelectorAll('[data-sort]').forEach(b => b.onclick = () => { sort = b.dataset.sort; renderOverzicht(); });
+    document.getElementById('sorteer').onchange = e => { sort = e.target.value; renderOverzicht(); };
   }
 
   // ---------- Recept ----------
+  // Aantal personen en afgevinkte ingrediënten/stappen blijven bewaard, zodat een herladen tab tijdens het koken niets kwijtraakt.
+  // De vinkjes vervallen na 12 uur (volgende keer koken begin je schoon); het aantal personen blijft.
+  let voortgang = laad('kookboek-voortgang', {});     // { receptId: { p, ingr: [i], stap: [i], t: tijdstip } }
+  const VERS = 12 * 36e5;
   function getStaat(r) {
-    return staat[r.id] || (staat[r.id] = { personen: (lijst[r.id] && lijst[r.id].p) || r.personen, ingr: new Set(), stap: new Set() });
+    if (staat[r.id]) return staat[r.id];
+    const v = voortgang[r.id] || {}, vers = v.t && Date.now() - v.t < VERS;
+    const n = r.ingredienten.reduce((a, g) => a + g.items.length, 0);
+    return staat[r.id] = {
+      personen: (lijst[r.id] && lijst[r.id].p) || v.p || r.personen,
+      ingr: new Set(vers ? (v.ingr || []).filter(i => i < n) : []),
+      stap: new Set(vers ? (v.stap || []).filter(i => i < r.stappen.length) : [])
+    };
+  }
+  function bewaarStaat(r) {
+    const s = getStaat(r);
+    if (s.personen === r.personen && !s.ingr.size && !s.stap.size) delete voortgang[r.id];
+    else voortgang[r.id] = { p: s.personen, ingr: [...s.ingr], stap: [...s.stap], t: Date.now() };
+    bewaar('kookboek-voortgang', voortgang);
   }
 
   function renderRecept(r) {
@@ -365,7 +382,7 @@
           <div>
             <section class="steps" style="--hl:${hl}">
               <div class="sec-head"><h2>Bereiding</h2><button class="btn" id="reset">Opnieuw</button></div>
-              <p class="hint">Tik op een stap als hij klaar is.</p>
+              <p class="hint">Tik op een stap als hij klaar is. Je voortgang blijft bewaard.</p>
               <ol>${r.stappen.map((st, i) => `
                 <li class="${s.stap.has(i) ? 'done' : ''} ${i === huidige ? 'current' : ''}">
                   <button data-s="${i}" aria-pressed="${s.stap.has(i)}"><span class="num">${i + 1}</span><span>${esc(st)}</span></button>
@@ -379,12 +396,12 @@
     // Staat het recept op het lijstje, dan volgt het lijstje het aantal personen dat je hier kiest.
     const personen = d => {
       const n = s.personen + d; if (n < 1 || n > 12) return;
-      s.personen = n; if (lijst[r.id]) { lijst[r.id].p = n; bewaarLijst(); }
+      s.personen = n; bewaarStaat(r); if (lijst[r.id]) { lijst[r.id].p = n; bewaarLijst(); }
       const y = window.scrollY; renderRecept(r); window.scrollTo(0, y);
     };
     document.getElementById('min').onclick = () => personen(-1);
     document.getElementById('plus').onclick = () => personen(1);
-    document.getElementById('reset').onclick = () => { s.ingr.clear(); s.stap.clear(); renderRecept(r); };
+    document.getElementById('reset').onclick = () => { s.ingr.clear(); s.stap.clear(); bewaarStaat(r); renderRecept(r); };
     document.getElementById('wake').onclick = toggleWake;
     // Eerste tik zet het recept op het lijstje en blijft hier; daarna opent de knop het lijstje.
     const lb = document.getElementById('lijstbtn');
@@ -402,9 +419,11 @@
     app.querySelectorAll('.ingr input').forEach(cb => cb.onchange = () => {
       const i = +cb.dataset.i; cb.checked ? s.ingr.add(i) : s.ingr.delete(i);
       cb.closest('li').classList.toggle('done', cb.checked);
+      bewaarStaat(r);
     });
     app.querySelectorAll('[data-s]').forEach(b => b.onclick = () => {
       const i = +b.dataset.s; s.stap.has(i) ? s.stap.delete(i) : s.stap.add(i);
+      bewaarStaat(r);
       const y = window.scrollY; renderRecept(r); window.scrollTo(0, y);
     });
   }
@@ -541,8 +560,8 @@
       rij.querySelectorAll('[data-act]').forEach(b => b.onclick = () => {
         if (b.dataset.act === 'min' && st.p > 1) st.p--;
         if (b.dataset.act === 'plus' && st.p < 12) st.p++;
-        if (staat[id]) staat[id].personen = st.p;
         if (b.dataset.act === 'del') delete lijst[id];
+        else { getStaat(r).personen = st.p; bewaarStaat(r); }
         bewaarLijst(); renderLijst();
       });
       rij.querySelectorAll('[data-keuze]').forEach(b => b.onclick = () => {
@@ -614,8 +633,16 @@
 
   fetch('recepten.json', { cache: 'no-cache' })
     .then(res => { if (!res.ok) throw new Error(res.status); return res.json(); })
-    .then(data => { recepten = data.recepten; route(); window.addEventListener('hashchange', route); })
+    .then(data => {
+      recepten = data.recepten; route(); window.addEventListener('hashchange', route);
+      // Herladen tijdens het koken: ga terug naar de stap waar je was.
+      const r = recepten.find(x => x.id === huidigRecept);
+      if (r && getStaat(r).stap.size) { const li = app.querySelector('.steps li.current'); if (li) li.scrollIntoView({ block: 'center' }); }
+    })
     .catch(() => { app.innerHTML = '<main class="wrap"><p class="empty">De recepten konden niet geladen worden.</p></main>'; });
+
+  // Offline: de service worker bewaart de site en de recepten op het toestel.
+  if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 })();
 </script>
 </body>

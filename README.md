@@ -6,6 +6,7 @@ Mijn persoonlijke receptenverzameling als kleine website, gehost op GitHub Pages
 
 - `recepten/` – één JSON-bestand per recept. De bestandsnaam is het `id` en het anker in de URL (`#plaattaart-rode-pesto`).
 - `site/` – de website zelf (`index.html`) en `site/iconen/` met één icoon per recept (zie ICONEN.md).
+- `site/manifest.webmanifest`, `site/sw.js` en `site/app/` – maken de site installeerbaar als app en offline bruikbaar (zie hieronder).
 - `scripts/build.mjs` – controleert de recepten en voegt ze samen tot `_site/recepten.json`.
 - `.github/workflows/pages.yml` – bouwt en publiceert bij elke push naar `main`.
 
@@ -79,3 +80,10 @@ Het lijstje toont winkelhoeveelheden: stuks, zakken, rollen en teentjes worden n
 Onderaan staat "Waarschijnlijk in huis": kruiden & specerijen, sauzen & olie en overig houdbaar waarvan je alleen lepels of een snufje nodig hebt. Die gaan niet mee bij exporteren, tenzij je ze aantikt.
 
 "Exporteren" deelt de nog niet afgevinkte items als tekst, met één item per regel zodat het in Google Keep (+ > Checkboxes) of Notities (checklist) met één tik een afvinkbaar lijstje wordt. Op een computer wordt een `.txt` gedownload. "Kopieer" kopieert dezelfde tekst.
+
+## App en offline
+
+- De site is te installeren op het startscherm (Chrome op Android: menu > "App installeren" of "Toevoegen aan startscherm"). Het app-icoon staat in `site/app/` (`icoon.svg` is de bron van de png's).
+- `site/sw.js` is de service worker. De build vult daarin de lijst met bestanden en een versie in; bij elke wijziging aan de site of de recepten verandert die versie en wordt alles opnieuw opgehaald. Nieuwe bestanden in `site/` gaan vanzelf mee.
+- Pagina en recepten komen eerst van het netwerk; na 3 seconden of zonder verbinding uit de opslag op het toestel. Iconen en het lettertype komen altijd uit die opslag.
+- Voortgang: het aantal personen en de afgevinkte ingrediënten en stappen per recept worden in de browser bewaard. De vinkjes vervallen na 12 uur, het aantal personen blijft.
