@@ -15,7 +15,8 @@ function controleer(r, bestand) {
   if (!STATUSSEN.includes(r.status)) fout(`status moet een van ${STATUSSEN.join(' / ')} zijn`);
   if (!Number.isFinite(r.tijd)) fout('tijd (minuten) ontbreekt');
   if (!Number.isFinite(r.personen)) fout('personen ontbreekt');
-  if (r.beoordeling != null && !(r.beoordeling >= 1 && r.beoordeling <= 5)) fout('beoordeling moet 1-5 of null zijn');
+  if (r.favoriet != null && typeof r.favoriet !== 'boolean') fout('favoriet moet true of false zijn');
+  if ('beoordeling' in r) fout('beoordeling bestaat niet meer, gebruik favoriet: true/false');
   if (!Array.isArray(r.tags)) fout('tags moet een lijst zijn');
   if (r.kleur != null && !['tomaat', 'mosterd', 'salie', 'lila', 'wit'].includes(r.kleur)) fout('kleur moet tomaat, mosterd, salie, lila of wit zijn');
   if (!Array.isArray(r.ingredienten) || !r.ingredienten.length) fout('ingredienten ontbreekt');

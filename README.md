@@ -26,7 +26,7 @@ npx serve _site
   "statusNoot": "zonder oven",      // optioneel
   "tijd": 30,                       // minuten
   "personen": 2,
-  "beoordeling": 4,                 // 1-5 of null
+  "favoriet": true,                 // optioneel, standaard false
   "bron": "https://…",              // tekst, URL of null
   "hoeveelhedenGeschat": true,      // optioneel
   "tags": ["vegetarisch", "snel"],

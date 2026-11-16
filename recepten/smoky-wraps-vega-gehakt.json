@@ -5,7 +5,7 @@
   "statusNoot": "zonder oven",
   "tijd": 45,
   "personen": 2,
-  "beoordeling": null,
+  "favoriet": false,
   "bron": null,
   "tags": [
     "vegetarisch",

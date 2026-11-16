@@ -123,6 +123,7 @@
   const KLEUREN = { tomaat: '#E4573D', mosterd: '#F4B740', salie: '#A9C49A', lila: '#C9B6E4', wit: '#FFFFFF' };
   const VOLGORDE = ['tomaat', 'salie', 'mosterd', 'lila', 'wit'];
   let recepten = [];
+  const FAV = '__favorieten';
   let filterTag = null, zoek = '', sort = 'snel';
   const staat = {};
   let wakeLock = null, wilWake = false;
@@ -133,6 +134,7 @@
   const svg = {
     zoek: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
     terug: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
+    hart: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 4.3 2.4h2c.7-1.2 2.2-2.4 4.3-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>',
     zon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
   };
 
@@ -170,23 +172,25 @@
   const zoekTekst = r => [r.titel, ...r.tags, ...r.ingredienten.flatMap(g => g.items.map(i => i.n))].join(' ').toLowerCase();
   function meta(r) {
     const extra = r.tags[0] ? r.tags[0][0].toUpperCase() + r.tags[0].slice(1) : '';
-    return [r.tijd + ' min', extra, r.beoordeling ? '★ ' + r.beoordeling : ''].filter(Boolean).join(' · ');
+    return [r.tijd + ' min', extra].filter(Boolean).join(' · ');
   }
   function sorteer(lijst) {
     const s = lijst.slice();
     if (sort === 'snel') s.sort((a, b) => a.tijd - b.tijd || a.titel.localeCompare(b.titel, 'nl'));
     if (sort === 'lang') s.sort((a, b) => b.tijd - a.tijd || a.titel.localeCompare(b.titel, 'nl'));
-    if (sort === 'ster') s.sort((a, b) => (b.beoordeling || 0) - (a.beoordeling || 0) || a.tijd - b.tijd);
+    if (sort === 'fav') s.sort((a, b) => (!!b.favoriet - !!a.favoriet) || a.tijd - b.tijd);
     return s;
   }
 
   function renderOverzicht() {
     const lijst = sorteer(recepten.filter(r =>
-      (!filterTag || r.tags.some(t => t.toLowerCase() === filterTag.toLowerCase())) &&
+      (filterTag === FAV ? r.favoriet : !filterTag || r.tags.some(t => t.toLowerCase() === filterTag.toLowerCase())) &&
       (!zoek || zoekTekst(r).includes(zoek.toLowerCase()))));
-    const favoriet = recepten.filter(r => r.beoordeling).sort((a, b) => b.beoordeling - a.beoordeling)[0];
+    // Wisselt elke dag tussen de favorieten
+    const favs = recepten.filter(r => r.favoriet);
+    const favoriet = favs.length ? favs[Math.floor(Date.now() / 864e5) % favs.length] : null;
     const toonFav = favoriet && !filterTag && !zoek;
-    const sorts = [['snel', 'Snelst'], ['lang', 'Langst'], ['ster', 'Beste']];
+    const sorts = [['snel', 'Snelst'], ['lang', 'Langst'], ['fav', 'Favoriet']];
 
     app.innerHTML = `<main class="wrap">
       <header class="top">
@@ -196,11 +200,12 @@
       <label class="search">${svg.zoek}<input id="zoek" type="search" placeholder="Zoek op recept of ingrediënt" aria-label="Zoeken" value="${esc(zoek)}"></label>
       <div class="chips" role="group" aria-label="Filter op tag">
         <button class="chip" data-tag="" aria-pressed="${!filterTag}">Alles</button>
+        ${favs.length ? `<button class="chip" data-tag="${FAV}" aria-pressed="${filterTag === FAV}">${svg.hart} Favorieten</button>` : ''}
         ${alleTags().map(t => `<button class="chip" data-tag="${esc(t)}" aria-pressed="${filterTag === t}">${esc(t[0].toUpperCase() + t.slice(1))}</button>`).join('')}
       </div>
       ${toonFav ? `
       <a class="featured" href="#${esc(favoriet.id)}" style="background:${kleur(favoriet, recepten.indexOf(favoriet))}">
-        <div class="row"><span class="tag-cream">Favoriet · ★ ${favoriet.beoordeling}</span><span class="disc big">${icoon(favoriet)}</span></div>
+        <div class="row"><span class="tag-cream">${svg.hart} ${favs.length > 1 ? 'Favoriet van vandaag' : 'Favoriet'}</span><span class="disc big">${icoon(favoriet)}</span></div>
         <h2>${esc(favoriet.titel)}</h2>
         <span class="meta">${esc([favoriet.tijd + ' min', ...favoriet.tags.slice(0, 2)].join(' · '))}</span>
       </a>` : ''}
@@ -214,7 +219,7 @@
         <a class="card" href="#${esc(r.id)}" style="background:${kleur(r, recepten.indexOf(r))}">
           <span class="disc">${icoon(r)}</span>
           <h3>${esc(r.titel)}</h3>
-          <span class="meta">${esc(meta(r))}</span>
+          <span class="meta">${esc(meta(r))}${r.favoriet ? ' · ' + svg.hart : ''}</span>
         </a>`).join('')}</div>` : '<p class="empty">Geen recepten gevonden.</p>'}
     </main>`;
 
@@ -260,7 +265,7 @@
           <h1>${esc(r.titel)}</h1>
           <div class="chips-static">
             <span>${r.tijd} min</span>
-            <span>${r.beoordeling ? '★ ' + r.beoordeling + ' van 5' : 'Nog niet beoordeeld'}</span>
+            ${r.favoriet ? `<span>${svg.hart} Favoriet</span>` : ''}
             <span>${esc(r.status)}${r.statusNoot ? ' · ' + esc(r.statusNoot) : ''}</span>
             ${r.tags.map(t => `<span>${esc(t)}</span>`).join('')}
           </div>
