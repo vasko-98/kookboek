@@ -1,5 +1,6 @@
 # Instructies voor Claude
 
+- Noem nergens een bron (geen website, auteur of link), ook niet in notities, stappen of commentaar. Als iets uit een link komt, neem alleen de inhoud over.
 - Recepten toevoegen of wijzigen: alleen in `recepten/<id>.json`, volgens het formaat in README.md. Nederlands, metrische eenheden, standaard 2 personen.
 - Houd het bijbehorende doc `recepten/<id>.md` in het claude.ai-project "Recepten" gelijk met het JSON-bestand.
 - Teken bij elk nieuw recept een icoon `site/iconen/<id>.svg` volgens ICONEN.md (zelfde stijl, palet en lijndiktes als de bestaande iconen).
