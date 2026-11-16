@@ -69,4 +69,4 @@ Er zijn geen losse tags en geen bron meer.
 - **`keuze`** op een groep, voor alternatieven (bijv. saus A of B): groepen met dezelfde `keuze` komen onderaan de notitie onder "Kies één".
 - Staat er "optioneel" in de groepsnaam of omschrijving, dan komt het als "(optioneel)" in de notitie.
 
-Op de receptpagina deelt de knop "Boodschappen" een tekstnotitie voor het gekozen aantal personen, gegroepeerd per soort. Op een telefoon opent het deelmenu (Notities, Reminders, Keep, enz.); op een computer wordt een `.txt` gedownload.
+Op de receptpagina deelt de knop "Boodschappen" een tekstnotitie voor het gekozen aantal personen, gegroepeerd per soort, met één item per regel zodat de notitie in Google Keep (+ > Checkboxes) of Notities (checklist) met één tik een afvinkbaar lijstje wordt. Op een telefoon opent het deelmenu (Notities, Reminders, Keep, enz.); op een computer wordt een `.txt` gedownload.

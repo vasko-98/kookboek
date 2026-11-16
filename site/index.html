@@ -383,24 +383,26 @@
   }
   function regelTekst(e) {
     const delen = [...e.delen].map(([u, v]) => fmtGetal(v) + (u ? ' ' + (v > 1 && MEERVOUD[u] ? MEERVOUD[u] : u) : ''));
-    return '- ' + [delen.join(' + '), e.naam].filter(Boolean).join(' ') + (e.opt ? ' (optioneel)' : '');
+    return [delen.join(' + '), e.naam].filter(Boolean).join(' ') + (e.opt ? ' (optioneel)' : '');
   }
+  // Eén regel per item, zonder streepjes of lege regels: in Keep (+ > Checkboxes) of Notities (checklist)
+  // wordt elke regel dan een afvinkbaar item. De kopjes per soort staan op eigen regels.
+  function notitieTitel(r, personen) { return `Boodschappen ${r.titel} (${personen} pers.)`; }
   function notitieTekst(r, personen) {
-    const f = personen / r.personen;
-    const uit = [`Boodschappen: ${r.titel}`, `${personen} ${personen === 1 ? 'persoon' : 'personen'}`];
-    groepeer(r.ingredienten.filter(g => !g.keuze), f).forEach(g => uit.push('', g.soort.toUpperCase(), ...g.regels.map(regelTekst)));
+    const f = personen / r.personen, uit = [];
+    groepeer(r.ingredienten.filter(g => !g.keuze), f).forEach(g => uit.push(g.soort.toUpperCase(), ...g.regels.map(regelTekst)));
     // Alternatieven (bijv. saus A of B) staan los onderaan
     const keuzes = {};
     r.ingredienten.filter(g => g.keuze).forEach(g => (keuzes[g.keuze] = keuzes[g.keuze] || []).push(g));
     Object.entries(keuzes).forEach(([label, gs]) => {
-      uit.push('', `KIES ÉÉN: ${label.toUpperCase()}`);
-      gs.forEach(g => uit.push(g.groep, ...groepeer([g], f).flatMap(x => x.regels.map(regelTekst))));
+      uit.push(`KIES ÉÉN: ${label.toUpperCase()}`);
+      gs.forEach(g => uit.push(g.groep.toUpperCase(), ...groepeer([g], f).flatMap(x => x.regels.map(regelTekst))));
     });
     return uit.join('\n');
   }
   // Deelt de notitie via het deelmenu (Notities, Reminders, Keep, ...); anders downloaden als .txt
   async function deelNotitie(r, personen) {
-    const tekst = notitieTekst(r, personen), titel = 'Boodschappen ' + r.titel;
+    const tekst = notitieTekst(r, personen), titel = notitieTitel(r, personen);
     if (navigator.share) {
       try { await navigator.share({ title: titel, text: tekst }); return ''; }
       catch (e) { if (e && e.name === 'AbortError') return ''; }
