@@ -26,6 +26,8 @@ function controleer(r, bestand) {
   if ('beoordeling' in r) fout('beoordeling bestaat niet meer, gebruik favoriet: true/false');
   if ('tags' in r) fout('tags bestaan niet meer, gebruik keuken, maaltijd, dieet en bereiding');
   if ('bron' in r) fout('bron bestaat niet meer en wordt niet getoond');
+  if ('notities' in r) fout('notities bestaat niet meer, gebruik tips (een lijst met korte tips)');
+  if (r.tips != null && (!Array.isArray(r.tips) || r.tips.length > 4 || !r.tips.every(t => typeof t === 'string' && t.trim()))) fout('tips moet een lijst van maximaal 4 korte teksten zijn');
   if (typeof r.keuken !== 'string' || !r.keuken) fout('keuken ontbreekt (bijv. Mexicaans)');
   if (!Array.isArray(r.maaltijd) || !r.maaltijd.length || !r.maaltijd.every(m => MAALTIJDEN.includes(m))) fout(`maaltijd moet een lijst met ${MAALTIJDEN.join(' / ')} zijn`);
   if (!DIETEN.includes(r.dieet)) fout(`dieet moet een van ${DIETEN.join(' / ')} zijn`);

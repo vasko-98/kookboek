@@ -41,7 +41,7 @@ npx serve _site
     { "groep": "Topping", "items": [ … ] }
   ],
   "stappen": ["Stap 1", "Stap 2"],
-  "notities": "Tekst"
+  "tips": ["Korte tip 1", "Korte tip 2"]   // optioneel, maximaal 4
 }
 ```
 
