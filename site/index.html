@@ -151,7 +151,12 @@
   const bewaar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
   let lijst = laad('kookboek-lijst', {});            // { receptId: { p: personen, k: { keuzelabel: index } } }
   let afgevinkt = new Set(laad('kookboek-afgevinkt', []));
-  const bewaarLijst = () => { bewaar('kookboek-lijst', lijst); bewaar('kookboek-afgevinkt', [...afgevinkt]); };
+  // Vinkjes van producten die niet meer op het lijstje staan vervallen, zodat ze later niet afgevinkt terugkomen.
+  const bewaarLijst = () => {
+    const keys = new Set(lijstRegels().flatMap(g => g.regels.map(e => e.key)));
+    afgevinkt = new Set([...afgevinkt].filter(k => keys.has(k)));
+    bewaar('kookboek-lijst', lijst); bewaar('kookboek-afgevinkt', [...afgevinkt]);
+  };
   let wakeLock = null, wilWake = false;
 
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -538,14 +543,19 @@
     }
   });
 
+  // Onthoudt waar je in het overzicht was, zodat je na een recept op dezelfde plek terugkomt.
+  let opOverzicht = false, overzichtY = 0;
+  try { history.scrollRestoration = 'manual'; } catch {}
   function route() {
     const id = decodeURIComponent(location.hash.slice(1));
     const r = recepten.find(x => x.id === id);
-    window.scrollTo(0, 0);
+    if (opOverzicht) overzichtY = window.scrollY;
+    opOverzicht = !r && id !== 'boodschappen';
     wisBevestig = false;
-    if (id === 'boodschappen') { document.title = 'Boodschappen · Kookboek'; return renderLijst(); }
-    document.title = r ? r.titel + ' · Kookboek' : 'Kookboek';
-    r ? renderRecept(r) : renderOverzicht();
+    if (id === 'boodschappen') document.title = 'Boodschappen · Kookboek';
+    else document.title = r ? r.titel + ' · Kookboek' : 'Kookboek';
+    id === 'boodschappen' ? renderLijst() : r ? renderRecept(r) : renderOverzicht();
+    window.scrollTo(0, opOverzicht ? overzichtY : 0);
   }
 
   fetch('recepten.json', { cache: 'no-cache' })
