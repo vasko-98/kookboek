@@ -17,6 +17,7 @@ function controleer(r, bestand) {
   if (!Number.isFinite(r.personen)) fout('personen ontbreekt');
   if (r.beoordeling != null && !(r.beoordeling >= 1 && r.beoordeling <= 5)) fout('beoordeling moet 1-5 of null zijn');
   if (!Array.isArray(r.tags)) fout('tags moet een lijst zijn');
+  if (r.kleur != null && !['tomaat', 'mosterd', 'salie', 'lila', 'wit'].includes(r.kleur)) fout('kleur moet tomaat, mosterd, salie, lila of wit zijn');
   if (!Array.isArray(r.ingredienten) || !r.ingredienten.length) fout('ingredienten ontbreekt');
   r.ingredienten.forEach((g, i) => {
     if (!Array.isArray(g.items)) fout(`ingredienten[${i}].items ontbreekt`);

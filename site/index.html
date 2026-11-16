@@ -3,331 +3,346 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mijn recepten</title>
+<meta name="theme-color" content="#FFF8EF">
+<title>Kookboek</title>
+<link rel="icon" href="iconen/_standaard.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #faf4ea;
-    --surface: #ffffff;
-    --surface-2: #f3eadb;
-    --text: #2b2420;
-    --muted: #7a6c62;
-    --line: #e6dccd;
-    --accent: #b83c2b;
-    --accent-soft: #f6e1da;
-    --on-accent: #ffffff;
-    --star: #d9902b;
-    --radius: 14px;
-    --shadow: 0 1px 2px rgba(60,40,20,.06), 0 4px 14px rgba(60,40,20,.06);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1c1815;
-      --surface: #262019;
-      --surface-2: #2f2820;
-      --text: #f1e9de;
-      --muted: #a8998b;
-      --line: #3b3229;
-      --accent: #e0725f;
-      --accent-soft: #3d2620;
-      --on-accent: #1c1815;
-      --star: #e7a94a;
-      --shadow: none;
-    }
+    --ink: #2A1A14;
+    --muted: #6B5548;
+    --cream: #FFF8EF;
+    --white: #FFFFFF;
+    --tomaat: #E4573D;
+    --mosterd: #F4B740;
+    --salie: #A9C49A;
+    --lila: #C9B6E4;
+    --line: 2px solid var(--ink);
+    color-scheme: light;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
   body {
-    background: var(--bg); color: var(--text);
-    font: 16px/1.55 Inter, system-ui, sans-serif;
+    background: var(--cream); color: var(--ink);
+    font: 16px/1.5 'Bricolage Grotesque', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 650; line-height: 1.15; margin: 0; }
+  h1, h2, h3 { margin: 0; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
   button { font: inherit; color: inherit; cursor: pointer; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 20px 16px 64px; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 24px 20px 64px; }
 
-  /* Overzicht */
-  .top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 8px 0 16px; }
-  .top h1 { font-size: 2rem; }
-  .count { color: var(--muted); font-size: .9rem; }
-  .search {
-    width: 100%; padding: 12px 14px; border-radius: 12px;
-    border: 1px solid var(--line); background: var(--surface); color: var(--text);
-    font: inherit; outline: none;
-  }
-  .search:focus { border-color: var(--accent); }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 20px; }
-  .chip {
-    border: 1px solid var(--line); background: var(--surface);
-    padding: 6px 12px; border-radius: 999px; font-size: .88rem;
-  }
-  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-  .card {
-    text-align: left; background: var(--surface); border: 1px solid var(--line);
-    border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow);
-    display: flex; flex-direction: column; gap: 10px; min-height: 160px;
-    border-top: 4px solid var(--accent);
-  }
-  .card:hover { border-color: var(--accent); }
-  .card h2 { font-size: 1.2rem; }
-  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; color: var(--muted); font-size: .88rem; }
-  .badge {
-    font-size: .75rem; font-weight: 600; padding: 2px 8px; border-radius: 6px;
-    background: var(--accent-soft); color: var(--accent);
-  }
-  .badge.wil { background: var(--surface-2); color: var(--muted); }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
-  .tag { font-size: .78rem; color: var(--muted); background: var(--surface-2); padding: 2px 8px; border-radius: 6px; }
-  .stars { color: var(--star); letter-spacing: 1px; }
-  .stars .off { color: var(--line); }
-  .empty { color: var(--muted); padding: 32px 0; text-align: center; }
+  /* ---------- Overzicht ---------- */
+  .top { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 20px; }
+  .kicker { display: block; font-size: 15px; color: var(--muted); margin-bottom: 2px; }
+  .top h1 { font-size: clamp(42px, 8vw, 60px); letter-spacing: -0.03em; }
+  .pill-dark { background: var(--ink); color: var(--cream); border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 600; white-space: nowrap; }
 
-  /* Recept */
-  .back { background: none; border: 0; padding: 6px 0; color: var(--accent); font-weight: 600; }
-  .r-head { margin: 8px 0 20px; }
-  .r-head h1 { font-size: clamp(1.7rem, 5vw, 2.4rem); margin: 6px 0 10px; }
-  .r-layout { display: grid; gap: 18px; }
-  @media (min-width: 820px) { .r-layout { grid-template-columns: 340px 1fr; align-items: start; } .ingr { position: sticky; top: 16px; } }
-  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
-  .panel h2 { font-size: 1.25rem; margin-bottom: 12px; }
-  .stepper { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-  .stepper button {
-    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
-    background: var(--surface-2); font-size: 1.2rem; line-height: 1;
-  }
-  .stepper output { min-width: 92px; text-align: center; font-weight: 600; }
-  .note-small { font-size: .82rem; color: var(--muted); margin: -6px 0 12px; }
-  .group { font-weight: 600; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 14px 0 4px; }
-  .ingr ul, .steps ol { list-style: none; margin: 0; padding: 0; }
-  .ingr li label { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; border-bottom: 1px dashed var(--line); cursor: pointer; }
-  .ingr input { accent-color: var(--accent); width: 18px; height: 18px; margin-top: 3px; flex: none; }
-  .ingr .q { font-weight: 600; white-space: nowrap; }
-  .ingr li.done span { color: var(--muted); text-decoration: line-through; }
-  .steps li {
-    display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 14px 0;
-    border-bottom: 1px solid var(--line); cursor: pointer; font-size: 1.12rem; line-height: 1.6;
-  }
-  .steps li:last-child { border-bottom: 0; }
-  .num {
-    width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: var(--on-accent);
-    display: grid; place-items: center; font-weight: 600; font-size: .95rem;
-  }
-  .steps li.done { color: var(--muted); }
-  .steps li.done .num { background: var(--line); color: var(--muted); }
-  .hint { color: var(--muted); font-size: .85rem; margin: 0 0 6px; }
-  .notes { background: var(--accent-soft); border: 0; }
-  .notes p { margin: 0; }
-  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-  .btn { border: 1px solid var(--line); background: var(--surface); padding: 8px 14px; border-radius: 10px; font-size: .9rem; }
-  .btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-  .msg { font-size: .82rem; color: var(--muted); align-self: center; }
-  .src { font-size: .88rem; color: var(--muted); }
-  .src a { color: var(--accent); }
+  .search { display: flex; align-items: center; gap: 10px; background: var(--white); border: var(--line); border-radius: 16px; padding: 12px 16px; }
+  .search input { border: 0; background: transparent; font: inherit; font-size: 16px; color: var(--ink); flex: 1; outline: none; min-width: 0; }
+
+  .chips { display: flex; gap: 8px; overflow-x: auto; padding: 16px 2px 6px; margin: 0 -2px; scrollbar-width: none; }
+  .chips::-webkit-scrollbar { display: none; }
+  @media (min-width: 700px) { .chips { flex-wrap: wrap; overflow: visible; } }
+  .chip { flex: none; min-height: 44px; border-radius: 999px; border: var(--line); background: var(--white); padding: 0 16px; font-weight: 600; }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+
+  .featured { display: flex; flex-direction: column; gap: 14px; margin: 18px 0 8px; padding: 20px; border: var(--line); border-radius: 24px; text-decoration: none; box-shadow: 4px 4px 0 var(--ink); transition: transform .12s, box-shadow .12s; }
+  .featured:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+  .featured .row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .featured h2 { font-size: clamp(26px, 5vw, 34px); }
+  .tag-cream { background: var(--cream); border-radius: 999px; padding: 4px 10px; font-size: 13px; font-weight: 600; }
+  .meta { font-size: 14px; font-weight: 600; }
+
+  .list-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin: 26px 0 12px; }
+  .list-head h2 { font-size: 24px; }
+  .seg { display: flex; border: var(--line); border-radius: 999px; background: var(--white); padding: 2px; }
+  .seg button { min-height: 40px; border: 0; border-radius: 999px; background: transparent; padding: 0 14px; font-size: 14px; font-weight: 600; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .card { display: flex; flex-direction: column; gap: 12px; min-height: 190px; padding: 16px; border: var(--line); border-radius: 24px; text-decoration: none; transition: transform .12s, box-shadow .12s; }
+  .card:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
+  .card h3 { font-size: 18px; line-height: 1.12; letter-spacing: -0.01em; }
+  .card .meta { margin-top: auto; font-size: 13px; }
+  .disc { flex: none; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--cream); border: var(--line); }
+  .disc img { width: 52px; height: 52px; display: block; }
+  .disc.big { width: 104px; height: 104px; }
+  .disc.big img { width: 84px; height: 84px; }
+  .empty { padding: 40px 0; text-align: center; color: var(--muted); }
+
+  /* ---------- Recept ---------- */
+  .r-band { padding: 20px 0 32px; }
+  .r-band .wrap { padding-top: 0; padding-bottom: 0; display: flex; flex-direction: column; gap: 16px; }
+  .r-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .round { width: 44px; height: 44px; border-radius: 50%; background: var(--cream); border: var(--line); display: grid; place-items: center; text-decoration: none; }
+  .btn { min-height: 44px; border-radius: 999px; background: var(--cream); border: var(--line); padding: 0 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+  .btn[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+  .r-title { display: flex; align-items: center; gap: 18px; }
+  .r-title h1 { font-size: clamp(30px, 6vw, 46px); }
+  .chips-static { display: flex; gap: 8px; flex-wrap: wrap; font-size: 14px; font-weight: 600; }
+  .chips-static span { background: var(--cream); border: var(--line); border-radius: 999px; padding: 4px 12px; }
+  .msg { font-size: 14px; font-weight: 600; }
+  .src { font-size: 14px; }
+
+  .sheet { background: var(--cream); border-top: var(--line); border-radius: 28px 28px 0 0; min-height: 60vh; }
+  .sheet .wrap { display: grid; gap: 28px; padding-top: 28px; }
+  @media (min-width: 820px) { .sheet .wrap { grid-template-columns: 340px 1fr; align-items: start; } .ingr { position: sticky; top: 20px; } }
+  .sec-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .sec-head h2 { font-size: 24px; }
+  .stepper { display: flex; align-items: center; border: var(--line); border-radius: 999px; background: var(--white); }
+  .stepper button { width: 44px; height: 44px; border: 0; background: transparent; font-size: 20px; font-weight: 800; }
+  .stepper output { font-weight: 600; padding: 0 2px; min-width: 56px; text-align: center; }
+  .note { font-size: 13px; color: var(--muted); margin: -4px 0 10px; }
+  .group { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; margin: 16px 0 8px; }
+  .ingr ul, .steps ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .ingr label { display: flex; gap: 12px; align-items: center; background: var(--white); border: var(--line); border-radius: 14px; padding: 10px 14px; cursor: pointer; }
+  .ingr input { width: 20px; height: 20px; accent-color: var(--ink); flex: none; margin: 0; }
+  .ingr li.done label { background: var(--salie); }
+  .ingr li.done .txt { text-decoration: line-through; }
+  .steps li button { width: 100%; text-align: left; display: flex; gap: 14px; align-items: flex-start; padding: 12px; border: 2px solid transparent; border-radius: 16px; background: transparent; font-size: 17px; line-height: 1.5; }
+  .num { flex: none; width: 36px; height: 36px; border-radius: 50%; border: var(--line); display: grid; place-items: center; font-weight: 800; }
+  .steps li.current button { background: var(--hl, var(--mosterd)); border-color: var(--ink); }
+  .steps li.current .num { background: var(--ink); color: var(--cream); }
+  .steps li.done button { opacity: .5; }
+  .steps li.done .num { background: var(--ink); color: var(--cream); }
+  .hint { font-size: 14px; color: var(--muted); margin: -4px 0 10px; }
+  .tip { margin-top: 20px; background: var(--lila); border: var(--line); border-radius: 18px; padding: 16px; font-size: 16px; line-height: 1.5; }
+  .tip strong { display: block; margin-bottom: 4px; }
 </style>
 </head>
 <body>
-<main class="wrap" id="app"><p class="empty">Recepten laden…</p></main>
+<div id="app"><main class="wrap"><p class="empty">Recepten laden…</p></main></div>
 
 <script>
 (() => {
   const app = document.getElementById('app');
+  const KLEUREN = { tomaat: '#E4573D', mosterd: '#F4B740', salie: '#A9C49A', lila: '#C9B6E4', wit: '#FFFFFF' };
+  const VOLGORDE = ['tomaat', 'salie', 'mosterd', 'lila', 'wit'];
   let recepten = [];
-  let filterTag = null;
-  let zoek = '';
-  const staat = {}; // per recept: { personen, ingr:Set, stap:Set } — alleen zolang de pagina open is
-  let wakeLock = null;
+  let filterTag = null, zoek = '', sort = 'snel';
+  const staat = {};
+  let wakeLock = null, wilWake = false;
 
-  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-
-  const sterren = b => {
-    if (!b) return '<span class="stars" title="Nog geen beoordeling"><span class="off">★★★★★</span></span>';
-    return `<span class="stars" title="${b} van 5">${'★'.repeat(b)}<span class="off">${'★'.repeat(5 - b)}</span></span>`;
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const kleur = (r, i) => KLEUREN[r.kleur] || KLEUREN[VOLGORDE[i % VOLGORDE.length]];
+  const icoon = r => `<img src="iconen/${esc(r.id)}.svg" alt="" onerror="this.onerror=null;this.src='iconen/_standaard.svg'">`;
+  const svg = {
+    zoek: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+    terug: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
+    zon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
   };
 
-  // Hoeveelheden omrekenen en netjes tonen
+  // ---------- Hoeveelheden omrekenen ----------
   const breuken = { 0.25: '¼', 0.5: '½', 0.75: '¾' };
   function fmtGetal(x) {
     const heel = Math.floor(x + 1e-9), rest = +(x - heel).toFixed(2);
     if (rest === 0) return String(heel);
-    if (breuken[rest]) return (heel ? heel : '') + breuken[rest];
+    if (breuken[rest]) return (heel || '') + breuken[rest];
     return x.toLocaleString('nl-NL', { maximumFractionDigits: 1 });
   }
-  function schaal(q, u, factor) {
+  function schaal(q, u, f) {
     if (q == null) return null;
-    let v = q * factor;
-    if (u === 'g' || u === 'ml') {
-      v = v >= 50 ? Math.round(v / 5) * 5 : Math.max(1, Math.round(v));
-    } else if (u === 'el' || u === 'tl') {
-      v = Math.max(0.25, Math.round(v * 4) / 4);
-    } else if (u && u.startsWith('teentje')) {
-      v = Math.max(1, Math.ceil(v - 0.01));
-    } else {
-      v = Math.max(0.5, Math.round(v * 2) / 2);
-    }
+    let v = q * f;
+    if (u === 'g' || u === 'ml') v = v >= 50 ? Math.round(v / 5) * 5 : Math.max(1, Math.round(v));
+    else if (u === 'el' || u === 'tl') v = Math.max(0.25, Math.round(v * 4) / 4);
+    else if (u && u.startsWith('teentje')) v = Math.max(1, Math.ceil(v - 0.01));
+    else v = Math.max(0.5, Math.round(v * 2) / 2);
     return v;
   }
-  function hoeveelheid(it, factor) {
-    const v = schaal(it.q, it.u, factor);
+  function hoeveelheid(it, f) {
+    const v = schaal(it.q, it.u, f);
     if (v == null) return '';
     let unit = it.u ? ' ' + it.u : '';
     if (it.u && it.u.startsWith('teentje')) unit = v === 1 ? ' teentje' : ' teentjes';
     return fmtGetal(v) + unit;
   }
 
+  // ---------- Overzicht ----------
   function alleTags() {
-    const set = new Map();
-    recepten.forEach(r => r.tags.forEach(t => set.set(t.toLowerCase(), t)));
-    return [...set.values()].sort((a, b) => a.localeCompare(b, 'nl'));
+    const m = new Map();
+    recepten.forEach(r => r.tags.forEach(t => m.set(t.toLowerCase(), t)));
+    return [...m.values()].sort((a, b) => a.localeCompare(b, 'nl'));
   }
-
-  function zoekTekst(r) {
-    return [r.titel, ...r.tags, ...r.ingredienten.flatMap(g => g.items.map(i => i.n))].join(' ').toLowerCase();
+  const zoekTekst = r => [r.titel, ...r.tags, ...r.ingredienten.flatMap(g => g.items.map(i => i.n))].join(' ').toLowerCase();
+  function meta(r) {
+    const extra = r.tags[0] ? r.tags[0][0].toUpperCase() + r.tags[0].slice(1) : '';
+    return [r.tijd + ' min', extra, r.beoordeling ? '★ ' + r.beoordeling : ''].filter(Boolean).join(' · ');
+  }
+  function sorteer(lijst) {
+    const s = lijst.slice();
+    if (sort === 'snel') s.sort((a, b) => a.tijd - b.tijd || a.titel.localeCompare(b.titel, 'nl'));
+    if (sort === 'lang') s.sort((a, b) => b.tijd - a.tijd || a.titel.localeCompare(b.titel, 'nl'));
+    if (sort === 'ster') s.sort((a, b) => (b.beoordeling || 0) - (a.beoordeling || 0) || a.tijd - b.tijd);
+    return s;
   }
 
   function renderOverzicht() {
-    const lijst = recepten.filter(r =>
+    const lijst = sorteer(recepten.filter(r =>
       (!filterTag || r.tags.some(t => t.toLowerCase() === filterTag.toLowerCase())) &&
-      (!zoek || zoekTekst(r).includes(zoek.toLowerCase()))
-    );
-    const tags = alleTags();
-    app.innerHTML = `
-      <div class="top"><h1>Mijn recepten</h1><span class="count">${recepten.length} recepten</span></div>
-      <input class="search" id="zoek" type="search" placeholder="Zoek op recept of ingrediënt…" value="${esc(zoek)}" aria-label="Zoeken">
+      (!zoek || zoekTekst(r).includes(zoek.toLowerCase()))));
+    const favoriet = recepten.filter(r => r.beoordeling).sort((a, b) => b.beoordeling - a.beoordeling)[0];
+    const toonFav = favoriet && !filterTag && !zoek;
+    const sorts = [['snel', 'Snelst'], ['lang', 'Langst'], ['ster', 'Beste']];
+
+    app.innerHTML = `<main class="wrap">
+      <header class="top">
+        <div><span class="kicker">Wat eten we vandaag?</span><h1>Kookboek</h1></div>
+        <span class="pill-dark">${recepten.length} recepten</span>
+      </header>
+      <label class="search">${svg.zoek}<input id="zoek" type="search" placeholder="Zoek op recept of ingrediënt" aria-label="Zoeken" value="${esc(zoek)}"></label>
       <div class="chips" role="group" aria-label="Filter op tag">
         <button class="chip" data-tag="" aria-pressed="${!filterTag}">Alles</button>
-        ${tags.map(t => `<button class="chip" data-tag="${esc(t)}" aria-pressed="${filterTag === t}">${esc(t)}</button>`).join('')}
+        ${alleTags().map(t => `<button class="chip" data-tag="${esc(t)}" aria-pressed="${filterTag === t}">${esc(t[0].toUpperCase() + t.slice(1))}</button>`).join('')}
       </div>
-      <div class="grid">
-        ${lijst.length ? lijst.map(r => `
-          <button class="card" data-id="${esc(r.id)}">
-            <span class="meta">
-              <span class="badge ${r.status === 'Gemaakt' ? '' : 'wil'}">${esc(r.status)}</span>
-              ${sterren(r.beoordeling)}
-            </span>
-            <h2>${esc(r.titel)}</h2>
-            <span class="meta"><span>⏱ ${r.tijd} min</span><span>👥 ${r.personen} pers.</span></span>
-            <span class="tags">${r.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
-          </button>`).join('') : '<p class="empty">Geen recepten gevonden.</p>'}
-      </div>`;
+      ${toonFav ? `
+      <a class="featured" href="#${esc(favoriet.id)}" style="background:${kleur(favoriet, recepten.indexOf(favoriet))}">
+        <div class="row"><span class="tag-cream">Favoriet · ★ ${favoriet.beoordeling}</span><span class="disc big">${icoon(favoriet)}</span></div>
+        <h2>${esc(favoriet.titel)}</h2>
+        <span class="meta">${esc([favoriet.tijd + ' min', ...favoriet.tags.slice(0, 2)].join(' · '))}</span>
+      </a>` : ''}
+      <div class="list-head">
+        <h2>${filterTag || zoek ? lijst.length + (lijst.length === 1 ? ' recept' : ' recepten') : 'Alle recepten'}</h2>
+        <div class="seg" role="group" aria-label="Sorteren">
+          ${sorts.map(([k, l]) => `<button data-sort="${k}" aria-pressed="${sort === k}">${l}</button>`).join('')}
+        </div>
+      </div>
+      ${lijst.length ? `<div class="grid">${lijst.map(r => `
+        <a class="card" href="#${esc(r.id)}" style="background:${kleur(r, recepten.indexOf(r))}">
+          <span class="disc">${icoon(r)}</span>
+          <h3>${esc(r.titel)}</h3>
+          <span class="meta">${esc(meta(r))}</span>
+        </a>`).join('')}</div>` : '<p class="empty">Geen recepten gevonden.</p>'}
+    </main>`;
+
     const z = document.getElementById('zoek');
     z.addEventListener('input', e => {
-      zoek = e.target.value;
-      const pos = e.target.selectionStart;
+      zoek = e.target.value; const pos = e.target.selectionStart;
       renderOverzicht();
       const nz = document.getElementById('zoek'); nz.focus(); nz.setSelectionRange(pos, pos);
     });
     app.querySelectorAll('.chip').forEach(b => b.onclick = () => { filterTag = b.dataset.tag || null; renderOverzicht(); });
-    app.querySelectorAll('.card').forEach(b => b.onclick = () => { location.hash = b.dataset.id; });
+    app.querySelectorAll('[data-sort]').forEach(b => b.onclick = () => { sort = b.dataset.sort; renderOverzicht(); });
   }
 
+  // ---------- Recept ----------
   function getStaat(r) {
-    if (!staat[r.id]) staat[r.id] = { personen: r.personen, ingr: new Set(), stap: new Set() };
-    return staat[r.id];
+    return staat[r.id] || (staat[r.id] = { personen: r.personen, ingr: new Set(), stap: new Set() });
   }
 
   function renderRecept(r) {
     const s = getStaat(r);
-    const factor = s.personen / r.personen;
+    const f = s.personen / r.personen;
+    const bg = kleur(r, recepten.indexOf(r));
+    const hl = r.kleur === 'mosterd' ? '#C9B6E4' : '#F4B740';
+    const huidige = r.stappen.findIndex((_, i) => !s.stap.has(i));
     let idx = 0;
-    const ingrHtml = r.ingredienten.map(g => `
+    const ingr = r.ingredienten.map(g => `
       ${g.groep ? `<div class="group">${esc(g.groep)}</div>` : ''}
-      <ul>${g.items.map(it => { const i = idx++; const h = hoeveelheid(it, factor); return `
+      <ul>${g.items.map(it => { const i = idx++; const h = hoeveelheid(it, f); return `
         <li class="${s.ingr.has(i) ? 'done' : ''}"><label>
           <input type="checkbox" data-i="${i}" ${s.ingr.has(i) ? 'checked' : ''}>
-          <span>${h ? `<span class="q">${esc(h)}</span> ` : ''}${esc(it.n)}</span>
+          <span class="txt">${h ? `<strong>${esc(h)}</strong> ` : ''}${esc(it.n)}</span>
         </label></li>`; }).join('')}</ul>`).join('');
-
-    const bron = r.bron
-      ? (/^https?:\/\//.test(r.bron) ? `<a href="${esc(r.bron)}" target="_blank" rel="noopener">${esc(r.bron)}</a>` : esc(r.bron))
-      : '';
+    const bron = r.bron ? (/^https?:\/\//.test(r.bron) ? `<a href="${esc(r.bron)}" target="_blank" rel="noopener">${esc(r.bron)}</a>` : esc(r.bron)) : '';
 
     app.innerHTML = `
-      <button class="back" id="terug">← Alle recepten</button>
-      <header class="r-head">
-        <span class="meta">
-          <span class="badge ${r.status === 'Gemaakt' ? '' : 'wil'}">${esc(r.status)}${r.statusNoot ? ' · ' + esc(r.statusNoot) : ''}</span>
-          ${sterren(r.beoordeling)}
-        </span>
-        <h1>${esc(r.titel)}</h1>
-        <span class="meta"><span>⏱ ${r.tijd} min</span>${r.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
-        ${bron ? `<p class="src">Bron: ${bron}</p>` : ''}
-        <div class="tools">
-          <button class="btn" id="wake" aria-pressed="${!!wakeLock}">☀ Scherm aan houden</button>
-          <button class="btn" id="reset">Vinkjes wissen</button>
-          <span class="msg" id="msg"></span>
-        </div>
-      </header>
-      <div class="r-layout">
-        <section class="panel ingr">
-          <h2>Ingrediënten</h2>
-          <div class="stepper">
-            <button id="min" aria-label="Minder personen">−</button>
-            <output>${s.personen} ${s.personen === 1 ? 'persoon' : 'personen'}</output>
-            <button id="plus" aria-label="Meer personen">+</button>
+      <div class="r-band" style="background:${bg}">
+        <div class="wrap">
+          <div class="r-bar">
+            <a class="round" href="#" aria-label="Terug naar overzicht">${svg.terug}</a>
+            <button class="btn" id="wake" aria-pressed="${wilWake}">${svg.zon} Scherm aan</button>
           </div>
-          ${r.hoeveelhedenGeschat ? '<p class="note-small">Hoeveelheden zijn geschat.</p>' : ''}
-          ${factor !== 1 ? '<p class="note-small">Omgerekend en afgerond, proef en pas aan.</p>' : ''}
-          ${ingrHtml}
-        </section>
-        <div style="display:grid;gap:18px">
-          <section class="panel steps">
-            <h2>Bereiding</h2>
-            <p class="hint">Tik op een stap om hem af te vinken.</p>
-            <ol>${r.stappen.map((st, i) => `
-              <li data-s="${i}" class="${s.stap.has(i) ? 'done' : ''}"><span class="num">${i + 1}</span><span>${esc(st)}</span></li>`).join('')}
-            </ol>
-          </section>
-          ${r.notities ? `<section class="panel notes"><h2>Notities voor de volgende keer</h2><p>${esc(r.notities)}</p></section>` : ''}
+          <div class="r-title"><span class="disc big">${icoon(r)}</span></div>
+          <h1>${esc(r.titel)}</h1>
+          <div class="chips-static">
+            <span>${r.tijd} min</span>
+            <span>${r.beoordeling ? '★ ' + r.beoordeling + ' van 5' : 'Nog niet beoordeeld'}</span>
+            <span>${esc(r.status)}${r.statusNoot ? ' · ' + esc(r.statusNoot) : ''}</span>
+            ${r.tags.map(t => `<span>${esc(t)}</span>`).join('')}
+          </div>
+          ${bron ? `<p class="src" style="margin:0">Bron: ${bron}</p>` : ''}
+          <span class="msg" id="msg" aria-live="polite"></span>
         </div>
+      </div>
+      <div class="sheet">
+        <main class="wrap">
+          <section class="ingr">
+            <div class="sec-head">
+              <h2>Ingrediënten</h2>
+              <div class="stepper">
+                <button id="min" aria-label="Minder personen">−</button>
+                <output>${s.personen} pers.</output>
+                <button id="plus" aria-label="Meer personen">+</button>
+              </div>
+            </div>
+            ${r.hoeveelhedenGeschat ? '<p class="note">Hoeveelheden zijn geschat.</p>' : ''}
+            ${f !== 1 ? '<p class="note">Omgerekend en afgerond, proef en pas aan.</p>' : ''}
+            ${ingr}
+          </section>
+          <div>
+            <section class="steps" style="--hl:${hl}">
+              <div class="sec-head"><h2>Bereiding</h2><button class="btn" id="reset">Opnieuw</button></div>
+              <p class="hint">Tik op een stap als hij klaar is.</p>
+              <ol>${r.stappen.map((st, i) => `
+                <li class="${s.stap.has(i) ? 'done' : ''} ${i === huidige ? 'current' : ''}">
+                  <button data-s="${i}" aria-pressed="${s.stap.has(i)}"><span class="num">${i + 1}</span><span>${esc(st)}</span></button>
+                </li>`).join('')}</ol>
+            </section>
+            ${r.notities ? `<aside class="tip"><strong>Tip voor de volgende keer</strong>${esc(r.notities)}</aside>` : ''}
+          </div>
+        </main>
       </div>`;
 
-    document.getElementById('terug').onclick = () => { location.hash = ''; };
     document.getElementById('min').onclick = () => { if (s.personen > 1) { s.personen--; renderRecept(r); } };
     document.getElementById('plus').onclick = () => { if (s.personen < 12) { s.personen++; renderRecept(r); } };
     document.getElementById('reset').onclick = () => { s.ingr.clear(); s.stap.clear(); renderRecept(r); };
+    document.getElementById('wake').onclick = toggleWake;
     app.querySelectorAll('.ingr input').forEach(cb => cb.onchange = () => {
       const i = +cb.dataset.i; cb.checked ? s.ingr.add(i) : s.ingr.delete(i);
       cb.closest('li').classList.toggle('done', cb.checked);
     });
-    app.querySelectorAll('.steps li').forEach(li => li.onclick = () => {
-      const i = +li.dataset.s; s.stap.has(i) ? s.stap.delete(i) : s.stap.add(i);
-      li.classList.toggle('done');
+    app.querySelectorAll('[data-s]').forEach(b => b.onclick = () => {
+      const i = +b.dataset.s; s.stap.has(i) ? s.stap.delete(i) : s.stap.add(i);
+      const y = window.scrollY; renderRecept(r); window.scrollTo(0, y);
     });
-    document.getElementById('wake').onclick = toggleWake;
   }
 
   async function toggleWake() {
     const btn = document.getElementById('wake'), msg = document.getElementById('msg');
     try {
-      if (wakeLock) { await wakeLock.release(); wakeLock = null; btn.setAttribute('aria-pressed', 'false'); msg.textContent = ''; return; }
+      if (wilWake) { wilWake = false; if (wakeLock) await wakeLock.release(); wakeLock = null; btn.setAttribute('aria-pressed', 'false'); msg.textContent = ''; return; }
       if (!('wakeLock' in navigator)) throw new Error();
-      wakeLock = await navigator.wakeLock.request('screen');
-      wakeLock.addEventListener('release', () => { wakeLock = null; const b = document.getElementById('wake'); if (b) b.setAttribute('aria-pressed', 'false'); });
+      wakeLock = await navigator.wakeLock.request('screen'); wilWake = true;
+      wakeLock.addEventListener('release', () => { wakeLock = null; });
       btn.setAttribute('aria-pressed', 'true'); msg.textContent = 'Scherm blijft aan.';
     } catch {
-      wakeLock = null; btn.setAttribute('aria-pressed', 'false');
-      msg.textContent = 'Werkt niet in deze weergave. Open de pagina los in je browser.';
+      wakeLock = null; wilWake = false; btn.setAttribute('aria-pressed', 'false');
+      msg.textContent = 'Scherm aan houden werkt niet in deze browser.';
     }
   }
+  // Wake lock vervalt als de tab verborgen wordt; vraag hem opnieuw aan bij terugkeer.
+  document.addEventListener('visibilitychange', async () => {
+    if (document.visibilityState === 'visible' && wilWake && !wakeLock) {
+      try { wakeLock = await navigator.wakeLock.request('screen'); } catch {}
+    }
+  });
 
   function route() {
     const id = decodeURIComponent(location.hash.slice(1));
     const r = recepten.find(x => x.id === id);
     window.scrollTo(0, 0);
+    document.title = r ? r.titel + ' · Kookboek' : 'Kookboek';
     r ? renderRecept(r) : renderOverzicht();
   }
 
   fetch('recepten.json', { cache: 'no-cache' })
     .then(res => { if (!res.ok) throw new Error(res.status); return res.json(); })
-    .then(data => {
-      recepten = data.recepten.slice().sort((a, b) =>
-        (a.status === b.status ? 0 : a.status === 'Gemaakt' ? -1 : 1) || a.titel.localeCompare(b.titel, 'nl'));
-      route();
-      window.addEventListener('hashchange', route);
-    })
-    .catch(() => { app.innerHTML = '<p class="empty">De recepten konden niet geladen worden.</p>'; });
+    .then(data => { recepten = data.recepten; route(); window.addEventListener('hashchange', route); })
+    .catch(() => { app.innerHTML = '<main class="wrap"><p class="empty">De recepten konden niet geladen worden.</p></main>'; });
 })();
 </script>
 </body>

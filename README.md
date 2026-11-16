@@ -5,7 +5,7 @@ Mijn persoonlijke receptenverzameling als kleine website, gehost op GitHub Pages
 ## Opbouw
 
 - `recepten/` – één JSON-bestand per recept. De bestandsnaam is het `id` en het anker in de URL (`#plaattaart-rode-pesto`).
-- `site/` – de website zelf (`index.html`).
+- `site/` – de website zelf (`index.html`) en `site/iconen/` met één icoon per recept (zie ICONEN.md).
 - `scripts/build.mjs` – controleert de recepten en voegt ze samen tot `_site/recepten.json`.
 - `.github/workflows/pages.yml` – bouwt en publiceert bij elke push naar `main`.
 
@@ -30,6 +30,7 @@ npx serve _site
   "bron": "https://…",              // tekst, URL of null
   "hoeveelhedenGeschat": true,      // optioneel
   "tags": ["vegetarisch", "snel"],
+  "kleur": "salie",                 // tomaat, mosterd, salie, lila of wit
   "ingredienten": [
     { "groep": null, "items": [
       { "q": 200, "u": "g", "n": "penne" },
