@@ -1,18 +1,17 @@
 {
   "id": "plaattaart-rode-pesto",
   "titel": "Plaattaart met rode pesto, ovengroenten en feta",
-  "status": "Gemaakt",
-  "tijd": 35,
+  "tijd": "30-45",
   "personen": 2,
   "moeite": "makkelijk",
   "favoriet": true,
-  "bron": "pdf (geen link bekend)",
-  "tags": [
-    "Italiaans",
+  "keuken": "Italiaans",
+  "maaltijd": [
     "lunch",
-    "diner",
-    "ovengerecht"
+    "diner"
   ],
+  "dieet": "vega",
+  "bereiding": "oven",
   "kleur": "tomaat",
   "ingredienten": [
     {

@@ -22,15 +22,15 @@ npx serve _site
 {
   "id": "naam-van-recept",
   "titel": "Naam van recept",
-  "status": "Gemaakt",              // of "Wil ik maken"
-  "statusNoot": "zonder oven",      // optioneel
-  "tijd": 30,                       // minuten
+  "tijd": "30-45",                  // range in minuten: tot 15, 15-30, 30-45, 45-60 of 60+
   "personen": 2,
   "moeite": "gemiddeld",           // makkelijk, gemiddeld of veel werk (los van de tijd)
   "favoriet": true,                 // optioneel, standaard false
-  "bron": "https://…",              // tekst, URL of null
   "hoeveelhedenGeschat": true,      // optioneel
-  "tags": ["Mexicaans", "diner", "ovengerecht"],  // vaste selectie, zie hieronder
+  "keuken": "Mexicaans",
+  "maaltijd": ["diner"],            // ontbijt, lunch en/of diner
+  "dieet": "vega",                  // vega, vlees of vis
+  "bereiding": "oven",              // oven, één pan, meerdere pannen, BBQ of geen koken
   "kleur": "salie",                 // tomaat, mosterd, salie, lila of wit
   "ingredienten": [
     { "groep": null, "items": [
@@ -46,10 +46,17 @@ npx serve _site
 
 Eén hoeveelheid per regel: `q` is een getal (of `null`), `u` de eenheid, `n` de omschrijving. Zo kan de site omrekenen naar meer of minder personen.
 
-## Tags
+## Categorieën
 
-Vaste selectie, in deze volgorde (de eerste tag staat op de kaart):
-1. **Keuken**, één per recept: Mexicaans, Italiaans, Thais, Nederlands, enz.
-2. **Maaltijd**, één of meer: ontbijt, lunch, diner.
-3. **Extra**, optioneel: eenpansgerecht, ovengerecht.
-4. **Vlees** of **vis**, alleen bij gerechten die niet vegetarisch zijn. Vegetarisch is de standaard en krijgt dus geen tag.
+Elk recept kiest precies één waarde per categorie (maaltijd mag meer dan één zijn). `node scripts/build.mjs` controleert dit.
+
+| Veld | Waarden |
+|---|---|
+| `keuken` | vrij, bijv. Mexicaans, Italiaans, Thais, Nederlands |
+| `maaltijd` | ontbijt, lunch, diner |
+| `dieet` | vega, vlees, vis |
+| `bereiding` | oven, één pan, meerdere pannen, BBQ, geen koken |
+| `moeite` | makkelijk, gemiddeld, veel werk (los van de tijd) |
+| `tijd` | tot 15, 15-30, 30-45, 45-60, 60+ (minuten, een range omdat het afhangt van hoe snel je kookt) |
+
+Er zijn geen losse tags en geen bron meer.

@@ -1,18 +1,16 @@
 {
   "id": "preischotel",
   "titel": "Preischotel (champignon-walnoot)",
-  "status": "Wil ik maken",
-  "statusNoot": "nog niet in deze vega-versie gemaakt",
-  "tijd": 50,
+  "tijd": "45-60",
   "personen": 2,
   "moeite": "gemiddeld",
   "favoriet": false,
-  "bron": null,
-  "tags": [
-    "Nederlands",
-    "diner",
-    "ovengerecht"
+  "keuken": "Nederlands",
+  "maaltijd": [
+    "diner"
   ],
+  "dieet": "vega",
+  "bereiding": "oven",
   "kleur": "salie",
   "ingredienten": [
     {

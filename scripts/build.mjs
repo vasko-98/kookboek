@@ -5,21 +5,29 @@ import path from 'node:path';
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const out = path.join(root, '_site');
-const STATUSSEN = ['Gemaakt', 'Wil ik maken'];
 const MOEITE = ['makkelijk', 'gemiddeld', 'veel werk'];
+const TIJDEN = ['tot 15', '15-30', '30-45', '45-60', '60+'];
+const MAALTIJDEN = ['ontbijt', 'lunch', 'diner'];
+const DIETEN = ['vega', 'vlees', 'vis'];
+const BEREIDINGEN = ['oven', 'één pan', 'meerdere pannen', 'BBQ', 'geen koken'];
 
 function controleer(r, bestand) {
   const fout = m => { throw new Error(`${bestand}: ${m}`); };
   const id = path.basename(bestand, '.json');
   if (r.id !== id) fout(`id "${r.id}" moet gelijk zijn aan de bestandsnaam "${id}"`);
   if (!r.titel) fout('titel ontbreekt');
-  if (!STATUSSEN.includes(r.status)) fout(`status moet een van ${STATUSSEN.join(' / ')} zijn`);
-  if (!Number.isFinite(r.tijd)) fout('tijd (minuten) ontbreekt');
+  if ('status' in r || 'statusNoot' in r) fout('status bestaat niet meer');
+  if (!TIJDEN.includes(r.tijd)) fout(`tijd moet een van ${TIJDEN.join(' / ')} zijn (range in minuten)`);
   if (!Number.isFinite(r.personen)) fout('personen ontbreekt');
   if (!MOEITE.includes(r.moeite)) fout(`moeite moet een van ${MOEITE.join(' / ')} zijn`);
   if (r.favoriet != null && typeof r.favoriet !== 'boolean') fout('favoriet moet true of false zijn');
   if ('beoordeling' in r) fout('beoordeling bestaat niet meer, gebruik favoriet: true/false');
-  if (!Array.isArray(r.tags)) fout('tags moet een lijst zijn');
+  if ('tags' in r) fout('tags bestaan niet meer, gebruik keuken, maaltijd, dieet en bereiding');
+  if ('bron' in r) fout('bron bestaat niet meer en wordt niet getoond');
+  if (typeof r.keuken !== 'string' || !r.keuken) fout('keuken ontbreekt (bijv. Mexicaans)');
+  if (!Array.isArray(r.maaltijd) || !r.maaltijd.length || !r.maaltijd.every(m => MAALTIJDEN.includes(m))) fout(`maaltijd moet een lijst met ${MAALTIJDEN.join(' / ')} zijn`);
+  if (!DIETEN.includes(r.dieet)) fout(`dieet moet een van ${DIETEN.join(' / ')} zijn`);
+  if (!BEREIDINGEN.includes(r.bereiding)) fout(`bereiding moet een van ${BEREIDINGEN.join(' / ')} zijn`);
   if (r.kleur != null && !['tomaat', 'mosterd', 'salie', 'lila', 'wit'].includes(r.kleur)) fout('kleur moet tomaat, mosterd, salie, lila of wit zijn');
   if (!Array.isArray(r.ingredienten) || !r.ingredienten.length) fout('ingredienten ontbreekt');
   r.ingredienten.forEach((g, i) => {

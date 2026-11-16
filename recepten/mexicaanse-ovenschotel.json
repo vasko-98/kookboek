@@ -1,18 +1,16 @@
 {
   "id": "mexicaanse-ovenschotel",
   "titel": "Mexicaanse ovenschotel met nacho's en kaas",
-  "status": "Gemaakt",
-  "tijd": 45,
+  "tijd": "30-45",
   "personen": 2,
   "moeite": "veel werk",
   "favoriet": false,
-  "bron": null,
-  "tags": [
-    "Mexicaans",
-    "diner",
-    "ovengerecht",
-    "vlees"
+  "keuken": "Mexicaans",
+  "maaltijd": [
+    "diner"
   ],
+  "dieet": "vlees",
+  "bereiding": "oven",
   "kleur": "wit",
   "ingredienten": [
     {

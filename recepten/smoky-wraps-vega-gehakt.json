@@ -1,18 +1,16 @@
 {
   "id": "smoky-wraps-vega-gehakt",
   "titel": "Smoky wraps met vega gehakt en groenten",
-  "status": "Gemaakt",
-  "statusNoot": "zonder oven",
-  "tijd": 45,
+  "tijd": "30-45",
   "personen": 2,
   "moeite": "gemiddeld",
   "favoriet": false,
-  "bron": null,
-  "tags": [
-    "Mexicaans",
-    "diner",
-    "eenpansgerecht"
+  "keuken": "Mexicaans",
+  "maaltijd": [
+    "diner"
   ],
+  "dieet": "vega",
+  "bereiding": "één pan",
   "kleur": "lila",
   "ingredienten": [
     {

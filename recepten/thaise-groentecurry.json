@@ -1,17 +1,16 @@
 {
   "id": "thaise-groentecurry",
   "titel": "Thaise groentecurry met kikkererwten",
-  "status": "Gemaakt",
-  "tijd": 40,
+  "tijd": "30-45",
   "personen": 2,
   "moeite": "gemiddeld",
   "favoriet": false,
-  "bron": null,
-  "tags": [
-    "Thais",
-    "diner",
-    "eenpansgerecht"
+  "keuken": "Thais",
+  "maaltijd": [
+    "diner"
   ],
+  "dieet": "vega",
+  "bereiding": "één pan",
   "kleur": "salie",
   "ingredienten": [
     {

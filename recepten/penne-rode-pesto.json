@@ -1,17 +1,17 @@
 {
   "id": "penne-rode-pesto",
   "titel": "Penne met rode pesto en groenten",
-  "status": "Gemaakt",
-  "tijd": 25,
+  "tijd": "15-30",
   "personen": 2,
   "moeite": "gemiddeld",
   "favoriet": false,
-  "bron": null,
   "hoeveelhedenGeschat": true,
-  "tags": [
-    "Italiaans",
+  "keuken": "Italiaans",
+  "maaltijd": [
     "diner"
   ],
+  "dieet": "vega",
+  "bereiding": "meerdere pannen",
   "kleur": "mosterd",
   "ingredienten": [
     {

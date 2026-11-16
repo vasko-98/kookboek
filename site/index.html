@@ -49,6 +49,10 @@
   @media (min-width: 700px) { .chips { flex-wrap: wrap; overflow: visible; } }
   .chip { flex: none; min-height: 44px; border-radius: 999px; border: var(--line); background: var(--white); padding: 0 16px; font-weight: 600; }
   .chip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+  .filters { margin-top: 6px; }
+  .filters summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+  .cat-naam { display: block; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; margin-top: 10px; }
+  .filters .chips { padding-top: 6px; }
 
   .featured { display: flex; flex-direction: column; gap: 14px; margin: 18px 0 8px; padding: 20px; border: var(--line); border-radius: 24px; text-decoration: none; box-shadow: 4px 4px 0 var(--ink); transition: transform .12s, box-shadow .12s; }
   .featured:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
@@ -123,8 +127,7 @@
   const KLEUREN = { tomaat: '#E4573D', mosterd: '#F4B740', salie: '#A9C49A', lila: '#C9B6E4', wit: '#FFFFFF' };
   const VOLGORDE = ['tomaat', 'salie', 'mosterd', 'lila', 'wit'];
   let recepten = [];
-  const FAV = '__favorieten';
-  let filterTag = null, zoek = '', sort = 'snel';
+  let zoek = '', sort = 'snel', filters = {}, favFilter = false, filtersOpen = false;
   const staat = {};
   let wakeLock = null, wilWake = false;
 
@@ -164,32 +167,45 @@
   }
 
   // ---------- Overzicht ----------
-  function alleTags() {
-    const m = new Map();
-    recepten.forEach(r => r.tags.forEach(t => m.set(t.toLowerCase(), t)));
-    return [...m.values()].sort((a, b) => a.localeCompare(b, 'nl'));
+  const TIJDEN = ['tot 15', '15-30', '30-45', '45-60', '60+'];
+  const MOEITEN = ['makkelijk', 'gemiddeld', 'veel werk'];
+  const tijdLabel = t => t.replace('-', '–') + ' min';
+  const cap = t => t[0].toUpperCase() + t.slice(1);
+  const CATEGORIEEN = [
+    { k: 'keuken', label: 'Keuken', van: r => [r.keuken] },
+    { k: 'maaltijd', label: 'Maaltijd', van: r => r.maaltijd },
+    { k: 'dieet', label: 'Dieet', van: r => [r.dieet] },
+    { k: 'bereiding', label: 'Bereiding', van: r => [r.bereiding] },
+    { k: 'moeite', label: 'Moeite', van: r => [r.moeite], volgorde: MOEITEN },
+    { k: 'tijd', label: 'Tijd', van: r => [r.tijd], volgorde: TIJDEN, toon: tijdLabel },
+  ];
+  function waarden(c) {
+    const set = new Set();
+    recepten.forEach(r => c.van(r).forEach(v => set.add(v)));
+    return c.volgorde ? c.volgorde.filter(v => set.has(v)) : [...set].sort((a, b) => a.localeCompare(b, 'nl'));
   }
-  const zoekTekst = r => [r.titel, ...r.tags, ...r.ingredienten.flatMap(g => g.items.map(i => i.n))].join(' ').toLowerCase();
-  function meta(r) {
-    const extra = r.tags[0] ? r.tags[0][0].toUpperCase() + r.tags[0].slice(1) : '';
-    return [r.tijd + ' min', r.moeite, extra].filter(Boolean).join(' · ');
-  }
+  const zoekTekst = r => [r.titel, r.keuken, ...r.maaltijd, r.dieet, r.bereiding, ...r.ingredienten.flatMap(g => g.items.map(i => i.n))].join(' ').toLowerCase();
+  const meta = r => [tijdLabel(r.tijd), r.moeite, r.keuken].join(' · ');
+  const tijdIdx = r => TIJDEN.indexOf(r.tijd);
   function sorteer(lijst) {
     const s = lijst.slice();
-    if (sort === 'snel') s.sort((a, b) => a.tijd - b.tijd || a.titel.localeCompare(b.titel, 'nl'));
-    if (sort === 'lang') s.sort((a, b) => b.tijd - a.tijd || a.titel.localeCompare(b.titel, 'nl'));
-    if (sort === 'fav') s.sort((a, b) => (!!b.favoriet - !!a.favoriet) || a.tijd - b.tijd);
+    if (sort === 'snel') s.sort((a, b) => tijdIdx(a) - tijdIdx(b) || a.titel.localeCompare(b.titel, 'nl'));
+    if (sort === 'lang') s.sort((a, b) => tijdIdx(b) - tijdIdx(a) || a.titel.localeCompare(b.titel, 'nl'));
+    if (sort === 'fav') s.sort((a, b) => (!!b.favoriet - !!a.favoriet) || tijdIdx(a) - tijdIdx(b));
     return s;
   }
 
   function renderOverzicht() {
+    const aantal = Object.keys(filters).length;
+    const actief = aantal > 0 || favFilter;
     const lijst = sorteer(recepten.filter(r =>
-      (filterTag === FAV ? r.favoriet : !filterTag || r.tags.some(t => t.toLowerCase() === filterTag.toLowerCase())) &&
+      (!favFilter || r.favoriet) &&
+      CATEGORIEEN.every(c => !filters[c.k] || c.van(r).includes(filters[c.k])) &&
       (!zoek || zoekTekst(r).includes(zoek.toLowerCase()))));
     // Wisselt elke dag tussen de favorieten
     const favs = recepten.filter(r => r.favoriet);
     const favoriet = favs.length ? favs[Math.floor(Date.now() / 864e5) % favs.length] : null;
-    const toonFav = favoriet && !filterTag && !zoek;
+    const toonFav = favoriet && !actief && !zoek;
     const sorts = [['snel', 'Snelst'], ['lang', 'Langst'], ['fav', 'Favoriet']];
 
     app.innerHTML = `<main class="wrap">
@@ -198,11 +214,16 @@
         <span class="pill-dark">${recepten.length} recepten</span>
       </header>
       <label class="search">${svg.zoek}<input id="zoek" type="search" placeholder="Zoek op recept of ingrediënt" aria-label="Zoeken" value="${esc(zoek)}"></label>
-      <div class="chips" role="group" aria-label="Filter op tag">
-        <button class="chip" data-tag="" aria-pressed="${!filterTag}">Alles</button>
-        ${favs.length ? `<button class="chip" data-tag="${FAV}" aria-pressed="${filterTag === FAV}">${svg.hart} Favorieten</button>` : ''}
-        ${alleTags().map(t => `<button class="chip" data-tag="${esc(t)}" aria-pressed="${filterTag === t}">${esc(t[0].toUpperCase() + t.slice(1))}</button>`).join('')}
+      <div class="chips" role="group" aria-label="Snelfilter">
+        <button class="chip" data-reset="1" aria-pressed="${!actief}">Alles</button>
+        ${favs.length ? `<button class="chip" data-fav="1" aria-pressed="${favFilter}">${svg.hart} Favorieten</button>` : ''}
       </div>
+      <details class="filters" ${filtersOpen ? 'open' : ''}>
+        <summary>Filters${aantal ? ' (' + aantal + ')' : ''}</summary>
+        ${CATEGORIEEN.map(c => `<div class="cat"><span class="cat-naam">${c.label}</span>
+          <div class="chips" role="group" aria-label="${c.label}">${waarden(c).map(v =>
+            `<button class="chip" data-cat="${c.k}" data-w="${esc(v)}" aria-pressed="${filters[c.k] === v}">${esc(c.toon ? c.toon(v) : cap(v))}</button>`).join('')}</div></div>`).join('')}
+      </details>
       ${toonFav ? `
       <a class="featured" href="#${esc(favoriet.id)}" style="background:${kleur(favoriet, recepten.indexOf(favoriet))}">
         <div class="row"><span class="tag-cream">${svg.hart} ${favs.length > 1 ? 'Favoriet van vandaag' : 'Favoriet'}</span><span class="disc big">${icoon(favoriet)}</span></div>
@@ -210,7 +231,7 @@
         <span class="meta">${esc(meta(favoriet))}</span>
       </a>` : ''}
       <div class="list-head">
-        <h2>${filterTag || zoek ? lijst.length + (lijst.length === 1 ? ' recept' : ' recepten') : 'Alle recepten'}</h2>
+        <h2>${actief || zoek ? lijst.length + (lijst.length === 1 ? ' recept' : ' recepten') : 'Alle recepten'}</h2>
         <div class="seg" role="group" aria-label="Sorteren">
           ${sorts.map(([k, l]) => `<button data-sort="${k}" aria-pressed="${sort === k}">${l}</button>`).join('')}
         </div>
@@ -229,7 +250,15 @@
       renderOverzicht();
       const nz = document.getElementById('zoek'); nz.focus(); nz.setSelectionRange(pos, pos);
     });
-    app.querySelectorAll('.chip').forEach(b => b.onclick = () => { filterTag = b.dataset.tag || null; renderOverzicht(); });
+    app.querySelector('details.filters').addEventListener('toggle', e => { filtersOpen = e.target.open; });
+    app.querySelector('[data-reset]').onclick = () => { filters = {}; favFilter = false; renderOverzicht(); };
+    const fb = app.querySelector('[data-fav]');
+    if (fb) fb.onclick = () => { favFilter = !favFilter; renderOverzicht(); };
+    app.querySelectorAll('[data-cat]').forEach(b => b.onclick = () => {
+      const k = b.dataset.cat, w = b.dataset.w;
+      if (filters[k] === w) delete filters[k]; else filters[k] = w;
+      renderOverzicht();
+    });
     app.querySelectorAll('[data-sort]').forEach(b => b.onclick = () => { sort = b.dataset.sort; renderOverzicht(); });
   }
 
@@ -252,7 +281,6 @@
           <input type="checkbox" data-i="${i}" ${s.ingr.has(i) ? 'checked' : ''}>
           <span class="txt">${h ? `<strong>${esc(h)}</strong> ` : ''}${esc(it.n)}</span>
         </label></li>`; }).join('')}</ul>`).join('');
-    const bron = r.bron ? (/^https?:\/\//.test(r.bron) ? `<a href="${esc(r.bron)}" target="_blank" rel="noopener">${esc(r.bron)}</a>` : esc(r.bron)) : '';
 
     app.innerHTML = `
       <div class="r-band" style="background:${bg}">
@@ -264,13 +292,11 @@
           <div class="r-title"><span class="disc big">${icoon(r)}</span></div>
           <h1>${esc(r.titel)}</h1>
           <div class="chips-static">
-            <span>${r.tijd} min</span>
+            <span>${tijdLabel(r.tijd)}</span>
             ${r.moeite ? `<span>${esc(r.moeite)}</span>` : ''}
             ${r.favoriet ? `<span>${svg.hart} Favoriet</span>` : ''}
-            <span>${esc(r.status)}${r.statusNoot ? ' · ' + esc(r.statusNoot) : ''}</span>
-            ${r.tags.map(t => `<span>${esc(t)}</span>`).join('')}
+            ${[r.keuken, ...r.maaltijd, r.dieet, r.bereiding].map(t => `<span>${esc(t)}</span>`).join('')}
           </div>
-          ${bron ? `<p class="src" style="margin:0">Bron: ${bron}</p>` : ''}
           <span class="msg" id="msg" aria-live="polite"></span>
         </div>
       </div>
