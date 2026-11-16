@@ -30,7 +30,7 @@ npx serve _site
   "favoriet": true,                 // optioneel, standaard false
   "bron": "https://…",              // tekst, URL of null
   "hoeveelhedenGeschat": true,      // optioneel
-  "tags": ["Mexicaans", "diner", "vegetarisch"],  // vaste selectie, zie hieronder
+  "tags": ["Mexicaans", "diner", "ovengerecht"],  // vaste selectie, zie hieronder
   "kleur": "salie",                 // tomaat, mosterd, salie, lila of wit
   "ingredienten": [
     { "groep": null, "items": [
@@ -51,4 +51,5 @@ Eén hoeveelheid per regel: `q` is een getal (of `null`), `u` de eenheid, `n` de
 Vaste selectie, in deze volgorde (de eerste tag staat op de kaart):
 1. **Keuken**, één per recept: Mexicaans, Italiaans, Thais, Nederlands, enz.
 2. **Maaltijd**, één of meer: ontbijt, lunch, diner.
-3. **Extra**, optioneel: vegetarisch, eenpansgerecht, ovengerecht.
+3. **Extra**, optioneel: eenpansgerecht, ovengerecht.
+4. **Vlees** of **vis**, alleen bij gerechten die niet vegetarisch zijn. Vegetarisch is de standaard en krijgt dus geen tag.
