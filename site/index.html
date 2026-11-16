@@ -50,6 +50,7 @@
   .chip { flex: none; min-height: 44px; border-radius: 999px; border: var(--line); background: var(--white); padding: 0 16px; font-weight: 600; }
   .chip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
   .top-rechts { display: flex; gap: 8px; align-items: center; }
+  @media (max-width: 440px) { .top-rechts .count { display: none; } }
   a.pill-dark { text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
   .lrecept { background: var(--white); border: var(--line); border-radius: 14px; padding: 10px 14px; margin-bottom: 8px; }
   .lkop { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
@@ -190,6 +191,7 @@
     else if (it.u === 'rol' && v > 1) unit = ' rollen';
     else if (it.u === 'zak' && v > 1) unit = ' zakken';
     else if (it.u === 'pakje' && v > 1) unit = ' pakjes';
+    else if (it.u === 'handje' && v > 1) unit = ' handjes';
     return fmtGetal(v) + unit;
   }
 
@@ -225,7 +227,7 @@
   function renderOverzicht() {
     const aantal = Object.keys(filters).length;
     const actief = aantal > 0 || favFilter;
-    const lijst = sorteer(recepten.filter(r =>
+    const zichtbaar = sorteer(recepten.filter(r =>
       (!favFilter || r.favoriet) &&
       CATEGORIEEN.every(c => !filters[c.k] || c.van(r).includes(filters[c.k])) &&
       (!zoek || zoekTekst(r).includes(zoek.toLowerCase()))));
@@ -239,7 +241,7 @@
       <header class="top">
         <div><span class="kicker">Wat eten we vandaag?</span><h1>Kookboek</h1></div>
         <div class="top-rechts">
-          <span class="pill-dark">${recepten.length} recepten</span>
+          <span class="pill-dark count">${recepten.length} recepten</span>
           <a class="pill-dark" href="#boodschappen" aria-label="Boodschappenlijst">${svg.mand}${Object.keys(lijst).length ? ' ' + Object.keys(lijst).length : ''}</a>
         </div>
       </header>
@@ -261,12 +263,12 @@
         <span class="meta">${esc(meta(favoriet))}</span>
       </a>` : ''}
       <div class="list-head">
-        <h2>${actief || zoek ? lijst.length + (lijst.length === 1 ? ' recept' : ' recepten') : 'Alle recepten'}</h2>
+        <h2>${actief || zoek ? zichtbaar.length + (zichtbaar.length === 1 ? ' recept' : ' recepten') : 'Alle recepten'}</h2>
         <div class="seg" role="group" aria-label="Sorteren">
           ${sorts.map(([k, l]) => `<button data-sort="${k}" aria-pressed="${sort === k}">${l}</button>`).join('')}
         </div>
       </div>
-      ${lijst.length ? `<div class="grid">${lijst.map(r => `
+      ${zichtbaar.length ? `<div class="grid">${zichtbaar.map(r => `
         <a class="card" href="#${esc(r.id)}" style="background:${kleur(r, recepten.indexOf(r))}">
           <span class="disc">${icoon(r)}</span>
           <h3>${esc(r.titel)}</h3>
@@ -384,7 +386,7 @@
   // ---------- Boodschappenlijst ----------
   const SOORTEN = ['groente & fruit', 'vlees, vis & vega', 'zuivel & eieren', 'brood & deeg', 'pasta, rijst & granen', 'conserven & potten', 'sauzen & olie', 'kruiden & specerijen', 'overig houdbaar'];
   const productNaam = it => (it.p || it.n.replace(/\s*\(.*?\)/g, '').split(',')[0]).trim().toLowerCase();
-  const MEERVOUD = { teentje: 'teentjes', rol: 'rollen', zak: 'zakken', pakje: 'pakjes' };
+  const MEERVOUD = { teentje: 'teentjes', rol: 'rollen', zak: 'zakken', pakje: 'pakjes', handje: 'handjes' };
   const eenheid = u => (u && u.startsWith('teentje') ? 'teentje' : (u || ''));
   const optioneel = (g, it) => /optioneel/i.test(g.groep || '') || /optioneel/i.test(it.n);
 

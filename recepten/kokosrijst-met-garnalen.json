@@ -1,0 +1,99 @@
+{
+  "id": "kokosrijst-met-garnalen",
+  "titel": "Kokosrijst met garnalen",
+  "tijd": "15-30",
+  "personen": 2,
+  "moeite": "makkelijk",
+  "keuken": "Aziatisch",
+  "maaltijd": [
+    "diner"
+  ],
+  "dieet": "vis",
+  "bereiding": "meerdere pannen",
+  "favoriet": true,
+  "kleur": "tomaat",
+  "ingredienten": [
+    {
+      "groep": "Rijst",
+      "items": [
+        {
+          "q": 125,
+          "u": "g",
+          "n": "zilvervliesrijst",
+          "s": "pasta, rijst & granen"
+        },
+        {
+          "q": 100,
+          "u": "ml",
+          "n": "kokosmelk",
+          "s": "conserven & potten"
+        }
+      ]
+    },
+    {
+      "groep": "Groenten en garnalen",
+      "items": [
+        {
+          "q": 200,
+          "u": "g",
+          "n": "bimi",
+          "s": "groente & fruit"
+        },
+        {
+          "q": 200,
+          "u": "g",
+          "n": "garnalen",
+          "s": "vlees, vis & vega"
+        },
+        {
+          "q": 200,
+          "u": "g",
+          "n": "doperwten",
+          "s": "groente & fruit"
+        }
+      ]
+    },
+    {
+      "groep": "Garnering",
+      "items": [
+        {
+          "q": 1,
+          "u": "handje",
+          "n": "peterselie",
+          "s": "groente & fruit"
+        }
+      ]
+    },
+    {
+      "groep": "Overig",
+      "items": [
+        {
+          "q": null,
+          "u": null,
+          "n": "olie",
+          "s": "sauzen & olie"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "peper",
+          "s": "kruiden & specerijen"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "zout",
+          "s": "kruiden & specerijen"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Breng de kokosmelk met 200 ml water aan de kook, voeg de rijst toe en laat ca. 8 minuten koken.",
+    "Snijd de bimi in stukjes en hak de peterselie grof.",
+    "Bak de bimi ca. 5 minuten in een scheutje olie; voeg de laatste 3 minuten de garnalen toe.",
+    "Meng rijst, bimi, garnalen, doperwten en peterselie. Verwarm ca. 2 minuten en kruid met peper en zout.",
+    "Verdeel over twee borden en serveer."
+  ],
+  "notities": "Origineel recept (chickslovefood.com), nog niet aangepast. Heel lekker. Ideeën voor de volgende keer, zonder koriander: knoflook, verse gember en rode peper/sambal meebakken met de bimi; een tl currypasta (geel/rood) of citroengras in de kokosmelk; limoensap en -rasp en eventueel 1 el vissaus of soja aan het eind; lenteui of Thaise basilicum naast de peterselie; geroosterde cashewnoten, kokoschips of sesam als topping; stukjes mango of ananas; extra groente (paprika, courgette of paksoi); garnalen vooraf marineren in knoflook, paprikapoeder en limoen."
+}
