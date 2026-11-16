@@ -5,12 +5,13 @@
   "statusNoot": "zonder oven",
   "tijd": 45,
   "personen": 2,
+  "moeite": "gemiddeld",
   "favoriet": false,
   "bron": null,
   "tags": [
-    "vegetarisch",
     "Mexicaans",
-    "wraps",
+    "diner",
+    "vegetarisch",
     "eenpansgerecht"
   ],
   "kleur": "lila",

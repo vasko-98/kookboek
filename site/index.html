@@ -172,7 +172,7 @@
   const zoekTekst = r => [r.titel, ...r.tags, ...r.ingredienten.flatMap(g => g.items.map(i => i.n))].join(' ').toLowerCase();
   function meta(r) {
     const extra = r.tags[0] ? r.tags[0][0].toUpperCase() + r.tags[0].slice(1) : '';
-    return [r.tijd + ' min', extra].filter(Boolean).join(' · ');
+    return [r.tijd + ' min', r.moeite, extra].filter(Boolean).join(' · ');
   }
   function sorteer(lijst) {
     const s = lijst.slice();
@@ -207,7 +207,7 @@
       <a class="featured" href="#${esc(favoriet.id)}" style="background:${kleur(favoriet, recepten.indexOf(favoriet))}">
         <div class="row"><span class="tag-cream">${svg.hart} ${favs.length > 1 ? 'Favoriet van vandaag' : 'Favoriet'}</span><span class="disc big">${icoon(favoriet)}</span></div>
         <h2>${esc(favoriet.titel)}</h2>
-        <span class="meta">${esc([favoriet.tijd + ' min', ...favoriet.tags.slice(0, 2)].join(' · '))}</span>
+        <span class="meta">${esc(meta(favoriet))}</span>
       </a>` : ''}
       <div class="list-head">
         <h2>${filterTag || zoek ? lijst.length + (lijst.length === 1 ? ' recept' : ' recepten') : 'Alle recepten'}</h2>
@@ -265,6 +265,7 @@
           <h1>${esc(r.titel)}</h1>
           <div class="chips-static">
             <span>${r.tijd} min</span>
+            ${r.moeite ? `<span>${esc(r.moeite)}</span>` : ''}
             ${r.favoriet ? `<span>${svg.hart} Favoriet</span>` : ''}
             <span>${esc(r.status)}${r.statusNoot ? ' · ' + esc(r.statusNoot) : ''}</span>
             ${r.tags.map(t => `<span>${esc(t)}</span>`).join('')}

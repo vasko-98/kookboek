@@ -6,6 +6,7 @@ import path from 'node:path';
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const out = path.join(root, '_site');
 const STATUSSEN = ['Gemaakt', 'Wil ik maken'];
+const MOEITE = ['makkelijk', 'gemiddeld', 'veel werk'];
 
 function controleer(r, bestand) {
   const fout = m => { throw new Error(`${bestand}: ${m}`); };
@@ -15,6 +16,7 @@ function controleer(r, bestand) {
   if (!STATUSSEN.includes(r.status)) fout(`status moet een van ${STATUSSEN.join(' / ')} zijn`);
   if (!Number.isFinite(r.tijd)) fout('tijd (minuten) ontbreekt');
   if (!Number.isFinite(r.personen)) fout('personen ontbreekt');
+  if (!MOEITE.includes(r.moeite)) fout(`moeite moet een van ${MOEITE.join(' / ')} zijn`);
   if (r.favoriet != null && typeof r.favoriet !== 'boolean') fout('favoriet moet true of false zijn');
   if ('beoordeling' in r) fout('beoordeling bestaat niet meer, gebruik favoriet: true/false');
   if (!Array.isArray(r.tags)) fout('tags moet een lijst zijn');

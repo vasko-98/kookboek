@@ -26,10 +26,11 @@ npx serve _site
   "statusNoot": "zonder oven",      // optioneel
   "tijd": 30,                       // minuten
   "personen": 2,
+  "moeite": "gemiddeld",           // makkelijk, gemiddeld of veel werk (los van de tijd)
   "favoriet": true,                 // optioneel, standaard false
   "bron": "https://…",              // tekst, URL of null
   "hoeveelhedenGeschat": true,      // optioneel
-  "tags": ["vegetarisch", "snel"],
+  "tags": ["Mexicaans", "diner", "vegetarisch"],  // vaste selectie, zie hieronder
   "kleur": "salie",                 // tomaat, mosterd, salie, lila of wit
   "ingredienten": [
     { "groep": null, "items": [
@@ -44,3 +45,10 @@ npx serve _site
 ```
 
 Eén hoeveelheid per regel: `q` is een getal (of `null`), `u` de eenheid, `n` de omschrijving. Zo kan de site omrekenen naar meer of minder personen.
+
+## Tags
+
+Vaste selectie, in deze volgorde (de eerste tag staat op de kaart):
+1. **Keuken**, één per recept: Mexicaans, Italiaans, Thais, Nederlands, enz.
+2. **Maaltijd**, één of meer: ontbijt, lunch, diner.
+3. **Extra**, optioneel: vegetarisch, eenpansgerecht, ovengerecht.

@@ -4,12 +4,13 @@
   "status": "Gemaakt",
   "tijd": 40,
   "personen": 2,
+  "moeite": "gemiddeld",
   "favoriet": false,
   "bron": null,
   "tags": [
-    "vegetarisch",
     "Thais",
-    "curry",
+    "diner",
+    "vegetarisch",
     "eenpansgerecht"
   ],
   "kleur": "salie",

@@ -4,13 +4,14 @@
   "status": "Gemaakt",
   "tijd": 25,
   "personen": 2,
+  "moeite": "gemiddeld",
   "favoriet": false,
   "bron": null,
   "hoeveelhedenGeschat": true,
   "tags": [
-    "vegetarisch",
-    "snel",
-    "pasta"
+    "Italiaans",
+    "diner",
+    "vegetarisch"
   ],
   "kleur": "mosterd",
   "ingredienten": [

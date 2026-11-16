@@ -5,11 +5,13 @@
   "statusNoot": "nog niet in deze vega-versie gemaakt",
   "tijd": 50,
   "personen": 2,
+  "moeite": "gemiddeld",
   "favoriet": false,
   "bron": null,
   "tags": [
-    "vegetarisch",
-    "ovengerecht"
+    "Nederlands",
+    "diner",
+    "vegetarisch"
   ],
   "kleur": "salie",
   "ingredienten": [
