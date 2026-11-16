@@ -15,52 +15,77 @@
   "kleur": "mosterd",
   "ingredienten": [
     {
-      "groep": null,
+      "groep": "Pasta",
       "items": [
         {
           "q": 180,
           "u": "g",
-          "n": "penne"
+          "n": "penne",
+          "s": "pasta, rijst & granen"
+        }
+      ]
+    },
+    {
+      "groep": "Groenten",
+      "items": [
+        {
+          "q": 1,
+          "u": null,
+          "n": "winterpeen, in dunne halve plakjes",
+          "s": "groente & fruit"
         },
         {
           "q": 1,
           "u": null,
-          "n": "winterpeen, in dunne halve plakjes"
+          "n": "rode paprika",
+          "s": "groente & fruit"
         },
         {
           "q": 1,
           "u": null,
-          "n": "rode paprika"
-        },
-        {
-          "q": 1,
-          "u": null,
-          "n": "ui"
+          "n": "ui",
+          "s": "groente & fruit"
         },
         {
           "q": 2,
-          "u": "teentjes",
-          "n": "knoflook"
+          "u": "teentje",
+          "n": "knoflook",
+          "s": "groente & fruit"
         },
         {
           "q": 150,
           "u": "g",
-          "n": "cherrytomaatjes"
-        },
+          "n": "cherrytomaatjes",
+          "s": "groente & fruit"
+        }
+      ]
+    },
+    {
+      "groep": "Saus",
+      "items": [
         {
           "q": 3,
           "u": "el",
-          "n": "rode pesto"
+          "n": "rode pesto",
+          "s": "conserven & potten"
         },
         {
           "q": 1.5,
           "u": "el",
-          "n": "crème fraîche (1–2 el)"
-        },
+          "n": "crème fraîche (1–2 el)",
+          "s": "zuivel & eieren"
+        }
+      ]
+    },
+    {
+      "groep": "Overig",
+      "items": [
         {
           "q": 1,
           "u": "el",
-          "n": "olijfolie"
+          "n": "olijfolie",
+          "s": "sauzen & olie",
+          "p": "olie"
         }
       ]
     }

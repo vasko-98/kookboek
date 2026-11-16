@@ -14,82 +14,121 @@
   "kleur": "salie",
   "ingredienten": [
     {
-      "groep": null,
+      "groep": "Groenten",
       "items": [
         {
           "q": 250,
           "u": "g",
-          "n": "vastkokende aardappel, blokjes van 2 cm"
+          "n": "vastkokende aardappel, blokjes van 2 cm",
+          "s": "groente & fruit"
         },
         {
           "q": 1,
           "u": null,
-          "n": "rode paprika"
+          "n": "rode paprika",
+          "s": "groente & fruit"
         },
         {
           "q": 0.5,
           "u": null,
-          "n": "courgette"
+          "n": "courgette",
+          "s": "groente & fruit"
         },
         {
           "q": 200,
           "u": "g",
-          "n": "kikkererwten (uitgelekt)"
-        },
+          "n": "kikkererwten (uitgelekt)",
+          "s": "conserven & potten"
+        }
+      ]
+    },
+    {
+      "groep": "Basis",
+      "items": [
         {
           "q": 1,
           "u": null,
-          "n": "kleine ui"
+          "n": "kleine ui",
+          "s": "groente & fruit",
+          "p": "ui"
         },
         {
           "q": 2,
-          "u": "teentjes",
-          "n": "knoflook"
+          "u": "teentje",
+          "n": "knoflook",
+          "s": "groente & fruit"
         },
         {
           "q": 1.5,
           "u": "tl",
-          "n": "geraspte verse gember"
+          "n": "geraspte verse gember",
+          "s": "groente & fruit",
+          "p": "verse gember"
         },
         {
           "q": 1,
           "u": "el",
-          "n": "currypasta (rood of geel)"
+          "n": "olie",
+          "s": "sauzen & olie"
+        }
+      ]
+    },
+    {
+      "groep": "Curry",
+      "items": [
+        {
+          "q": 1,
+          "u": "el",
+          "n": "currypasta (rood of geel)",
+          "s": "conserven & potten"
         },
         {
           "q": 200,
           "u": "ml",
-          "n": "kokosmelk"
+          "n": "kokosmelk",
+          "s": "conserven & potten"
         },
         {
           "q": 100,
           "u": "ml",
-          "n": "water of groentebouillon"
-        },
-        {
-          "q": 1,
-          "u": "el",
-          "n": "olie"
-        },
+          "n": "water of groentebouillon",
+          "s": null,
+          "p": "water"
+        }
+      ]
+    },
+    {
+      "groep": "Smaak",
+      "items": [
         {
           "q": 1.5,
           "u": "tl",
-          "n": "vissaus of sojasaus"
+          "n": "vissaus of sojasaus",
+          "s": "sauzen & olie"
         },
         {
           "q": 0.5,
           "u": "tl",
-          "n": "suiker"
+          "n": "suiker",
+          "s": "overig houdbaar"
         },
         {
           "q": 1.5,
           "u": "tl",
-          "n": "limoensap"
-        },
+          "n": "limoensap",
+          "s": "sauzen & olie"
+        }
+      ]
+    },
+    {
+      "groep": "Serveren",
+      "items": [
         {
           "q": 8,
           "u": "g",
-          "n": "verse koriander"
+          "n": "verse koriander",
+          "s": "groente & fruit",
+          "p": "koriander"
         }
       ]
     }

@@ -9,6 +9,7 @@ const MOEITE = ['makkelijk', 'gemiddeld', 'veel werk'];
 const TIJDEN = ['tot 15', '15-30', '30-45', '45-60', '60+'];
 const MAALTIJDEN = ['ontbijt', 'lunch', 'diner'];
 const DIETEN = ['vega', 'vlees', 'vis'];
+const SOORTEN = ['groente & fruit', 'vlees, vis & vega', 'zuivel & eieren', 'brood & deeg', 'pasta, rijst & granen', 'conserven & potten', 'sauzen & olie', 'kruiden & specerijen', 'overig houdbaar'];
 const BEREIDINGEN = ['oven', 'één pan', 'meerdere pannen', 'BBQ', 'geen koken'];
 
 function controleer(r, bestand) {
@@ -32,8 +33,10 @@ function controleer(r, bestand) {
   if (!Array.isArray(r.ingredienten) || !r.ingredienten.length) fout('ingredienten ontbreekt');
   r.ingredienten.forEach((g, i) => {
     if (!Array.isArray(g.items)) fout(`ingredienten[${i}].items ontbreekt`);
+    if (g.keuze != null && typeof g.keuze !== 'string') fout(`ingredienten[${i}].keuze moet tekst zijn`);
     g.items.forEach((it, j) => {
       if (!it.n) fout(`ingredienten[${i}].items[${j}].n ontbreekt`);
+      if (!('s' in it) || (it.s !== null && !SOORTEN.includes(it.s))) fout(`ingredienten[${i}].items[${j}].s (soort voor de boodschappenlijst) moet een van ${SOORTEN.join(' / ')} of null zijn`);
       if (it.q != null && !Number.isFinite(it.q)) fout(`ingredienten[${i}].items[${j}].q moet een getal of null zijn`);
     });
   });

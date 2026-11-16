@@ -15,47 +15,77 @@
   "kleur": "tomaat",
   "ingredienten": [
     {
-      "groep": null,
+      "groep": "Basis",
       "items": [
         {
           "q": 1,
           "u": "rol",
-          "n": "bladerdeeg (ca. 275 g)"
-        },
-        {
-          "q": 1,
-          "u": "zak",
-          "n": "ovengroenten (zoete aardappel, broccoli, paprika)"
-        },
-        {
-          "q": 3,
-          "u": "el",
-          "n": "rode pesto"
-        },
-        {
-          "q": 100,
-          "u": "g",
-          "n": "feta"
-        },
-        {
-          "q": 1,
-          "u": "el",
-          "n": "olijfolie"
-        },
-        {
-          "q": null,
-          "u": null,
-          "n": "peper, eventueel chilivlokken"
+          "n": "bladerdeeg (ca. 275 g)",
+          "s": "brood & deeg"
         }
       ]
     },
     {
-      "groep": "Optioneel",
+      "groep": "Groenten",
+      "items": [
+        {
+          "q": 1,
+          "u": "zak",
+          "n": "ovengroenten (zoete aardappel, broccoli, paprika)",
+          "s": "groente & fruit"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "olijfolie",
+          "s": "sauzen & olie",
+          "p": "olie"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "peper",
+          "s": "kruiden & specerijen"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "chilivlokken (eventueel)",
+          "s": "kruiden & specerijen"
+        }
+      ]
+    },
+    {
+      "groep": "Topping",
+      "items": [
+        {
+          "q": 3,
+          "u": "el",
+          "n": "rode pesto",
+          "s": "conserven & potten"
+        },
+        {
+          "q": 100,
+          "u": "g",
+          "n": "feta",
+          "s": "zuivel & eieren"
+        }
+      ]
+    },
+    {
+      "groep": "Garnering (optioneel)",
       "items": [
         {
           "q": null,
           "u": null,
-          "n": "rucola en pijnboompitten"
+          "n": "rucola",
+          "s": "groente & fruit"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "pijnboompitten",
+          "s": "overig houdbaar"
         }
       ]
     }

@@ -6,3 +6,4 @@
 - Draai `node scripts/build.mjs` voor elke commit; die controleert alle recepten.
 - Push naar `main`; GitHub Actions publiceert de site.
 - Geen dependencies of frameworks toevoegen zonder overleg.
+- Ingrediënten: groepeer per onderdeel van het gerecht in volgorde van gebruik, geef elk ingrediënt een `s` (soort voor het boodschappenlijstje) en eventueel een `p`; zie README.md.

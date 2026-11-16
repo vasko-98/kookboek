@@ -14,137 +14,169 @@
   "kleur": "wit",
   "ingredienten": [
     {
-      "groep": null,
+      "groep": "Vulling",
       "items": [
         {
           "q": 250,
           "u": "g",
-          "n": "rundergehakt"
+          "n": "rundergehakt",
+          "s": "vlees, vis & vega"
         },
         {
           "q": 200,
           "u": "g",
-          "n": "zoete aardappel, blokjes van 1 cm"
+          "n": "zoete aardappel, blokjes van 1 cm",
+          "s": "groente & fruit"
         },
         {
           "q": 1,
           "u": null,
-          "n": "kleine ui"
+          "n": "kleine ui",
+          "s": "groente & fruit",
+          "p": "ui"
         },
         {
           "q": 1,
           "u": "teentje",
-          "n": "knoflook"
+          "n": "knoflook",
+          "s": "groente & fruit"
         },
         {
           "q": 0.5,
           "u": null,
-          "n": "rode paprika"
+          "n": "rode paprika",
+          "s": "groente & fruit"
         },
         {
           "q": 0.5,
           "u": null,
-          "n": "courgette"
+          "n": "courgette",
+          "s": "groente & fruit"
         },
         {
           "q": 75,
           "u": "g",
-          "n": "mais"
+          "n": "mais",
+          "s": "conserven & potten"
         },
         {
           "q": 120,
           "u": "g",
-          "n": "kidneybonen (uitgelekt)"
+          "n": "kidneybonen (uitgelekt)",
+          "s": "conserven & potten"
         },
         {
           "q": 1,
           "u": "el",
-          "n": "olijfolie"
+          "n": "olijfolie",
+          "s": "sauzen & olie",
+          "p": "olie"
         }
       ]
     },
     {
       "groep": "Saus A (zelfgemaakt)",
+      "keuze": "Saus",
       "items": [
         {
           "q": 200,
           "u": "g",
-          "n": "passata"
+          "n": "passata",
+          "s": "conserven & potten"
         },
         {
           "q": 1,
           "u": "el",
-          "n": "tomatenpuree"
+          "n": "tomatenpuree",
+          "s": "conserven & potten"
         },
         {
           "q": 1,
           "u": "tl",
-          "n": "komijn"
+          "n": "komijn",
+          "s": "kruiden & specerijen"
         },
         {
           "q": 1,
           "u": "tl",
-          "n": "gerookt paprikapoeder"
+          "n": "gerookt paprikapoeder",
+          "s": "kruiden & specerijen"
         },
         {
           "q": 0.5,
           "u": "tl",
-          "n": "chilipoeder"
+          "n": "chilipoeder",
+          "s": "kruiden & specerijen"
         },
         {
           "q": 0.5,
           "u": "tl",
-          "n": "oregano"
+          "n": "oregano",
+          "s": "kruiden & specerijen"
         },
         {
           "q": 0.5,
           "u": "tl",
-          "n": "zout"
+          "n": "zout",
+          "s": "kruiden & specerijen"
         },
         {
           "q": 50,
           "u": "ml",
-          "n": "water"
+          "n": "water",
+          "s": null
         }
       ]
     },
     {
       "groep": "Saus B (kant-en-klaar)",
+      "keuze": "Saus",
       "items": [
         {
           "q": 200,
           "u": "g",
-          "n": "tomatensalsa of taco-saus"
+          "n": "tomatensalsa of taco-saus",
+          "s": "conserven & potten"
         },
         {
           "q": 0.5,
           "u": "pakje",
-          "n": "tacokruiden (optioneel)"
+          "n": "tacokruiden (optioneel)",
+          "s": "kruiden & specerijen"
         }
       ]
     },
     {
-      "groep": "Topping en serveren",
+      "groep": "Bovenop",
       "items": [
         {
           "q": 75,
           "u": "g",
-          "n": "nacho's"
+          "n": "nacho's",
+          "s": "overig houdbaar"
         },
         {
           "q": 75,
           "u": "g",
-          "n": "geraspte kaas (cheddar of oude kaas)"
-        },
+          "n": "geraspte kaas (cheddar of oude kaas)",
+          "s": "zuivel & eieren"
+        }
+      ]
+    },
+    {
+      "groep": "Serveren",
+      "items": [
         {
           "q": 50,
           "u": "g",
-          "n": "zure room"
+          "n": "zure room",
+          "s": "zuivel & eieren"
         },
         {
           "q": null,
           "u": null,
-          "n": "koriander of bosui"
+          "n": "koriander of bosui",
+          "s": "groente & fruit"
         }
       ]
     }

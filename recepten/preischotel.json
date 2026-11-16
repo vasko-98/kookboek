@@ -14,102 +14,173 @@
   "kleur": "salie",
   "ingredienten": [
     {
-      "groep": null,
+      "groep": "Vulling",
       "items": [
-        {
-          "q": 350,
-          "u": "g",
-          "n": "aardappelen (liefst iets kruimig)"
-        },
-        {
-          "q": 1,
-          "u": null,
-          "n": "prei (ca. 135 g), in dunne ringen"
-        },
-        {
-          "q": 0.5,
-          "u": null,
-          "n": "ui, fijn gesnipperd"
-        },
-        {
-          "q": 1,
-          "u": "teen",
-          "n": "knoflook, fijngehakt"
-        },
         {
           "q": 200,
           "u": "g",
-          "n": "champignons, fijngehakt"
+          "n": "champignons, fijngehakt",
+          "s": "groente & fruit"
         },
         {
           "q": 40,
           "u": "g",
-          "n": "walnoten, grof gehakt"
+          "n": "walnoten, grof gehakt",
+          "s": "overig houdbaar"
         },
         {
           "q": 1,
-          "u": "tl",
-          "n": "sojasaus"
-        },
-        {
-          "q": 0.75,
-          "u": "tl",
-          "n": "paprikapoeder"
-        },
-        {
-          "q": 1,
-          "u": "tl",
-          "n": "uienpoeder (¾ tl bij de champignons, ¼ tl in het roommengsel)"
-        },
-        {
-          "q": 1,
-          "u": "el",
-          "n": "kerriepoeder"
-        },
-        {
-          "q": 65,
-          "u": "g",
-          "n": "crème fraîche voor het roommengsel"
-        },
-        {
-          "q": 1,
-          "u": "el",
-          "n": "crème fraîche voor de puree"
-        },
-        {
-          "q": 35,
-          "u": "ml",
-          "n": "melk voor het roommengsel"
-        },
-        {
-          "q": 0.33,
-          "u": "tl",
-          "n": "knoflookpoeder"
+          "u": null,
+          "n": "prei (ca. 135 g), in dunne ringen",
+          "s": "groente & fruit"
         },
         {
           "q": 0.5,
           "u": null,
-          "n": "ei, losgeklopt"
+          "n": "ui, fijn gesnipperd",
+          "s": "groente & fruit"
+        },
+        {
+          "q": 1,
+          "u": "teentje",
+          "n": "knoflook, fijngehakt",
+          "s": "groente & fruit"
+        },
+        {
+          "q": 1,
+          "u": "tl",
+          "n": "sojasaus",
+          "s": "sauzen & olie"
+        },
+        {
+          "q": 0.75,
+          "u": "tl",
+          "n": "paprikapoeder",
+          "s": "kruiden & specerijen"
+        },
+        {
+          "q": 0.75,
+          "u": "tl",
+          "n": "uienpoeder",
+          "s": "kruiden & specerijen"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "kerriepoeder",
+          "s": "kruiden & specerijen"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "chilivlokken",
+          "s": "kruiden & specerijen"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "olie",
+          "s": "sauzen & olie"
+        }
+      ]
+    },
+    {
+      "groep": "Roommengsel",
+      "items": [
+        {
+          "q": 65,
+          "u": "g",
+          "n": "crème fraîche",
+          "s": "zuivel & eieren"
+        },
+        {
+          "q": 35,
+          "u": "ml",
+          "n": "melk",
+          "s": "zuivel & eieren"
+        },
+        {
+          "q": 0.5,
+          "u": null,
+          "n": "ei, losgeklopt",
+          "s": "zuivel & eieren"
         },
         {
           "q": 2,
           "u": "tl",
-          "n": "verse peterselie, fijngesneden"
+          "n": "verse peterselie, fijngesneden",
+          "s": "groente & fruit"
         },
+        {
+          "q": 0.25,
+          "u": "tl",
+          "n": "uienpoeder",
+          "s": "kruiden & specerijen"
+        },
+        {
+          "q": 0.33,
+          "u": "tl",
+          "n": "knoflookpoeder",
+          "s": "kruiden & specerijen"
+        }
+      ]
+    },
+    {
+      "groep": "Puree",
+      "items": [
+        {
+          "q": 350,
+          "u": "g",
+          "n": "aardappelen (liefst iets kruimig)",
+          "s": "groente & fruit"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "crème fraîche",
+          "s": "zuivel & eieren"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "scheut melk",
+          "s": "zuivel & eieren",
+          "p": "melk"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "nootmuskaat",
+          "s": "kruiden & specerijen"
+        }
+      ]
+    },
+    {
+      "groep": "Bovenop",
+      "items": [
         {
           "q": 25,
           "u": "g",
-          "n": "geraspte oude kaas"
+          "n": "geraspte oude kaas",
+          "s": "zuivel & eieren",
+          "p": "geraspte kaas"
+        }
+      ]
+    },
+    {
+      "groep": "Overig",
+      "items": [
+        {
+          "q": null,
+          "u": null,
+          "n": "peper",
+          "s": "kruiden & specerijen"
         },
         {
           "q": null,
           "u": null,
-          "n": "scheut melk voor de puree"
-        },
-        {
-          "q": null,
-          "u": null,
-          "n": "olie, chilivlokken, nootmuskaat, peper en zout"
+          "n": "zout",
+          "s": "kruiden & specerijen"
         }
       ]
     }

@@ -49,6 +49,19 @@
   @media (min-width: 700px) { .chips { flex-wrap: wrap; overflow: visible; } }
   .chip { flex: none; min-height: 44px; border-radius: 999px; border: var(--line); background: var(--white); padding: 0 16px; font-weight: 600; }
   .chip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+  .top-rechts { display: flex; gap: 8px; align-items: center; }
+  a.pill-dark { text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .r-acties { display: flex; gap: 6px; }
+  .r-acties .btn { white-space: nowrap; }
+  @media (max-width: 460px) { .r-acties .btn { padding: 0 11px; font-size: 14px; gap: 5px; } }
+  .lrecept { background: var(--white); border: var(--line); border-radius: 14px; padding: 10px 14px; margin-bottom: 8px; }
+  .lkop { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .lrij { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+  .lrecept .lnaam { font-weight: 700; }
+  .lrecept .stepper button { width: 36px; height: 36px; }
+  .lrecept .btn { min-height: 36px; font-size: 14px; }
+  .lacties { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 6px; }
+  .lacties .btn { background: var(--white); }
   .filters { margin-top: 6px; }
   .filters summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: var(--line); border-radius: 999px; background: var(--white); font-weight: 600; user-select: none; }
   .filters summary::-webkit-details-marker { display: none; }
@@ -133,6 +146,11 @@
   let recepten = [];
   let zoek = '', sort = 'snel', filters = {}, favFilter = false, filtersOpen = false;
   const staat = {};
+  const laad = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch { return d; } };
+  const bewaar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+  let lijst = laad('kookboek-lijst', {});            // { receptId: { p: personen, k: { keuzelabel: index } } }
+  let afgevinkt = new Set(laad('kookboek-afgevinkt', []));
+  const bewaarLijst = () => { bewaar('kookboek-lijst', lijst); bewaar('kookboek-afgevinkt', [...afgevinkt]); };
   let wakeLock = null, wilWake = false;
 
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -140,6 +158,7 @@
   const icoon = r => `<img src="iconen/${esc(r.id)}.svg" alt="" onerror="this.onerror=null;this.src='iconen/_standaard.svg'">`;
   const svg = {
     filter: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>',
+    mand: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2.2l2.3 10.5h10.2L20 7H6"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg>',
     zoek: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
     terug: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
     hart: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 4.3 2.4h2c.7-1.2 2.2-2.4 4.3-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>',
@@ -168,6 +187,9 @@
     if (v == null) return '';
     let unit = it.u ? ' ' + it.u : '';
     if (it.u && it.u.startsWith('teentje')) unit = v === 1 ? ' teentje' : ' teentjes';
+    else if (it.u === 'rol' && v > 1) unit = ' rollen';
+    else if (it.u === 'zak' && v > 1) unit = ' zakken';
+    else if (it.u === 'pakje' && v > 1) unit = ' pakjes';
     return fmtGetal(v) + unit;
   }
 
@@ -216,7 +238,10 @@
     app.innerHTML = `<main class="wrap">
       <header class="top">
         <div><span class="kicker">Wat eten we vandaag?</span><h1>Kookboek</h1></div>
-        <span class="pill-dark">${recepten.length} recepten</span>
+        <div class="top-rechts">
+          <span class="pill-dark">${recepten.length} recepten</span>
+          <a class="pill-dark" href="#boodschappen" aria-label="Boodschappenlijstje">${svg.mand}${Object.keys(lijst).length ? ' ' + Object.keys(lijst).length : ''}</a>
+        </div>
       </header>
       <label class="search">${svg.zoek}<input id="zoek" type="search" placeholder="Zoek op recept of ingrediënt" aria-label="Zoeken" value="${esc(zoek)}"></label>
       <div class="chips" role="group" aria-label="Snelfilter">
@@ -292,7 +317,10 @@
         <div class="wrap">
           <div class="r-bar">
             <a class="round" href="#" aria-label="Terug naar overzicht">${svg.terug}</a>
-            <button class="btn" id="wake" aria-pressed="${wilWake}">${svg.zon} Scherm aan</button>
+            <div class="r-acties">
+              <button class="btn" id="lijstbtn" aria-pressed="${!!lijst[r.id]}">${svg.mand} ${lijst[r.id] ? 'Op lijstje' : 'Boodschappen'}</button>
+              <button class="btn" id="wake" aria-pressed="${wilWake}">${svg.zon} Scherm aan</button>
+            </div>
           </div>
           <div class="r-title"><span class="disc big">${icoon(r)}</span></div>
           <h1>${esc(r.titel)}</h1>
@@ -338,6 +366,12 @@
     document.getElementById('plus').onclick = () => { if (s.personen < 12) { s.personen++; renderRecept(r); } };
     document.getElementById('reset').onclick = () => { s.ingr.clear(); s.stap.clear(); renderRecept(r); };
     document.getElementById('wake').onclick = toggleWake;
+    document.getElementById('lijstbtn').onclick = e => {
+      if (lijst[r.id]) delete lijst[r.id]; else lijst[r.id] = { p: s.personen, k: {} };
+      bewaarLijst();
+      e.currentTarget.setAttribute('aria-pressed', String(!!lijst[r.id]));
+      e.currentTarget.innerHTML = svg.mand + ' ' + (lijst[r.id] ? 'Op lijstje' : 'Boodschappen');
+    };
     app.querySelectorAll('.ingr input').forEach(cb => cb.onchange = () => {
       const i = +cb.dataset.i; cb.checked ? s.ingr.add(i) : s.ingr.delete(i);
       cb.closest('li').classList.toggle('done', cb.checked);
@@ -346,6 +380,124 @@
       const i = +b.dataset.s; s.stap.has(i) ? s.stap.delete(i) : s.stap.add(i);
       const y = window.scrollY; renderRecept(r); window.scrollTo(0, y);
     });
+  }
+
+  // ---------- Boodschappenlijst ----------
+  const SOORTEN = ['groente & fruit', 'vlees, vis & vega', 'zuivel & eieren', 'brood & deeg', 'pasta, rijst & granen', 'conserven & potten', 'sauzen & olie', 'kruiden & specerijen', 'overig houdbaar'];
+  const productNaam = it => (it.p || it.n.replace(/\s*\(.*?\)/g, '').split(',')[0]).trim().toLowerCase();
+  const MEERVOUD = { teentje: 'teentjes', rol: 'rollen', zak: 'zakken', pakje: 'pakjes' };
+  const eenheid = u => (u && u.startsWith('teentje') ? 'teentje' : (u || ''));
+  const optioneel = (g, it) => /optioneel/i.test(g.groep || '') || /optioneel/i.test(it.n);
+
+  // Per recept: welke groep van een keuze (bijv. saus A of B) is gekozen
+  function opties(r) {
+    const o = {};
+    r.ingredienten.forEach(g => { if (g.keuze) (o[g.keuze] = o[g.keuze] || []).push(g.groep); });
+    return o;
+  }
+  function lijstRegels() {
+    const m = new Map();
+    for (const [id, st] of Object.entries(lijst)) {
+      const r = recepten.find(x => x.id === id);
+      if (!r) continue;
+      const f = st.p / r.personen, o = opties(r);
+      r.ingredienten.forEach(g => {
+        if (g.keuze && o[g.keuze][(st.k && st.k[g.keuze]) || 0] !== g.groep) return;
+        g.items.forEach(it => {
+          if (it.s == null) return;
+          const naam = productNaam(it), opt = optioneel(g, it), key = it.s + '|' + naam + '|' + opt;
+          const e = m.get(key) || { key, naam, s: it.s, opt, delen: new Map() };
+          const v = schaal(it.q, it.u, f);
+          if (v != null) e.delen.set(eenheid(it.u), (e.delen.get(eenheid(it.u)) || 0) + v);
+          m.set(key, e);
+        });
+      });
+    }
+    return SOORTEN.map(s => ({ soort: s, regels: [...m.values()].filter(e => e.s === s).sort((a, b) => a.naam.localeCompare(b.naam, 'nl')) })).filter(g => g.regels.length);
+  }
+  function regelTekst(e) {
+    const delen = [...e.delen].map(([u, v]) => fmtGetal(v) + (u ? ' ' + (v > 1 && MEERVOUD[u] ? MEERVOUD[u] : u) : ''));
+    return [delen.join(' + '), e.naam].filter(Boolean).join(' ') + (e.opt ? ' (optioneel)' : '');
+  }
+  function lijstTekst() {
+    const namen = Object.entries(lijst).map(([id, st]) => { const r = recepten.find(x => x.id === id); return r ? `${r.titel} (${st.p} pers.)` : null; }).filter(Boolean);
+    const uit = ['Boodschappen', 'Voor: ' + namen.join(', ')];
+    lijstRegels().forEach(g => {
+      const open = g.regels.filter(e => !afgevinkt.has(e.key));
+      if (open.length) uit.push('', g.soort.toUpperCase(), ...open.map(e => '- ' + regelTekst(e)));
+    });
+    return uit.join('\n');
+  }
+
+  let wisBevestig = false;
+  function renderLijst() {
+    const ids = Object.keys(lijst).filter(id => recepten.some(r => r.id === id));
+    const groepen = lijstRegels();
+    app.innerHTML = `<main class="wrap">
+      <header class="top">
+        <div><span class="kicker">Wat hebben we nodig?</span><h1>Boodschappen</h1></div>
+        <a class="round" href="#" aria-label="Terug naar overzicht">${svg.terug}</a>
+      </header>
+      ${ids.length ? `
+      ${ids.map(id => {
+        const r = recepten.find(x => x.id === id), st = lijst[id], o = opties(r);
+        return `<div class="lrecept" data-id="${esc(id)}">
+          <div class="lkop"><span class="lnaam">${esc(r.titel)}</span><button class="btn" data-act="del" aria-label="Verwijder van lijstje">✕</button></div>
+          <div class="lrij">
+            <div class="stepper"><button data-act="min" aria-label="Minder personen">−</button><output>${st.p} pers.</output><button data-act="plus" aria-label="Meer personen">+</button></div>
+            ${Object.entries(o).map(([label, namen]) => `<button class="btn" data-keuze="${esc(label)}" title="Wissel">${esc(label)}: ${esc(namen[(st.k && st.k[label]) || 0])} ⇄</button>`).join('')}
+          </div>
+        </div>`;
+      }).join('')}
+      <div class="lacties">
+        <button class="btn" id="kopieer">Kopieer</button>
+        ${navigator.share ? '<button class="btn" id="deel">Delen</button>' : ''}
+        <button class="btn" id="wis">${wisBevestig ? 'Zeker weten?' : 'Leegmaken'}</button>
+      </div>
+      <span class="msg" id="lmsg" aria-live="polite"></span>
+      <section class="ingr">
+        ${groepen.map(g => `<div class="group">${esc(cap(g.soort))}</div>
+          <ul>${g.regels.map(e => `<li class="${afgevinkt.has(e.key) ? 'done' : ''}"><label>
+            <input type="checkbox" data-k="${esc(e.key)}" ${afgevinkt.has(e.key) ? 'checked' : ''}>
+            <span class="txt">${esc(regelTekst(e))}</span></label></li>`).join('')}</ul>`).join('')}
+      </section>` : '<p class="empty">Nog niets op je lijstje. Open een recept en tik op "Boodschappen".</p>'}
+    </main>`;
+    if (!ids.length) return;
+    const msg = t => { document.getElementById('lmsg').textContent = t; };
+    app.querySelectorAll('.lrecept').forEach(rij => {
+      const id = rij.dataset.id, st = lijst[id], r = recepten.find(x => x.id === id);
+      rij.querySelectorAll('[data-act]').forEach(b => b.onclick = () => {
+        if (b.dataset.act === 'min' && st.p > 1) st.p--;
+        if (b.dataset.act === 'plus' && st.p < 12) st.p++;
+        if (b.dataset.act === 'del') delete lijst[id];
+        bewaarLijst(); renderLijst();
+      });
+      rij.querySelectorAll('[data-keuze]').forEach(b => b.onclick = () => {
+        const label = b.dataset.keuze, n = opties(r)[label].length;
+        st.k = st.k || {}; st.k[label] = ((st.k[label] || 0) + 1) % n;
+        bewaarLijst(); renderLijst();
+      });
+    });
+    app.querySelectorAll('.ingr input').forEach(cb => cb.onchange = () => {
+      cb.checked ? afgevinkt.add(cb.dataset.k) : afgevinkt.delete(cb.dataset.k);
+      cb.closest('li').classList.toggle('done', cb.checked);
+      bewaarLijst();
+    });
+    document.getElementById('kopieer').onclick = async () => {
+      const t = lijstTekst();
+      try { await navigator.clipboard.writeText(t); msg('Gekopieerd.'); }
+      catch {
+        const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); msg('Gekopieerd.'); } catch { msg('Kopiëren lukt niet in deze browser.'); }
+        ta.remove();
+      }
+    };
+    const deel = document.getElementById('deel');
+    if (deel) deel.onclick = async () => { try { await navigator.share({ title: 'Boodschappen', text: lijstTekst() }); } catch {} };
+    document.getElementById('wis').onclick = () => {
+      if (!wisBevestig) { wisBevestig = true; renderLijst(); return; }
+      wisBevestig = false; lijst = {}; afgevinkt.clear(); bewaarLijst(); renderLijst();
+    };
   }
 
   async function toggleWake() {
@@ -372,6 +524,8 @@
     const id = decodeURIComponent(location.hash.slice(1));
     const r = recepten.find(x => x.id === id);
     window.scrollTo(0, 0);
+    wisBevestig = false;
+    if (id === 'boodschappen') { document.title = 'Boodschappen · Kookboek'; return renderLijst(); }
     document.title = r ? r.titel + ' · Kookboek' : 'Kookboek';
     r ? renderRecept(r) : renderOverzicht();
   }

@@ -14,102 +14,131 @@
   "kleur": "lila",
   "ingredienten": [
     {
-      "groep": null,
+      "groep": "Groenten",
       "items": [
         {
           "q": 200,
           "u": "g",
-          "n": "zoete aardappel, blokjes van 1 cm"
-        },
-        {
-          "q": 3,
-          "u": "el",
-          "n": "olie"
+          "n": "zoete aardappel, blokjes van 1 cm",
+          "s": "groente & fruit"
         },
         {
           "q": 1,
           "u": null,
-          "n": "kleine ui"
+          "n": "kleine ui",
+          "s": "groente & fruit",
+          "p": "ui"
         },
         {
           "q": 1,
           "u": "teentje",
-          "n": "knoflook"
+          "n": "knoflook",
+          "s": "groente & fruit"
         },
         {
           "q": 100,
           "u": "g",
-          "n": "prei"
+          "n": "prei",
+          "s": "groente & fruit"
         },
         {
           "q": 1,
           "u": null,
-          "n": "rode paprika"
+          "n": "rode paprika",
+          "s": "groente & fruit"
         },
         {
           "q": 100,
           "u": "g",
-          "n": "sperziebonen"
-        },
+          "n": "sperziebonen",
+          "s": "groente & fruit"
+        }
+      ]
+    },
+    {
+      "groep": "Vulling",
+      "items": [
         {
           "q": 125,
           "u": "g",
-          "n": "vegetarisch gehakt"
+          "n": "vegetarisch gehakt",
+          "s": "vlees, vis & vega"
         },
         {
           "q": 1,
           "u": "el",
-          "n": "tomatenpuree"
-        },
-        {
-          "q": 0.75,
-          "u": "tl",
-          "n": "gerookt paprikapoeder"
-        },
-        {
-          "q": 0.5,
-          "u": "tl",
-          "n": "komijn"
-        },
-        {
-          "q": 0.5,
-          "u": "tl",
-          "n": "oregano"
+          "n": "tomatenpuree",
+          "s": "conserven & potten"
         },
         {
           "q": 250,
           "u": "ml",
-          "n": "passata"
-        },
-        {
-          "q": 0.5,
-          "u": "tl",
-          "n": "bruine suiker"
+          "n": "passata",
+          "s": "conserven & potten"
         },
         {
           "q": 120,
           "u": "g",
-          "n": "kidneybonen"
+          "n": "kidneybonen",
+          "s": "conserven & potten"
         },
         {
           "q": 75,
           "u": "g",
-          "n": "mais"
-        },
+          "n": "mais",
+          "s": "conserven & potten"
+        }
+      ]
+    },
+    {
+      "groep": "Kruiden en smaak",
+      "items": [
         {
-          "q": 1.5,
+          "q": 0.75,
           "u": "tl",
-          "n": "limoensap"
+          "n": "gerookt paprikapoeder",
+          "s": "kruiden & specerijen"
         },
         {
           "q": 0.5,
           "u": "tl",
-          "n": "zout"
+          "n": "komijn",
+          "s": "kruiden & specerijen"
         },
+        {
+          "q": 0.5,
+          "u": "tl",
+          "n": "oregano",
+          "s": "kruiden & specerijen"
+        },
+        {
+          "q": 0.5,
+          "u": "tl",
+          "n": "bruine suiker",
+          "s": "overig houdbaar"
+        },
+        {
+          "q": 1.5,
+          "u": "tl",
+          "n": "limoensap",
+          "s": "sauzen & olie"
+        },
+        {
+          "q": 0.5,
+          "u": "tl",
+          "n": "zout",
+          "s": "kruiden & specerijen"
+        }
+      ]
+    },
+    {
+      "groep": "Wraps",
+      "items": [
         {
           "q": 4,
           "u": null,
-          "n": "tortilla wraps"
+          "n": "tortilla wraps",
+          "s": "brood & deeg"
         }
       ]
     },
@@ -119,12 +148,26 @@
         {
           "q": 75,
           "u": "g",
-          "n": "crème fraîche"
+          "n": "crème fraîche",
+          "s": "zuivel & eieren"
         },
         {
           "q": 1,
           "u": "el",
-          "n": "chipotle in kleine blokjes"
+          "n": "chipotle in kleine blokjes",
+          "s": "conserven & potten",
+          "p": "chipotle"
+        }
+      ]
+    },
+    {
+      "groep": "Overig",
+      "items": [
+        {
+          "q": 3,
+          "u": "el",
+          "n": "olie",
+          "s": "sauzen & olie"
         }
       ]
     }
