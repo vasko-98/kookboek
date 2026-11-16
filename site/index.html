@@ -449,9 +449,11 @@
     const ids = Object.keys(lijst).filter(id => recepten.some(r => r.id === id));
     const groepen = lijstRegels();
     app.innerHTML = `<main class="wrap">
+      <div class="r-bar" style="margin-bottom:16px">
+        <a class="round" href="#" aria-label="Terug naar overzicht">${svg.terug}</a>
+      </div>
       <header class="top">
         <div><span class="kicker">Wat hebben we nodig?</span><h1>Boodschappen</h1></div>
-        <a class="round" href="#" aria-label="Terug naar overzicht">${svg.terug}</a>
       </header>
       ${ids.length ? `
       ${ids.map(id => {
