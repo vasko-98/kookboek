@@ -23,6 +23,7 @@ npx serve _site
 {
   "id": "naam-van-recept",
   "titel": "Naam van recept",
+  "omschrijving": "Korte omschrijving",  // optioneel, 1-2 zinnen, maximaal 160 tekens
   "tijd": "30-45",                  // range in minuten: tot 15, 15-30, 30-45, 45-60 of 60+
   "personen": 2,
   "moeite": "gemiddeld",           // weinig werk, gemiddeld of veel werk (los van de tijd)
@@ -45,6 +46,8 @@ npx serve _site
   "tips": ["Korte tip 1", "Korte tip 2"]   // optioneel, maximaal 4
 }
 ```
+
+`omschrijving` is optioneel: 1–2 zinnen over het gerecht en wanneer het past. Op de receptpagina staat hij onder de titel, bij "Favoriet van vandaag" als één regel, en het zoekveld zoekt erin. Is hij leeg of ontbreekt hij, dan wordt niets getoond.
 
 Eén hoeveelheid per regel: `q` is een getal (of `null`), `u` de eenheid, `n` de omschrijving. Zo kan de site omrekenen naar meer of minder personen.
 

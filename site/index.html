@@ -113,6 +113,8 @@
   .btn[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
   .r-title { display: flex; align-items: center; gap: 18px; }
   .r-title h1 { font-size: clamp(30px, 6vw, 46px); }
+  .oms { margin: 0; font-size: 16px; line-height: 1.45; background: var(--cream); border: var(--line); border-radius: 14px; padding: 10px 14px; max-width: 60ch; }
+  .featured .oms-kort { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .chips-static { display: flex; gap: 8px; flex-wrap: wrap; font-size: 14px; font-weight: 600; }
   .werk { display: flex; gap: 6px 16px; flex-wrap: wrap; font-size: 13px; font-weight: 600; margin-top: 10px; }
   .werk b { letter-spacing: 1px; margin-left: 4px; } .werk i { font-style: normal; opacity: .25; }
@@ -234,7 +236,7 @@
     recepten.forEach(r => c.van(r).forEach(v => set.add(v)));
     return c.volgorde ? c.volgorde.filter(v => set.has(v)) : [...set].sort((a, b) => a.localeCompare(b, 'nl'));
   }
-  const zoekTekst = r => [r.titel, r.keuken, ...r.maaltijd, r.dieet, r.bereiding, ...r.ingredienten.flatMap(g => g.items.map(i => i.n))].join(' ').toLowerCase();
+  const zoekTekst = r => [r.titel, r.omschrijving || '', r.keuken, ...r.maaltijd, r.dieet, r.bereiding, ...r.ingredienten.flatMap(g => g.items.map(i => i.n))].join(' ').toLowerCase();
   const meta = r => [tijdLabel(r.tijd), r.moeite, r.keuken].join(' · ');
   const tijdIdx = r => TIJDEN.indexOf(r.tijd);
   function sorteer(lijst) {
@@ -283,7 +285,7 @@
       <a class="featured" href="#${esc(favoriet.id)}" style="background:${kleur(favoriet, recepten.indexOf(favoriet))}">
         <span class="disc">${icoon(favoriet)}</span>
         <span class="body"><span class="label">${svg.hart} ${favs.length > 1 ? 'Favoriet van vandaag' : 'Favoriet'}</span>
-          <h2>${esc(favoriet.titel)}</h2><span class="meta">${esc(meta(favoriet))}</span></span>
+          <h2>${esc(favoriet.titel)}</h2>${favoriet.omschrijving ? `<span class="oms-kort">${esc(favoriet.omschrijving)}</span>` : ''}<span class="meta">${esc(meta(favoriet))}</span></span>
       </a>` : ''}
       ${actief || zoek
         ? `<h2 class="lijstkop">${zichtbaar.length} ${zichtbaar.length === 1 ? 'recept' : 'recepten'}<button id="wisfilters">Wis filters</button></h2>`
@@ -359,6 +361,7 @@
           </div>
           <div class="r-title"><span class="disc big">${icoon(r)}</span></div>
           <h1>${esc(r.titel)}</h1>
+          ${r.omschrijving ? `<p class="oms">${esc(r.omschrijving)}</p>` : ''}
           <div class="chips-static">
             <span>${tijdLabel(r.tijd)}</span>
             ${r.moeite ? `<span>${esc(r.moeite)}</span>` : ''}

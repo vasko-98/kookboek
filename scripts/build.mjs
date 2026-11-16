@@ -31,6 +31,7 @@ function controleer(r, bestand) {
     const verwacht = som <= 4 ? 'weinig werk' : som <= 6 ? 'gemiddeld' : 'veel werk';
     if (r.moeite !== verwacht) fout(`moeite moet "${verwacht}" zijn bij dit werk (weinig = 1, gemiddeld = 2, veel = 3; totaal 3-4 weinig werk, 5-6 gemiddeld, 7-9 veel werk)`);
   }
+  if (r.omschrijving != null && (typeof r.omschrijving !== 'string' || r.omschrijving.length > 160)) fout('omschrijving moet een korte tekst zijn (maximaal 160 tekens); laat het veld weg als er geen omschrijving is');
   if (r.favoriet != null && typeof r.favoriet !== 'boolean') fout('favoriet moet true of false zijn');
   if ('beoordeling' in r) fout('beoordeling bestaat niet meer, gebruik favoriet: true/false');
   if ('tags' in r) fout('tags bestaan niet meer, gebruik keuken, maaltijd, dieet en bereiding');
