@@ -61,12 +61,12 @@ Elk recept kiest precies één waarde per categorie (maaltijd mag meer dan één
 
 Er zijn geen losse tags en geen bron meer.
 
-## Ingrediënten: groepen en boodschappenlijst
+## Ingrediënten: groepen en boodschappen
 
 - **Groepen per onderdeel van het gerecht**, in de volgorde van gebruik (bijv. Vulling, Roommengsel, Puree, Bovenop). Kruiden staan bij het onderdeel waarvoor je ze gebruikt; zout, peper en dergelijke onder "Overig". Staat een kruid verdeeld over twee onderdelen, maak dan twee regels.
-- **`s` (soort)** per ingrediënt is verplicht en bepaalt de plek op het boodschappenlijstje: groente & fruit, vlees, vis & vega, zuivel & eieren, brood & deeg, pasta, rijst & granen, conserven & potten, sauzen & olie, kruiden & specerijen of overig houdbaar. `null` = niet op het lijstje (bijv. water).
-- **`p` (product)** is optioneel: de naam op het lijstje. Standaard is dat `n` zonder haakjes en alles na de eerste komma. Gebruik `p` als dat niet klopt (bijv. `n`: "kleine ui", `p`: "ui"). Zo worden dezelfde producten uit meerdere recepten opgeteld.
-- **`keuze`** op een groep, voor alternatieven (bijv. saus A of B): groepen met dezelfde `keuze` zijn alternatieven; op het lijstje kies je welke.
-- Staat er "optioneel" in de groepsnaam of omschrijving, dan komt het als "(optioneel)" op het lijstje.
+- **`s` (soort)** per ingrediënt is verplicht en bepaalt de plek in de boodschappennotitie: groente & fruit, vlees, vis & vega, zuivel & eieren, brood & deeg, pasta, rijst & granen, conserven & potten, sauzen & olie, kruiden & specerijen of overig houdbaar. `null` = niet in de notitie (bijv. water).
+- **`p` (product)** is optioneel: de naam in de notitie. Standaard is dat `n` zonder haakjes en alles na de eerste komma. Gebruik `p` als dat niet klopt (bijv. `n`: "kleine ui", `p`: "ui"). Zo worden dezelfde producten binnen een recept opgeteld.
+- **`keuze`** op een groep, voor alternatieven (bijv. saus A of B): groepen met dezelfde `keuze` komen onderaan de notitie onder "Kies één".
+- Staat er "optioneel" in de groepsnaam of omschrijving, dan komt het als "(optioneel)" in de notitie.
 
-Het boodschappenlijstje staat op `#boodschappen`. Je zet recepten erop met de knop "Boodschappen" op de receptpagina. Het lijstje wordt in de browser bewaard, is te kopiëren of te delen als tekst (alleen wat nog niet is afgevinkt) en is gegroepeerd per soort.
+Op de receptpagina deelt de knop "Boodschappen" een tekstnotitie voor het gekozen aantal personen, gegroepeerd per soort. Op een telefoon opent het deelmenu (Notities, Reminders, Keep, enz.); op een computer wordt een `.txt` gedownload.
