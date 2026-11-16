@@ -1,0 +1,70 @@
+{
+  "id": "plaattaart-rode-pesto",
+  "titel": "Plaattaart met rode pesto, ovengroenten en feta",
+  "status": "Gemaakt",
+  "tijd": 35,
+  "personen": 2,
+  "beoordeling": 4,
+  "bron": "pdf (geen link bekend)",
+  "tags": [
+    "vegetarisch",
+    "ovengerecht",
+    "snel"
+  ],
+  "ingredienten": [
+    {
+      "groep": null,
+      "items": [
+        {
+          "q": 1,
+          "u": "rol",
+          "n": "bladerdeeg (ca. 275 g)"
+        },
+        {
+          "q": 1,
+          "u": "zak",
+          "n": "ovengroenten (zoete aardappel, broccoli, paprika)"
+        },
+        {
+          "q": 3,
+          "u": "el",
+          "n": "rode pesto"
+        },
+        {
+          "q": 100,
+          "u": "g",
+          "n": "feta"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "olijfolie"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "peper, eventueel chilivlokken"
+        }
+      ]
+    },
+    {
+      "groep": "Optioneel",
+      "items": [
+        {
+          "q": null,
+          "u": null,
+          "n": "rucola en pijnboompitten"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Verwarm de oven voor op 200 °C (heteluchtoven 180 °C).",
+    "Schep de groenten om met de olie en peper. Rooster ze 10 min op een bakplaat.",
+    "Rol het bladerdeeg uit op bakpapier en prik het vol met een vork. Laat een rand van 2 cm vrij.",
+    "Smeer de pesto over het deeg, binnen de rand.",
+    "Verdeel de groenten over de pesto en brokkel de feta erover.",
+    "Bak 20–25 min tot de rand goudbruin is. Garneer met rucola en pijnboompitten."
+  ],
+  "notities": "Groenten eerst voorroosteren, dan wordt de bodem niet nat."
+}

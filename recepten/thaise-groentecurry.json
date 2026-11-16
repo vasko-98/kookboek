@@ -1,0 +1,106 @@
+{
+  "id": "thaise-groentecurry",
+  "titel": "Thaise groentecurry met kikkererwten",
+  "status": "Gemaakt",
+  "tijd": 40,
+  "personen": 2,
+  "beoordeling": null,
+  "bron": null,
+  "tags": [
+    "vegetarisch",
+    "Thais",
+    "curry",
+    "eenpansgerecht"
+  ],
+  "ingredienten": [
+    {
+      "groep": null,
+      "items": [
+        {
+          "q": 250,
+          "u": "g",
+          "n": "vastkokende aardappel, blokjes van 2 cm"
+        },
+        {
+          "q": 1,
+          "u": null,
+          "n": "rode paprika"
+        },
+        {
+          "q": 0.5,
+          "u": null,
+          "n": "courgette"
+        },
+        {
+          "q": 200,
+          "u": "g",
+          "n": "kikkererwten (uitgelekt)"
+        },
+        {
+          "q": 1,
+          "u": null,
+          "n": "kleine ui"
+        },
+        {
+          "q": 2,
+          "u": "teentjes",
+          "n": "knoflook"
+        },
+        {
+          "q": 1.5,
+          "u": "tl",
+          "n": "geraspte verse gember"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "currypasta (rood of geel)"
+        },
+        {
+          "q": 200,
+          "u": "ml",
+          "n": "kokosmelk"
+        },
+        {
+          "q": 100,
+          "u": "ml",
+          "n": "water of groentebouillon"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "olie"
+        },
+        {
+          "q": 1.5,
+          "u": "tl",
+          "n": "vissaus of sojasaus"
+        },
+        {
+          "q": 0.5,
+          "u": "tl",
+          "n": "suiker"
+        },
+        {
+          "q": 1.5,
+          "u": "tl",
+          "n": "limoensap"
+        },
+        {
+          "q": 8,
+          "u": "g",
+          "n": "verse koriander"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Bak de ui glazig in de olie (5 min).",
+    "Voeg knoflook, gember en currypasta toe en bak 1–2 min onder roeren.",
+    "Giet kokosmelk en water erbij, voeg de aardappel toe en breng aan de kook. Deksel erop en laat 10 min zachtjes sudderen.",
+    "Voeg paprika en kikkererwten toe en laat 10 min verder sudderen.",
+    "Voeg de courgette toe en kook 5 min tot alles gaar is.",
+    "Breng op smaak met vissaus of sojasaus, suiker en limoensap. Garneer met koriander."
+  ],
+  "notities": "Lekker met jasmijnrijst. Rood is pittiger, geel is milder en zoeter (laat bij geel de suiker weg). Proef voor je zout toevoegt, want pasta en vissaus zijn al zout."
+}

@@ -1,0 +1,75 @@
+{
+  "id": "penne-rode-pesto",
+  "titel": "Penne met rode pesto en groenten",
+  "status": "Gemaakt",
+  "tijd": 25,
+  "personen": 2,
+  "beoordeling": null,
+  "bron": null,
+  "hoeveelhedenGeschat": true,
+  "tags": [
+    "vegetarisch",
+    "snel",
+    "pasta"
+  ],
+  "ingredienten": [
+    {
+      "groep": null,
+      "items": [
+        {
+          "q": 180,
+          "u": "g",
+          "n": "penne"
+        },
+        {
+          "q": 1,
+          "u": null,
+          "n": "winterpeen, in dunne halve plakjes"
+        },
+        {
+          "q": 1,
+          "u": null,
+          "n": "rode paprika"
+        },
+        {
+          "q": 1,
+          "u": null,
+          "n": "ui"
+        },
+        {
+          "q": 2,
+          "u": "teentjes",
+          "n": "knoflook"
+        },
+        {
+          "q": 150,
+          "u": "g",
+          "n": "cherrytomaatjes"
+        },
+        {
+          "q": 3,
+          "u": "el",
+          "n": "rode pesto"
+        },
+        {
+          "q": 1.5,
+          "u": "el",
+          "n": "crème fraîche (1–2 el)"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "olijfolie"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Kook de penne beetgaar en bewaar een kopje pastawater.",
+    "Bak de winterpeen 5 min in de olie. Voeg ui en knoflook toe en bak 3 min mee.",
+    "Voeg paprika en cherrytomaatjes toe en bak tot de tomaatjes uiteenvallen.",
+    "Haal de pan van het vuur. Roer de pesto, de crème fraîche en een paar scheuten pastawater erdoor.",
+    "Meng de pasta erdoor en roer tot de saus glanst. Voeg zo nodig meer pastawater toe."
+  ],
+  "notities": "Roer pesto en crème fraîche buiten het vuur erdoor, anders kan de crème fraîche schiften. Zin in meer groente? Courgette, champignons of spinazie passen ook."
+}

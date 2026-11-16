@@ -1,0 +1,162 @@
+{
+  "id": "mexicaanse-ovenschotel",
+  "titel": "Mexicaanse ovenschotel met nacho's en kaas",
+  "status": "Gemaakt",
+  "tijd": 45,
+  "personen": 2,
+  "beoordeling": null,
+  "bron": null,
+  "tags": [
+    "ovengerecht",
+    "Mexicaans",
+    "hartig"
+  ],
+  "ingredienten": [
+    {
+      "groep": null,
+      "items": [
+        {
+          "q": 250,
+          "u": "g",
+          "n": "rundergehakt"
+        },
+        {
+          "q": 200,
+          "u": "g",
+          "n": "zoete aardappel, blokjes van 1 cm"
+        },
+        {
+          "q": 1,
+          "u": null,
+          "n": "kleine ui"
+        },
+        {
+          "q": 1,
+          "u": "teentje",
+          "n": "knoflook"
+        },
+        {
+          "q": 0.5,
+          "u": null,
+          "n": "rode paprika"
+        },
+        {
+          "q": 0.5,
+          "u": null,
+          "n": "courgette"
+        },
+        {
+          "q": 75,
+          "u": "g",
+          "n": "mais"
+        },
+        {
+          "q": 120,
+          "u": "g",
+          "n": "kidneybonen (uitgelekt)"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "olijfolie"
+        }
+      ]
+    },
+    {
+      "groep": "Saus A (zelfgemaakt)",
+      "items": [
+        {
+          "q": 200,
+          "u": "g",
+          "n": "passata"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "tomatenpuree"
+        },
+        {
+          "q": 1,
+          "u": "tl",
+          "n": "komijn"
+        },
+        {
+          "q": 1,
+          "u": "tl",
+          "n": "gerookt paprikapoeder"
+        },
+        {
+          "q": 0.5,
+          "u": "tl",
+          "n": "chilipoeder"
+        },
+        {
+          "q": 0.5,
+          "u": "tl",
+          "n": "oregano"
+        },
+        {
+          "q": 0.5,
+          "u": "tl",
+          "n": "zout"
+        },
+        {
+          "q": 50,
+          "u": "ml",
+          "n": "water"
+        }
+      ]
+    },
+    {
+      "groep": "Saus B (kant-en-klaar)",
+      "items": [
+        {
+          "q": 200,
+          "u": "g",
+          "n": "tomatensalsa of taco-saus"
+        },
+        {
+          "q": 0.5,
+          "u": "pakje",
+          "n": "tacokruiden (optioneel)"
+        }
+      ]
+    },
+    {
+      "groep": "Topping en serveren",
+      "items": [
+        {
+          "q": 75,
+          "u": "g",
+          "n": "nacho's"
+        },
+        {
+          "q": 75,
+          "u": "g",
+          "n": "geraspte kaas (cheddar of oude kaas)"
+        },
+        {
+          "q": 50,
+          "u": "g",
+          "n": "zure room"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "koriander of bosui"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Verwarm de oven voor op 200 °C. Snijd de groenten.",
+    "Bak het gehakt rul in de olie. Voeg ui en knoflook toe en bak 2 min mee.",
+    "Voeg zoete aardappel, paprika en courgette toe en bak 3 min.",
+    "Bij saus A: roer eerst de kruiden erdoor (1 min), giet dan passata, tomatenpuree en water erbij. Bij saus B: giet de salsa erbij met een scheutje water.",
+    "Laat afgedekt 12 min sudderen tot de zoete aardappel bijna gaar is.",
+    "Roer mais en bonen erdoor en verwarm 2 min. Breng op smaak met zout en peper.",
+    "Schep alles in een ovenschaal, verdeel de nacho's erover en strooi de kaas erop.",
+    "Bak 10–12 min tot de kaas gesmolten is. Laat 3 min rusten en serveer met zure room en koriander."
+  ],
+  "notities": "Kies saus A of B, niet allebei. Vegetarisch: vervang het gehakt door extra bonen en mais. Pittiger: jalapeño's of chipotle erbij. Pas op dat de nacho's niet verbranden."
+}

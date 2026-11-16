@@ -1,0 +1,142 @@
+{
+  "id": "smoky-wraps-vega-gehakt",
+  "titel": "Smoky wraps met vega gehakt en groenten",
+  "status": "Gemaakt",
+  "statusNoot": "zonder oven",
+  "tijd": 45,
+  "personen": 2,
+  "beoordeling": null,
+  "bron": null,
+  "tags": [
+    "vegetarisch",
+    "Mexicaans",
+    "wraps",
+    "eenpansgerecht"
+  ],
+  "ingredienten": [
+    {
+      "groep": null,
+      "items": [
+        {
+          "q": 200,
+          "u": "g",
+          "n": "zoete aardappel, blokjes van 1 cm"
+        },
+        {
+          "q": 3,
+          "u": "el",
+          "n": "olie"
+        },
+        {
+          "q": 1,
+          "u": null,
+          "n": "kleine ui"
+        },
+        {
+          "q": 1,
+          "u": "teentje",
+          "n": "knoflook"
+        },
+        {
+          "q": 100,
+          "u": "g",
+          "n": "prei"
+        },
+        {
+          "q": 1,
+          "u": null,
+          "n": "rode paprika"
+        },
+        {
+          "q": 100,
+          "u": "g",
+          "n": "sperziebonen"
+        },
+        {
+          "q": 125,
+          "u": "g",
+          "n": "vegetarisch gehakt"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "tomatenpuree"
+        },
+        {
+          "q": 0.75,
+          "u": "tl",
+          "n": "gerookt paprikapoeder"
+        },
+        {
+          "q": 0.5,
+          "u": "tl",
+          "n": "komijn"
+        },
+        {
+          "q": 0.5,
+          "u": "tl",
+          "n": "oregano"
+        },
+        {
+          "q": 250,
+          "u": "ml",
+          "n": "passata"
+        },
+        {
+          "q": 0.5,
+          "u": "tl",
+          "n": "bruine suiker"
+        },
+        {
+          "q": 120,
+          "u": "g",
+          "n": "kidneybonen"
+        },
+        {
+          "q": 75,
+          "u": "g",
+          "n": "mais"
+        },
+        {
+          "q": 1.5,
+          "u": "tl",
+          "n": "limoensap"
+        },
+        {
+          "q": 0.5,
+          "u": "tl",
+          "n": "zout"
+        },
+        {
+          "q": 4,
+          "u": null,
+          "n": "tortilla wraps"
+        }
+      ]
+    },
+    {
+      "groep": "Topping",
+      "items": [
+        {
+          "q": 75,
+          "u": "g",
+          "n": "crème fraîche"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "chipotle in kleine blokjes"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Bak de zoete aardappel in 2 el olie 12–15 min met het deksel erop, op middelhoog vuur. Roer regelmatig. Zet apart.",
+    "Bak ui, prei, paprika en sperziebonen in 1 el olie (8 min). Voeg de knoflook de laatste minuut toe.",
+    "Schuif de groenten opzij en bak het gehakt mee. Voeg tomatenpuree en kruiden toe en bak tot het gehakt kleurt.",
+    "Roer passata en suiker erdoor. Laat zonder deksel pruttelen tot de saus dik is.",
+    "Roer kidneybonen, mais en zoete aardappel erdoor en verwarm 3 min. Breng op smaak met limoensap en zout.",
+    "Verwarm de wraps kort. Beleg met de vulling, een lepel crème fraîche en chipotle. Rol dicht."
+  ],
+  "notities": "Houd de saus mild, want de chipotle geeft al vuur en rook. Meer diepte: een scheutje adobosaus uit het chipotleblikje in de saus. Restvulling blijft 3 dagen goed in de koelkast en kan in de vriezer."
+}

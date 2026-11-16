@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mijn recepten</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf4ea;
+    --surface: #ffffff;
+    --surface-2: #f3eadb;
+    --text: #2b2420;
+    --muted: #7a6c62;
+    --line: #e6dccd;
+    --accent: #b83c2b;
+    --accent-soft: #f6e1da;
+    --on-accent: #ffffff;
+    --star: #d9902b;
+    --radius: 14px;
+    --shadow: 0 1px 2px rgba(60,40,20,.06), 0 4px 14px rgba(60,40,20,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1815;
+      --surface: #262019;
+      --surface-2: #2f2820;
+      --text: #f1e9de;
+      --muted: #a8998b;
+      --line: #3b3229;
+      --accent: #e0725f;
+      --accent-soft: #3d2620;
+      --on-accent: #1c1815;
+      --star: #e7a94a;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 16px/1.55 Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 650; line-height: 1.15; margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 20px 16px 64px; }
+
+  /* Overzicht */
+  .top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 8px 0 16px; }
+  .top h1 { font-size: 2rem; }
+  .count { color: var(--muted); font-size: .9rem; }
+  .search {
+    width: 100%; padding: 12px 14px; border-radius: 12px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--text);
+    font: inherit; outline: none;
+  }
+  .search:focus { border-color: var(--accent); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 20px; }
+  .chip {
+    border: 1px solid var(--line); background: var(--surface);
+    padding: 6px 12px; border-radius: 999px; font-size: .88rem;
+  }
+  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .card {
+    text-align: left; background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 10px; min-height: 160px;
+    border-top: 4px solid var(--accent);
+  }
+  .card:hover { border-color: var(--accent); }
+  .card h2 { font-size: 1.2rem; }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; color: var(--muted); font-size: .88rem; }
+  .badge {
+    font-size: .75rem; font-weight: 600; padding: 2px 8px; border-radius: 6px;
+    background: var(--accent-soft); color: var(--accent);
+  }
+  .badge.wil { background: var(--surface-2); color: var(--muted); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+  .tag { font-size: .78rem; color: var(--muted); background: var(--surface-2); padding: 2px 8px; border-radius: 6px; }
+  .stars { color: var(--star); letter-spacing: 1px; }
+  .stars .off { color: var(--line); }
+  .empty { color: var(--muted); padding: 32px 0; text-align: center; }
+
+  /* Recept */
+  .back { background: none; border: 0; padding: 6px 0; color: var(--accent); font-weight: 600; }
+  .r-head { margin: 8px 0 20px; }
+  .r-head h1 { font-size: clamp(1.7rem, 5vw, 2.4rem); margin: 6px 0 10px; }
+  .r-layout { display: grid; gap: 18px; }
+  @media (min-width: 820px) { .r-layout { grid-template-columns: 340px 1fr; align-items: start; } .ingr { position: sticky; top: 16px; } }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+  .panel h2 { font-size: 1.25rem; margin-bottom: 12px; }
+  .stepper { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .stepper button {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line);
+    background: var(--surface-2); font-size: 1.2rem; line-height: 1;
+  }
+  .stepper output { min-width: 92px; text-align: center; font-weight: 600; }
+  .note-small { font-size: .82rem; color: var(--muted); margin: -6px 0 12px; }
+  .group { font-weight: 600; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 14px 0 4px; }
+  .ingr ul, .steps ol { list-style: none; margin: 0; padding: 0; }
+  .ingr li label { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; border-bottom: 1px dashed var(--line); cursor: pointer; }
+  .ingr input { accent-color: var(--accent); width: 18px; height: 18px; margin-top: 3px; flex: none; }
+  .ingr .q { font-weight: 600; white-space: nowrap; }
+  .ingr li.done span { color: var(--muted); text-decoration: line-through; }
+  .steps li {
+    display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 14px 0;
+    border-bottom: 1px solid var(--line); cursor: pointer; font-size: 1.12rem; line-height: 1.6;
+  }
+  .steps li:last-child { border-bottom: 0; }
+  .num {
+    width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: var(--on-accent);
+    display: grid; place-items: center; font-weight: 600; font-size: .95rem;
+  }
+  .steps li.done { color: var(--muted); }
+  .steps li.done .num { background: var(--line); color: var(--muted); }
+  .hint { color: var(--muted); font-size: .85rem; margin: 0 0 6px; }
+  .notes { background: var(--accent-soft); border: 0; }
+  .notes p { margin: 0; }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .btn { border: 1px solid var(--line); background: var(--surface); padding: 8px 14px; border-radius: 10px; font-size: .9rem; }
+  .btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .msg { font-size: .82rem; color: var(--muted); align-self: center; }
+  .src { font-size: .88rem; color: var(--muted); }
+  .src a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main class="wrap" id="app"><p class="empty">Recepten laden…</p></main>
+
+<script>
+(() => {
+  const app = document.getElementById('app');
+  let recepten = [];
+  let filterTag = null;
+  let zoek = '';
+  const staat = {}; // per recept: { personen, ingr:Set, stap:Set } — alleen zolang de pagina open is
+  let wakeLock = null;
+
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  const sterren = b => {
+    if (!b) return '<span class="stars" title="Nog geen beoordeling"><span class="off">★★★★★</span></span>';
+    return `<span class="stars" title="${b} van 5">${'★'.repeat(b)}<span class="off">${'★'.repeat(5 - b)}</span></span>`;
+  };
+
+  // Hoeveelheden omrekenen en netjes tonen
+  const breuken = { 0.25: '¼', 0.5: '½', 0.75: '¾' };
+  function fmtGetal(x) {
+    const heel = Math.floor(x + 1e-9), rest = +(x - heel).toFixed(2);
+    if (rest === 0) return String(heel);
+    if (breuken[rest]) return (heel ? heel : '') + breuken[rest];
+    return x.toLocaleString('nl-NL', { maximumFractionDigits: 1 });
+  }
+  function schaal(q, u, factor) {
+    if (q == null) return null;
+    let v = q * factor;
+    if (u === 'g' || u === 'ml') {
+      v = v >= 50 ? Math.round(v / 5) * 5 : Math.max(1, Math.round(v));
+    } else if (u === 'el' || u === 'tl') {
+      v = Math.max(0.25, Math.round(v * 4) / 4);
+    } else if (u && u.startsWith('teentje')) {
+      v = Math.max(1, Math.ceil(v - 0.01));
+    } else {
+      v = Math.max(0.5, Math.round(v * 2) / 2);
+    }
+    return v;
+  }
+  function hoeveelheid(it, factor) {
+    const v = schaal(it.q, it.u, factor);
+    if (v == null) return '';
+    let unit = it.u ? ' ' + it.u : '';
+    if (it.u && it.u.startsWith('teentje')) unit = v === 1 ? ' teentje' : ' teentjes';
+    return fmtGetal(v) + unit;
+  }
+
+  function alleTags() {
+    const set = new Map();
+    recepten.forEach(r => r.tags.forEach(t => set.set(t.toLowerCase(), t)));
+    return [...set.values()].sort((a, b) => a.localeCompare(b, 'nl'));
+  }
+
+  function zoekTekst(r) {
+    return [r.titel, ...r.tags, ...r.ingredienten.flatMap(g => g.items.map(i => i.n))].join(' ').toLowerCase();
+  }
+
+  function renderOverzicht() {
+    const lijst = recepten.filter(r =>
+      (!filterTag || r.tags.some(t => t.toLowerCase() === filterTag.toLowerCase())) &&
+      (!zoek || zoekTekst(r).includes(zoek.toLowerCase()))
+    );
+    const tags = alleTags();
+    app.innerHTML = `
+      <div class="top"><h1>Mijn recepten</h1><span class="count">${recepten.length} recepten</span></div>
+      <input class="search" id="zoek" type="search" placeholder="Zoek op recept of ingrediënt…" value="${esc(zoek)}" aria-label="Zoeken">
+      <div class="chips" role="group" aria-label="Filter op tag">
+        <button class="chip" data-tag="" aria-pressed="${!filterTag}">Alles</button>
+        ${tags.map(t => `<button class="chip" data-tag="${esc(t)}" aria-pressed="${filterTag === t}">${esc(t)}</button>`).join('')}
+      </div>
+      <div class="grid">
+        ${lijst.length ? lijst.map(r => `
+          <button class="card" data-id="${esc(r.id)}">
+            <span class="meta">
+              <span class="badge ${r.status === 'Gemaakt' ? '' : 'wil'}">${esc(r.status)}</span>
+              ${sterren(r.beoordeling)}
+            </span>
+            <h2>${esc(r.titel)}</h2>
+            <span class="meta"><span>⏱ ${r.tijd} min</span><span>👥 ${r.personen} pers.</span></span>
+            <span class="tags">${r.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
+          </button>`).join('') : '<p class="empty">Geen recepten gevonden.</p>'}
+      </div>`;
+    const z = document.getElementById('zoek');
+    z.addEventListener('input', e => {
+      zoek = e.target.value;
+      const pos = e.target.selectionStart;
+      renderOverzicht();
+      const nz = document.getElementById('zoek'); nz.focus(); nz.setSelectionRange(pos, pos);
+    });
+    app.querySelectorAll('.chip').forEach(b => b.onclick = () => { filterTag = b.dataset.tag || null; renderOverzicht(); });
+    app.querySelectorAll('.card').forEach(b => b.onclick = () => { location.hash = b.dataset.id; });
+  }
+
+  function getStaat(r) {
+    if (!staat[r.id]) staat[r.id] = { personen: r.personen, ingr: new Set(), stap: new Set() };
+    return staat[r.id];
+  }
+
+  function renderRecept(r) {
+    const s = getStaat(r);
+    const factor = s.personen / r.personen;
+    let idx = 0;
+    const ingrHtml = r.ingredienten.map(g => `
+      ${g.groep ? `<div class="group">${esc(g.groep)}</div>` : ''}
+      <ul>${g.items.map(it => { const i = idx++; const h = hoeveelheid(it, factor); return `
+        <li class="${s.ingr.has(i) ? 'done' : ''}"><label>
+          <input type="checkbox" data-i="${i}" ${s.ingr.has(i) ? 'checked' : ''}>
+          <span>${h ? `<span class="q">${esc(h)}</span> ` : ''}${esc(it.n)}</span>
+        </label></li>`; }).join('')}</ul>`).join('');
+
+    const bron = r.bron
+      ? (/^https?:\/\//.test(r.bron) ? `<a href="${esc(r.bron)}" target="_blank" rel="noopener">${esc(r.bron)}</a>` : esc(r.bron))
+      : '';
+
+    app.innerHTML = `
+      <button class="back" id="terug">← Alle recepten</button>
+      <header class="r-head">
+        <span class="meta">
+          <span class="badge ${r.status === 'Gemaakt' ? '' : 'wil'}">${esc(r.status)}${r.statusNoot ? ' · ' + esc(r.statusNoot) : ''}</span>
+          ${sterren(r.beoordeling)}
+        </span>
+        <h1>${esc(r.titel)}</h1>
+        <span class="meta"><span>⏱ ${r.tijd} min</span>${r.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</span>
+        ${bron ? `<p class="src">Bron: ${bron}</p>` : ''}
+        <div class="tools">
+          <button class="btn" id="wake" aria-pressed="${!!wakeLock}">☀ Scherm aan houden</button>
+          <button class="btn" id="reset">Vinkjes wissen</button>
+          <span class="msg" id="msg"></span>
+        </div>
+      </header>
+      <div class="r-layout">
+        <section class="panel ingr">
+          <h2>Ingrediënten</h2>
+          <div class="stepper">
+            <button id="min" aria-label="Minder personen">−</button>
+            <output>${s.personen} ${s.personen === 1 ? 'persoon' : 'personen'}</output>
+            <button id="plus" aria-label="Meer personen">+</button>
+          </div>
+          ${r.hoeveelhedenGeschat ? '<p class="note-small">Hoeveelheden zijn geschat.</p>' : ''}
+          ${factor !== 1 ? '<p class="note-small">Omgerekend en afgerond, proef en pas aan.</p>' : ''}
+          ${ingrHtml}
+        </section>
+        <div style="display:grid;gap:18px">
+          <section class="panel steps">
+            <h2>Bereiding</h2>
+            <p class="hint">Tik op een stap om hem af te vinken.</p>
+            <ol>${r.stappen.map((st, i) => `
+              <li data-s="${i}" class="${s.stap.has(i) ? 'done' : ''}"><span class="num">${i + 1}</span><span>${esc(st)}</span></li>`).join('')}
+            </ol>
+          </section>
+          ${r.notities ? `<section class="panel notes"><h2>Notities voor de volgende keer</h2><p>${esc(r.notities)}</p></section>` : ''}
+        </div>
+      </div>`;
+
+    document.getElementById('terug').onclick = () => { location.hash = ''; };
+    document.getElementById('min').onclick = () => { if (s.personen > 1) { s.personen--; renderRecept(r); } };
+    document.getElementById('plus').onclick = () => { if (s.personen < 12) { s.personen++; renderRecept(r); } };
+    document.getElementById('reset').onclick = () => { s.ingr.clear(); s.stap.clear(); renderRecept(r); };
+    app.querySelectorAll('.ingr input').forEach(cb => cb.onchange = () => {
+      const i = +cb.dataset.i; cb.checked ? s.ingr.add(i) : s.ingr.delete(i);
+      cb.closest('li').classList.toggle('done', cb.checked);
+    });
+    app.querySelectorAll('.steps li').forEach(li => li.onclick = () => {
+      const i = +li.dataset.s; s.stap.has(i) ? s.stap.delete(i) : s.stap.add(i);
+      li.classList.toggle('done');
+    });
+    document.getElementById('wake').onclick = toggleWake;
+  }
+
+  async function toggleWake() {
+    const btn = document.getElementById('wake'), msg = document.getElementById('msg');
+    try {
+      if (wakeLock) { await wakeLock.release(); wakeLock = null; btn.setAttribute('aria-pressed', 'false'); msg.textContent = ''; return; }
+      if (!('wakeLock' in navigator)) throw new Error();
+      wakeLock = await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release', () => { wakeLock = null; const b = document.getElementById('wake'); if (b) b.setAttribute('aria-pressed', 'false'); });
+      btn.setAttribute('aria-pressed', 'true'); msg.textContent = 'Scherm blijft aan.';
+    } catch {
+      wakeLock = null; btn.setAttribute('aria-pressed', 'false');
+      msg.textContent = 'Werkt niet in deze weergave. Open de pagina los in je browser.';
+    }
+  }
+
+  function route() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const r = recepten.find(x => x.id === id);
+    window.scrollTo(0, 0);
+    r ? renderRecept(r) : renderOverzicht();
+  }
+
+  fetch('recepten.json', { cache: 'no-cache' })
+    .then(res => { if (!res.ok) throw new Error(res.status); return res.json(); })
+    .then(data => {
+      recepten = data.recepten.slice().sort((a, b) =>
+        (a.status === b.status ? 0 : a.status === 'Gemaakt' ? -1 : 1) || a.titel.localeCompare(b.titel, 'nl'));
+      route();
+      window.addEventListener('hashchange', route);
+    })
+    .catch(() => { app.innerHTML = '<p class="empty">De recepten konden niet geladen worden.</p>'; });
+})();
+</script>
+</body>
+</html>
