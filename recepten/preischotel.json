@@ -6,39 +6,111 @@
   "tijd": 50,
   "personen": 2,
   "favoriet": false,
-  "bron": "https://eefkooktzo.nl/preischotel",
+  "bron": null,
   "tags": [
-    "ovengerecht",
     "vegetarisch",
-    "champignon",
-    "prei",
-    "aardappel",
-    "vooraf te maken"
+    "ovengerecht"
   ],
   "kleur": "salie",
   "ingredienten": [
     {
       "groep": null,
       "items": [
-        { "q": 350, "u": "g", "n": "aardappelen (liefst iets kruimig)" },
-        { "q": 1, "u": null, "n": "prei (ca. 135 g), in dunne ringen" },
-        { "q": 0.5, "u": null, "n": "ui, fijn gesnipperd" },
-        { "q": 1, "u": "teen", "n": "knoflook, fijngehakt" },
-        { "q": 200, "u": "g", "n": "champignons, fijngehakt" },
-        { "q": 40, "u": "g", "n": "walnoten, grof gehakt" },
-        { "q": 1, "u": "tl", "n": "sojasaus" },
-        { "q": 0.75, "u": "tl", "n": "paprikapoeder" },
-        { "q": 1, "u": "tl", "n": "uienpoeder (¾ tl bij de champignons, ¼ tl in het roommengsel)" },
-        { "q": 1, "u": "el", "n": "kerriepoeder" },
-        { "q": 65, "u": "g", "n": "crème fraîche voor het roommengsel" },
-        { "q": 1, "u": "el", "n": "crème fraîche voor de puree" },
-        { "q": 35, "u": "ml", "n": "melk voor het roommengsel" },
-        { "q": 0.33, "u": "tl", "n": "knoflookpoeder" },
-        { "q": 0.5, "u": null, "n": "ei, losgeklopt" },
-        { "q": 2, "u": "tl", "n": "verse peterselie, fijngesneden" },
-        { "q": 25, "u": "g", "n": "geraspte oude kaas" },
-        { "q": null, "u": null, "n": "scheut melk voor de puree" },
-        { "q": null, "u": null, "n": "olie, chilivlokken, nootmuskaat, peper en zout" }
+        {
+          "q": 350,
+          "u": "g",
+          "n": "aardappelen (liefst iets kruimig)"
+        },
+        {
+          "q": 1,
+          "u": null,
+          "n": "prei (ca. 135 g), in dunne ringen"
+        },
+        {
+          "q": 0.5,
+          "u": null,
+          "n": "ui, fijn gesnipperd"
+        },
+        {
+          "q": 1,
+          "u": "teen",
+          "n": "knoflook, fijngehakt"
+        },
+        {
+          "q": 200,
+          "u": "g",
+          "n": "champignons, fijngehakt"
+        },
+        {
+          "q": 40,
+          "u": "g",
+          "n": "walnoten, grof gehakt"
+        },
+        {
+          "q": 1,
+          "u": "tl",
+          "n": "sojasaus"
+        },
+        {
+          "q": 0.75,
+          "u": "tl",
+          "n": "paprikapoeder"
+        },
+        {
+          "q": 1,
+          "u": "tl",
+          "n": "uienpoeder (¾ tl bij de champignons, ¼ tl in het roommengsel)"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "kerriepoeder"
+        },
+        {
+          "q": 65,
+          "u": "g",
+          "n": "crème fraîche voor het roommengsel"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "crème fraîche voor de puree"
+        },
+        {
+          "q": 35,
+          "u": "ml",
+          "n": "melk voor het roommengsel"
+        },
+        {
+          "q": 0.33,
+          "u": "tl",
+          "n": "knoflookpoeder"
+        },
+        {
+          "q": 0.5,
+          "u": null,
+          "n": "ei, losgeklopt"
+        },
+        {
+          "q": 2,
+          "u": "tl",
+          "n": "verse peterselie, fijngesneden"
+        },
+        {
+          "q": 25,
+          "u": "g",
+          "n": "geraspte oude kaas"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "scheut melk voor de puree"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "olie, chilivlokken, nootmuskaat, peper en zout"
+        }
       ]
     }
   ],
