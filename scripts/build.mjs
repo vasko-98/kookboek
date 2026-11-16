@@ -37,6 +37,11 @@ for (const f of bestanden) {
   recepten.push(r);
 }
 
+const iconen = new Set((await readdir(path.join(root, 'site', 'iconen'))).filter(f => f.endsWith('.svg')));
+for (const r of recepten) {
+  if (!iconen.has(`${r.id}.svg`)) console.warn(`Let op: geen icoon voor ${r.id}, de site toont _standaard.svg`);
+}
+
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
 await cp(path.join(root, 'site'), out, { recursive: true });
