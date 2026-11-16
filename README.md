@@ -69,6 +69,12 @@ Er zijn geen losse tags en geen bron meer.
 - **`keuze`** op een groep, voor alternatieven (bijv. saus A of B): groepen met dezelfde `keuze` komen onderaan de notitie onder "Kies één".
 - Staat er "optioneel" in de groepsnaam of omschrijving, dan komt het als "(optioneel)" in de notitie.
 
-Op de receptpagina zet de knop "Boodschappen" het recept (voor het gekozen aantal personen) op het boodschappenlijstje en opent `#boodschappen`. Daar vink je items af, wijzig je het aantal personen, kies je bij alternatieven (saus A of B) en voeg je andere recepten toe via hun eigen knop. Het lijstje is gegroepeerd per soort en wordt in de browser bewaard.
+- **`huis`** is optioneel (`true`/`false`): overschrijft of iets onder "Waarschijnlijk in huis" valt (zie hieronder).
+
+Op de receptpagina zet de knop "Boodschappen" het recept (voor het gekozen aantal personen) op het boodschappenlijstje; je blijft op het recept. De knop wordt dan "Op lijstje" en opent bij de volgende tik `#boodschappen`. Daar vink je items af, wijzig je het aantal personen, kies je bij alternatieven (saus A of B) en haal je recepten er weer af. Het lijstje is gegroepeerd per soort en wordt in de browser bewaard.
+
+Het lijstje toont winkelhoeveelheden: stuks, zakken, rollen en teentjes worden naar boven afgerond op hele aantallen; gram/ml en lepels van hetzelfde product worden opgeteld tot één getal (el = 15, tl = 5); iets waarvan je alleen lepels nodig hebt staat er zonder hoeveelheid.
+
+Onderaan staat "Waarschijnlijk in huis": kruiden & specerijen, sauzen & olie en overig houdbaar waarvan je alleen lepels of een snufje nodig hebt. Die gaan niet mee bij exporteren, tenzij je ze aantikt.
 
 "Exporteren" deelt de nog niet afgevinkte items als tekst, met één item per regel zodat het in Google Keep (+ > Checkboxes) of Notities (checklist) met één tik een afvinkbaar lijstje wordt. Op een computer wordt een `.txt` gedownload. "Kopieer" kopieert dezelfde tekst.

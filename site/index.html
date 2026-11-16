@@ -60,6 +60,9 @@
   .lrecept .btn { min-height: 36px; font-size: 14px; }
   .lacties { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 6px; }
   .lacties .btn { background: var(--white); }
+  .huis { display: flex; flex-wrap: wrap; gap: 8px; }
+  .huis .chip { font-weight: 400; display: inline-flex; align-items: center; gap: 6px; }
+  .msg a { text-underline-offset: 3px; }
   .r-acties { display: flex; gap: 6px; }
   .r-acties .btn { white-space: nowrap; }
   @media (max-width: 460px) { .r-acties .btn { padding: 0 11px; font-size: 14px; gap: 5px; } }
@@ -151,11 +154,14 @@
   const bewaar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
   let lijst = laad('kookboek-lijst', {});            // { receptId: { p: personen, k: { keuzelabel: index } } }
   let afgevinkt = new Set(laad('kookboek-afgevinkt', []));
+  let nodig = new Set(laad('kookboek-nodig', []));    // "waarschijnlijk in huis", maar toch kopen
   // Vinkjes van producten die niet meer op het lijstje staan vervallen, zodat ze later niet afgevinkt terugkomen.
   const bewaarLijst = () => {
-    const keys = new Set(lijstRegels().flatMap(g => g.regels.map(e => e.key)));
+    const { groepen, huis } = lijstRegels();
+    const keys = new Set(groepen.flatMap(g => g.regels.map(e => e.key))), hkeys = new Set(huis.map(e => e.key));
     afgevinkt = new Set([...afgevinkt].filter(k => keys.has(k)));
-    bewaar('kookboek-lijst', lijst); bewaar('kookboek-afgevinkt', [...afgevinkt]);
+    nodig = new Set([...nodig].filter(k => hkeys.has(k)));
+    bewaar('kookboek-lijst', lijst); bewaar('kookboek-afgevinkt', [...afgevinkt]); bewaar('kookboek-nodig', [...nodig]);
   };
   let wakeLock = null, wilWake = false;
 
@@ -164,6 +170,7 @@
   const icoon = r => `<img src="iconen/${esc(r.id)}.svg" alt="" onerror="this.onerror=null;this.src='iconen/_standaard.svg'">`;
   const svg = {
     filter: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>',
+    vink: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
     mand: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2.2l2.3 10.5h10.2L20 7H6"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg>',
     zoek: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
     terug: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
@@ -301,7 +308,7 @@
 
   // ---------- Recept ----------
   function getStaat(r) {
-    return staat[r.id] || (staat[r.id] = { personen: r.personen, ingr: new Set(), stap: new Set() });
+    return staat[r.id] || (staat[r.id] = { personen: (lijst[r.id] && lijst[r.id].p) || r.personen, ingr: new Set(), stap: new Set() });
   }
 
   function renderRecept(r) {
@@ -325,7 +332,7 @@
           <div class="r-bar">
             <a class="round" href="#" aria-label="Terug naar overzicht">${svg.terug}</a>
             <div class="r-acties">
-              <button class="btn" id="lijstbtn">${svg.mand} Boodschappen</button>
+              <button class="btn" id="lijstbtn"></button>
               <button class="btn" id="wake" aria-pressed="${wilWake}">${svg.zon} Scherm aan</button>
             </div>
           </div>
@@ -369,14 +376,28 @@
         </main>
       </div>`;
 
-    document.getElementById('min').onclick = () => { if (s.personen > 1) { s.personen--; renderRecept(r); } };
-    document.getElementById('plus').onclick = () => { if (s.personen < 12) { s.personen++; renderRecept(r); } };
+    // Staat het recept op het lijstje, dan volgt het lijstje het aantal personen dat je hier kiest.
+    const personen = d => {
+      const n = s.personen + d; if (n < 1 || n > 12) return;
+      s.personen = n; if (lijst[r.id]) { lijst[r.id].p = n; bewaarLijst(); }
+      const y = window.scrollY; renderRecept(r); window.scrollTo(0, y);
+    };
+    document.getElementById('min').onclick = () => personen(-1);
+    document.getElementById('plus').onclick = () => personen(1);
     document.getElementById('reset').onclick = () => { s.ingr.clear(); s.stap.clear(); renderRecept(r); };
     document.getElementById('wake').onclick = toggleWake;
-    document.getElementById('lijstbtn').onclick = () => {
-      lijst[r.id] = { p: s.personen, k: (lijst[r.id] && lijst[r.id].k) || {} };
-      bewaarLijst();
-      location.hash = '#boodschappen';
+    // Eerste tik zet het recept op het lijstje en blijft hier; daarna opent de knop het lijstje.
+    const lb = document.getElementById('lijstbtn');
+    const toonLijstKnop = () => {
+      lb.innerHTML = lijst[r.id] ? svg.vink + ' Op lijstje' : svg.mand + ' Boodschappen';
+      lb.setAttribute('aria-label', lijst[r.id] ? 'Op je lijstje, open boodschappenlijst' : 'Zet op boodschappenlijst');
+    };
+    toonLijstKnop();
+    lb.onclick = () => {
+      if (lijst[r.id]) { location.hash = '#boodschappen'; return; }
+      lijst[r.id] = { p: s.personen, k: {} };
+      bewaarLijst(); toonLijstKnop();
+      document.getElementById('msg').innerHTML = `Op je lijstje gezet (${s.personen} pers.). <a href="#boodschappen">Bekijk lijstje</a>`;
     };
     app.querySelectorAll('.ingr input').forEach(cb => cb.onchange = () => {
       const i = +cb.dataset.i; cb.checked ? s.ingr.add(i) : s.ingr.delete(i);
@@ -413,25 +434,47 @@
           if (it.s == null) return;
           const naam = productNaam(it), opt = optioneel(g, it), key = it.s + '|' + naam + '|' + opt;
           const e = m.get(key) || { key, naam, s: it.s, opt, delen: new Map() };
+          if (it.huis === false) e.huis = false; else if (it.huis === true && e.huis !== false) e.huis = true;
           const v = schaal(it.q, it.u, f);
           if (v != null) e.delen.set(eenheid(it.u), (e.delen.get(eenheid(it.u)) || 0) + v);
           m.set(key, e);
         });
       });
     }
-    return SOORTEN.map(s => ({ soort: s, regels: [...m.values()].filter(e => e.s === s).sort((a, b) => a.naam.localeCompare(b.naam, 'nl')) })).filter(g => g.regels.length);
+    const alle = [...m.values()].sort((a, b) => a.naam.localeCompare(b.naam, 'nl'));
+    return {
+      groepen: SOORTEN.map(s => ({ soort: s, regels: alle.filter(e => e.s === s && !inHuis(e)) })).filter(g => g.regels.length),
+      huis: alle.filter(inHuis)
+    };
   }
+  // Waarschijnlijk in huis: kruiden, sauzen/olie en houdbaar waarvan je alleen lepels of een snufje nodig hebt.
+  // Per ingrediënt te overschrijven met "huis": true/false in het recept.
+  const HUIS_SOORTEN = ['kruiden & specerijen', 'sauzen & olie', 'overig houdbaar'];
+  const inHuis = e => e.huis != null ? e.huis : HUIS_SOORTEN.includes(e.s) && [...e.delen.keys()].every(u => u === 'el' || u === 'tl');
+  // Winkelhoeveelheid: gram/ml en lepels samen in één getal (el = 15, tl = 5), stuks naar boven afgerond.
+  // Alleen lepels: geen hoeveelheid, je koopt toch een pot of fles.
   function regelTekst(e) {
-    const delen = [...e.delen].map(([u, v]) => fmtGetal(v) + (u ? ' ' + (v > 1 && MEERVOUD[u] ? MEERVOUD[u] : u) : ''));
+    const d = e.delen, delen = [], maat = ['g', 'ml'].find(u => d.has(u));
+    if (maat) {
+      const tot = (d.get('g') || 0) + (d.get('ml') || 0) + (d.get('el') || 0) * 15 + (d.get('tl') || 0) * 5;
+      delen.push((tot >= 50 ? Math.ceil(tot / 5 - 1e-9) * 5 : Math.ceil(tot - 1e-9)) + ' ' + maat);
+    }
+    for (const [u, v] of d) {
+      if (['g', 'ml', 'el', 'tl'].includes(u)) continue;
+      const n = Math.ceil(v - 1e-9);
+      delen.push(n + (u ? ' ' + (n > 1 && MEERVOUD[u] ? MEERVOUD[u] : u) : ''));
+    }
     return [delen.join(' + '), e.naam].filter(Boolean).join(' ') + (e.opt ? ' (optioneel)' : '');
   }
   // Eén item per regel, zonder streepjes of lege regels: in Keep (+ > Checkboxes) of Notities (checklist)
   // wordt elke regel dan een afvinkbaar item. Alleen wat nog niet is afgevinkt.
   function lijstTekst() {
     const uit = [];
-    lijstRegels().forEach(g => {
-      const open = g.regels.filter(e => !afgevinkt.has(e.key));
-      if (open.length) uit.push(g.soort.toUpperCase(), ...open.map(regelTekst));
+    const { groepen, huis } = lijstRegels();
+    SOORTEN.forEach(soort => {
+      const g = groepen.find(x => x.soort === soort);
+      const open = [...(g ? g.regels.filter(e => !afgevinkt.has(e.key)) : []), ...huis.filter(e => e.s === soort && nodig.has(e.key))];
+      if (open.length) uit.push(soort.toUpperCase(), ...open.map(regelTekst));
     });
     return uit.join('\n');
   }
@@ -454,10 +497,11 @@
   let wisBevestig = false;
   function renderLijst() {
     const ids = Object.keys(lijst).filter(id => recepten.some(r => r.id === id));
-    const groepen = lijstRegels();
+    const { groepen, huis } = lijstRegels();
+    const terug = recepten.some(r => r.id === vorigRecept) ? vorigRecept : '';
     app.innerHTML = `<main class="wrap">
       <div class="r-bar" style="margin-bottom:16px">
-        <a class="round" href="#" aria-label="Terug naar overzicht">${svg.terug}</a>
+        <a class="round" href="#${esc(terug)}" aria-label="${terug ? 'Terug naar recept' : 'Terug naar overzicht'}">${svg.terug}</a>
       </div>
       <header class="top">
         <div><span class="kicker">Wat hebben we nodig?</span><h1>Boodschappen</h1></div>
@@ -484,6 +528,10 @@
           <ul>${g.regels.map(e => `<li class="${afgevinkt.has(e.key) ? 'done' : ''}"><label>
             <input type="checkbox" data-k="${esc(e.key)}" ${afgevinkt.has(e.key) ? 'checked' : ''}>
             <span class="txt">${esc(regelTekst(e))}</span></label></li>`).join('')}</ul>`).join('')}
+        ${huis.length ? `<div class="group">Waarschijnlijk in huis</div>
+          <p class="hint">Tik aan wat je toch moet kopen; dat gaat mee bij exporteren en kopiëren.</p>
+          <div class="huis" role="group" aria-label="Waarschijnlijk in huis">${huis.map(e =>
+            `<button class="chip" data-nodig="${esc(e.key)}" aria-pressed="${nodig.has(e.key)}">${nodig.has(e.key) ? svg.mand : ''}${esc(e.naam)}</button>`).join('')}</div>` : ''}
       </section>` : '<p class="empty">Nog niets op je lijstje. Open een recept en tik op "Boodschappen".</p>'}
     </main>`;
     if (!ids.length) return;
@@ -493,6 +541,7 @@
       rij.querySelectorAll('[data-act]').forEach(b => b.onclick = () => {
         if (b.dataset.act === 'min' && st.p > 1) st.p--;
         if (b.dataset.act === 'plus' && st.p < 12) st.p++;
+        if (staat[id]) staat[id].personen = st.p;
         if (b.dataset.act === 'del') delete lijst[id];
         bewaarLijst(); renderLijst();
       });
@@ -507,6 +556,10 @@
       cb.closest('li').classList.toggle('done', cb.checked);
       bewaarLijst();
     });
+    app.querySelectorAll('[data-nodig]').forEach(b => b.onclick = () => {
+      const k = b.dataset.nodig; nodig.has(k) ? nodig.delete(k) : nodig.add(k);
+      bewaarLijst(); const y = window.scrollY; renderLijst(); window.scrollTo(0, y);
+    });
     document.getElementById('kopieer').onclick = async () => {
       const t = lijstTekst();
       try { await navigator.clipboard.writeText(t); msg('Gekopieerd.'); }
@@ -519,7 +572,7 @@
     document.getElementById('deel').onclick = async () => { msg(await deelLijst()); };
     document.getElementById('wis').onclick = () => {
       if (!wisBevestig) { wisBevestig = true; renderLijst(); return; }
-      wisBevestig = false; lijst = {}; afgevinkt.clear(); bewaarLijst(); renderLijst();
+      wisBevestig = false; lijst = {}; afgevinkt.clear(); nodig.clear(); bewaarLijst(); renderLijst();
     };
   }
 
@@ -544,13 +597,14 @@
   });
 
   // Onthoudt waar je in het overzicht was, zodat je na een recept op dezelfde plek terugkomt.
-  let opOverzicht = false, overzichtY = 0;
+  let opOverzicht = false, overzichtY = 0, vorigRecept = '', huidigRecept = '';
   try { history.scrollRestoration = 'manual'; } catch {}
   function route() {
     const id = decodeURIComponent(location.hash.slice(1));
     const r = recepten.find(x => x.id === id);
     if (opOverzicht) overzichtY = window.scrollY;
     opOverzicht = !r && id !== 'boodschappen';
+    vorigRecept = huidigRecept; huidigRecept = r ? r.id : '';
     wisBevestig = false;
     if (id === 'boodschappen') document.title = 'Boodschappen · Kookboek';
     else document.title = r ? r.titel + ' · Kookboek' : 'Kookboek';

@@ -85,7 +85,8 @@
           "q": null,
           "u": null,
           "n": "pijnboompitten",
-          "s": "overig houdbaar"
+          "s": "overig houdbaar",
+          "huis": false
         }
       ]
     }

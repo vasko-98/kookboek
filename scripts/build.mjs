@@ -37,6 +37,7 @@ function controleer(r, bestand) {
     g.items.forEach((it, j) => {
       if (!it.n) fout(`ingredienten[${i}].items[${j}].n ontbreekt`);
       if (!('s' in it) || (it.s !== null && !SOORTEN.includes(it.s))) fout(`ingredienten[${i}].items[${j}].s (soort voor de boodschappenlijst) moet een van ${SOORTEN.join(' / ')} of null zijn`);
+      if (it.huis != null && typeof it.huis !== 'boolean') fout(`ingredienten[${i}].items[${j}].huis moet true of false zijn`);
       if (it.q != null && !Number.isFinite(it.q)) fout(`ingredienten[${i}].items[${j}].q moet een getal of null zijn`);
     });
   });
