@@ -114,6 +114,8 @@
   .r-title { display: flex; align-items: center; gap: 18px; }
   .r-title h1 { font-size: clamp(30px, 6vw, 46px); }
   .chips-static { display: flex; gap: 8px; flex-wrap: wrap; font-size: 14px; font-weight: 600; }
+  .werk { display: flex; gap: 6px 16px; flex-wrap: wrap; font-size: 13px; font-weight: 600; margin-top: 10px; }
+  .werk b { letter-spacing: 1px; margin-left: 4px; } .werk i { font-style: normal; opacity: .25; }
   .chips-static span { background: var(--cream); border: var(--line); border-radius: 999px; padding: 4px 12px; }
   .msg { font-size: 14px; font-weight: 600; }
   .src { font-size: 14px; }
@@ -210,12 +212,13 @@
     else if (it.u === 'zak' && v > 1) unit = ' zakken';
     else if (it.u === 'pakje' && v > 1) unit = ' pakjes';
     else if (it.u === 'handje' && v > 1) unit = ' handjes';
+    else if (it.u === 'blokje' && v > 1) unit = ' blokjes';
     return fmtGetal(v) + unit;
   }
 
   // ---------- Overzicht ----------
   const TIJDEN = ['tot 15', '15-30', '30-45', '45-60', '60+'];
-  const MOEITEN = ['makkelijk', 'gemiddeld', 'veel werk'];
+  const MOEITEN = ['weinig werk', 'gemiddeld', 'veel werk'];
   const tijdLabel = t => t.replace('-', '–') + ' min';
   const cap = t => t[0].toUpperCase() + t.slice(1);
   const CATEGORIEEN = [
@@ -362,6 +365,7 @@
             ${r.favoriet ? `<span>${svg.hart} Favoriet</span>` : ''}
             ${[r.keuken, ...r.maaltijd, r.dieet, r.bereiding].map(t => `<span>${esc(t)}</span>`).join('')}
           </div>
+          ${r.werk ? `<div class="werk">${[['snijwerk', 'Snijwerk'], ['pan', 'Aan de pan'], ['afwas', 'Afwas']].map(([k, l]) => `<span>${l} <b aria-label="${esc(r.werk[k])}">${'●'.repeat(['weinig', 'gemiddeld', 'veel'].indexOf(r.werk[k]) + 1)}<i>${'●'.repeat(2 - ['weinig', 'gemiddeld', 'veel'].indexOf(r.werk[k]))}</i></b></span>`).join('')}</div>` : ''}
           <span class="msg" id="msg" aria-live="polite"></span>
         </div>
       </div>

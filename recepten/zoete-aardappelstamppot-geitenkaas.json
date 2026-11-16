@@ -1,0 +1,132 @@
+{
+  "id": "zoete-aardappelstamppot-geitenkaas",
+  "titel": "Zoete-aardappelstamppot met geitenkaas",
+  "tijd": "30-45",
+  "personen": 2,
+  "moeite": "gemiddeld",
+  "werk": {
+    "snijwerk": "gemiddeld",
+    "pan": "weinig",
+    "afwas": "gemiddeld"
+  },
+  "favoriet": false,
+  "keuken": "Nederlands",
+  "maaltijd": [
+    "diner"
+  ],
+  "dieet": "vega",
+  "bereiding": "meerdere pannen",
+  "kleur": "mosterd",
+  "ingredienten": [
+    {
+      "groep": "Stamppot",
+      "items": [
+        {
+          "q": 600,
+          "u": "g",
+          "n": "zoete aardappel, geschild in blokjes",
+          "s": "groente & fruit"
+        },
+        {
+          "q": 1,
+          "u": "blokje",
+          "n": "groentebouillon",
+          "s": "overig houdbaar"
+        }
+      ]
+    },
+    {
+      "groep": "Groente",
+      "items": [
+        {
+          "q": 1,
+          "u": null,
+          "n": "rode ui, gesnipperd",
+          "s": "groente & fruit"
+        },
+        {
+          "q": 2,
+          "u": "teentje",
+          "n": "knoflook, fijngehakt",
+          "s": "groente & fruit"
+        },
+        {
+          "q": 1,
+          "u": null,
+          "n": "rode paprika, in blokjes",
+          "s": "groente & fruit"
+        },
+        {
+          "q": 1,
+          "u": "el",
+          "n": "olijfolie",
+          "s": "sauzen & olie"
+        }
+      ]
+    },
+    {
+      "groep": "Erdoor",
+      "items": [
+        {
+          "q": 100,
+          "u": "g",
+          "n": "spinazie, grof gehakt",
+          "s": "groente & fruit"
+        },
+        {
+          "q": 50,
+          "u": "g",
+          "n": "zongedroogde tomaten, gehakt",
+          "s": "conserven & potten"
+        }
+      ]
+    },
+    {
+      "groep": "Bovenop",
+      "items": [
+        {
+          "q": 100,
+          "u": "g",
+          "n": "zachte geitenkaas",
+          "s": "zuivel & eieren"
+        },
+        {
+          "q": 30,
+          "u": "g",
+          "n": "walnoten",
+          "s": "overig houdbaar"
+        }
+      ]
+    },
+    {
+      "groep": "Overig",
+      "items": [
+        {
+          "q": null,
+          "u": null,
+          "n": "peper",
+          "s": "kruiden & specerijen"
+        },
+        {
+          "q": null,
+          "u": null,
+          "n": "zout",
+          "s": "kruiden & specerijen"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Rooster de walnoten 2–3 min in een droge pan, hak ze grof en zet apart.",
+    "Kook de zoete aardappel ca. 15 min in water met het bouillonblokje tot hij zacht is. Bewaar een kopje kookvocht en giet af.",
+    "Bak intussen de ui 3 min in de olie in de pan van de walnoten. Voeg de knoflook en paprika toe en bak 5 min mee.",
+    "Stamp de zoete aardappel grof met een scheutje kookvocht.",
+    "Schep de groente, spinazie en zongedroogde tomaten door de stamppot en laat de spinazie op laag vuur slinken. Breng op smaak met peper en zout.",
+    "Verdeel de stamppot over de borden en verkruimel de geitenkaas en walnoten erover."
+  ],
+  "tips": [
+    "Gebruik zongedroogde tomaten op olie en bak de ui in een lepel van die olie, dat geeft extra smaak.",
+    "Zoete aardappel wordt snel papperig: kook hem net gaar en stamp grof.",
+    "Geen geitenkaas? Feta werkt ook."
+  ]
+}

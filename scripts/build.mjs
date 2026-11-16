@@ -6,7 +6,10 @@ import { createHash } from 'node:crypto';
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const out = path.join(root, '_site');
-const MOEITE = ['makkelijk', 'gemiddeld', 'veel werk'];
+const MOEITE = ['weinig werk', 'gemiddeld', 'veel werk'];
+// Moeite = hoeveel werk je eraan hebt (niet hoe moeilijk het is), opgebouwd uit snijwerk, aan de pan staan en afwas.
+const WERK = ['snijwerk', 'pan', 'afwas'];
+const NIVEAUS = ['weinig', 'gemiddeld', 'veel'];
 const TIJDEN = ['tot 15', '15-30', '30-45', '45-60', '60+'];
 const MAALTIJDEN = ['ontbijt', 'lunch', 'diner'];
 const DIETEN = ['vega', 'vlees', 'vis'];
@@ -22,6 +25,12 @@ function controleer(r, bestand) {
   if (!TIJDEN.includes(r.tijd)) fout(`tijd moet een van ${TIJDEN.join(' / ')} zijn (range in minuten)`);
   if (!Number.isFinite(r.personen)) fout('personen ontbreekt');
   if (!MOEITE.includes(r.moeite)) fout(`moeite moet een van ${MOEITE.join(' / ')} zijn`);
+  if (r.werk != null) {
+    if (typeof r.werk !== 'object' || Object.keys(r.werk).sort().join() !== [...WERK].sort().join() || !WERK.every(k => NIVEAUS.includes(r.werk[k]))) fout(`werk moet { snijwerk, pan, afwas } zijn, elk ${NIVEAUS.join(' / ')}`);
+    const som = WERK.reduce((t, k) => t + NIVEAUS.indexOf(r.werk[k]) + 1, 0);
+    const verwacht = som <= 4 ? 'weinig werk' : som <= 6 ? 'gemiddeld' : 'veel werk';
+    if (r.moeite !== verwacht) fout(`moeite moet "${verwacht}" zijn bij dit werk (weinig = 1, gemiddeld = 2, veel = 3; totaal 3-4 weinig werk, 5-6 gemiddeld, 7-9 veel werk)`);
+  }
   if (r.favoriet != null && typeof r.favoriet !== 'boolean') fout('favoriet moet true of false zijn');
   if ('beoordeling' in r) fout('beoordeling bestaat niet meer, gebruik favoriet: true/false');
   if ('tags' in r) fout('tags bestaan niet meer, gebruik keuken, maaltijd, dieet en bereiding');

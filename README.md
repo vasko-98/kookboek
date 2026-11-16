@@ -25,7 +25,8 @@ npx serve _site
   "titel": "Naam van recept",
   "tijd": "30-45",                  // range in minuten: tot 15, 15-30, 30-45, 45-60 of 60+
   "personen": 2,
-  "moeite": "gemiddeld",           // makkelijk, gemiddeld of veel werk (los van de tijd)
+  "moeite": "gemiddeld",           // weinig werk, gemiddeld of veel werk (los van de tijd)
+  "werk": { "snijwerk": "gemiddeld", "pan": "weinig", "afwas": "gemiddeld" },  // optioneel, zie Moeite
   "favoriet": true,                 // optioneel, standaard false
   "hoeveelhedenGeschat": true,      // optioneel
   "keuken": "Mexicaans",
@@ -57,10 +58,22 @@ Elk recept kiest precies één waarde per categorie (maaltijd mag meer dan één
 | `maaltijd` | ontbijt, lunch, diner |
 | `dieet` | vega, vlees, vis |
 | `bereiding` | oven, één pan, meerdere pannen, BBQ, geen koken |
-| `moeite` | makkelijk, gemiddeld, veel werk (los van de tijd) |
+| `moeite` | weinig werk, gemiddeld, veel werk (los van de tijd, zie hieronder) |
 | `tijd` | tot 15, 15-30, 30-45, 45-60, 60+ (minuten, een range omdat het afhangt van hoe snel je kookt) |
 
 Er zijn geen losse tags en geen bron meer.
+
+## Moeite
+
+Moeite gaat over hoeveel werk je aan een recept hebt, niet over hoe moeilijk het is. Het optionele veld `werk` geeft drie onderdelen, elk `weinig`, `gemiddeld` of `veel`:
+
+| Onderdeel | weinig | gemiddeld | veel |
+|---|---|---|---|
+| `snijwerk` | 1–2 dingen grof snijden | een paar groenten snijden of fijnhakken | veel groenten, fijn snijden of raspen |
+| `pan` | vooral wachten (koken, oven) | af en toe omscheppen | steeds erbij staan, meerdere dingen tegelijk |
+| `afwas` | één pan of schaal en een snijplank | twee pannen, of pan en schaal | drie of meer pannen, schalen en kommen |
+
+Tel weinig = 1, gemiddeld = 2, veel = 3. Totaal 3–4 = weinig werk, 5–6 = gemiddeld, 7–9 = veel werk. Staat `werk` in het recept, dan controleert de build dat `moeite` hierbij past. De receptpagina toont de drie onderdelen als bolletjes.
 
 ## Ingrediënten: groepen en boodschappen
 
