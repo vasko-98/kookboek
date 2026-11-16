@@ -64,6 +64,7 @@ Er zijn geen losse tags en geen bron meer.
 ## Ingrediënten: groepen en boodschappen
 
 - **Groepen per onderdeel van het gerecht**, in de volgorde van gebruik (bijv. Vulling, Roommengsel, Puree, Bovenop). Kruiden staan bij het onderdeel waarvoor je ze gebruikt; zout, peper en dergelijke onder "Overig". Staat een kruid verdeeld over twee onderdelen, maak dan twee regels.
+- **Eén standaardeenheid per product.** Grote groenten (paprika, courgette, prei, ui, winterpeen) altijd in hele of halve stuks, eventueel met het gewicht tussen haakjes: "1 kleine prei (ca. 100 g)". Producten als aardappel, sperziebonen en cherrytomaatjes per gewicht. `node scripts/build.mjs` stopt als hetzelfde product in het ene recept per stuk en in het andere per gewicht staat.
 - **`s` (soort)** per ingrediënt is verplicht en bepaalt de plek in de boodschappennotitie: groente & fruit, vlees, vis & vega, zuivel & eieren, brood & deeg, pasta, rijst & granen, conserven & potten, sauzen & olie, kruiden & specerijen of overig houdbaar. `null` = niet in de notitie (bijv. water).
 - **`p` (product)** is optioneel: de naam in de notitie. Standaard is dat `n` zonder haakjes en alles na de eerste komma. Gebruik `p` als dat niet klopt (bijv. `n`: "kleine ui", `p`: "ui"). Zo worden dezelfde producten binnen een recept opgeteld.
 - **`keuze`** op een groep, voor alternatieven (bijv. saus A of B): groepen met dezelfde `keuze` komen onderaan de notitie onder "Kies één".

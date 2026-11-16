@@ -36,10 +36,11 @@
           "s": "groente & fruit"
         },
         {
-          "q": 100,
-          "u": "g",
-          "n": "prei",
-          "s": "groente & fruit"
+          "q": 1,
+          "u": null,
+          "n": "kleine prei (ca. 100 g)",
+          "s": "groente & fruit",
+          "p": "prei"
         },
         {
           "q": 1,

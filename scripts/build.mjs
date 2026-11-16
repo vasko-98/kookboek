@@ -53,6 +53,16 @@ for (const f of bestanden) {
   recepten.push(r);
 }
 
+// Eén standaardeenheid per product: hetzelfde product mag niet in het ene recept per stuk en in het andere per gewicht staan.
+const productNaam = it => (it.p || it.n.replace(/\s*\(.*?\)/g, '').split(',')[0]).trim().toLowerCase();
+const eenheden = new Map();
+for (const r of recepten) for (const g of r.ingredienten) for (const it of g.items) {
+  if (it.s == null || it.q == null || it.u === 'el' || it.u === 'tl') continue;
+  const soort = it.u === 'g' || it.u === 'ml' ? 'gewicht' : 'stuks', naam = productNaam(it), eerder = eenheden.get(naam);
+  if (eerder && eerder.soort !== soort) throw new Error(`"${naam}" staat per ${eerder.soort} in ${eerder.id} en per ${soort} in ${r.id}. Kies één standaardeenheid: grote groenten (paprika, courgette, prei, ui) per stuk, de rest per gewicht.`);
+  if (!eerder) eenheden.set(naam, { soort, id: r.id });
+}
+
 const iconen = new Set((await readdir(path.join(root, 'site', 'iconen'))).filter(f => f.endsWith('.svg')));
 for (const r of recepten) {
   if (!iconen.has(`${r.id}.svg`)) console.warn(`Let op: geen icoon voor ${r.id}, de site toont _standaard.svg`);
