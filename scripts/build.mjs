@@ -53,6 +53,17 @@ for (const f of bestanden) {
   recepten.push(r);
 }
 
+// Vaste standaardeenheden voor groente & fruit. Grote groenten in hele of halve stuks (eventueel met gewicht in haakjes),
+// de rest per gewicht. Producten die hier niet in staan mogen kiezen, maar dan overal hetzelfde (zie hieronder).
+const STUKS = /\b(paprika|courgette|prei|ui|sjalot|winterpeen|aubergine|komkommer|venkel|bloemkool|broccoli|spitskool|savooiekool)\b/;
+const GEWICHT = /(aardappel|sperziebonen|cherry|champignon|doperwten|bimi|spinazie|wortel)/;
+for (const r of recepten) for (const g of r.ingredienten) for (const it of g.items) {
+  if (it.s !== 'groente & fruit' || it.q == null || it.u === 'el' || it.u === 'tl') continue;
+  const naam = it.n.replace(/\s*\(.*?\)/g, '').split(',')[0].toLowerCase();
+  if (STUKS.test(naam) && (it.u === 'g' || it.u === 'ml')) throw new Error(`${r.id}: "${it.n}" moet in hele of halve stuks (eventueel met gewicht in haakjes, bijv. "1 kleine prei (ca. 100 g)")`);
+  if (GEWICHT.test(naam) && it.u !== 'g') throw new Error(`${r.id}: "${it.n}" moet per gewicht (g)`);
+}
+
 // Eén standaardeenheid per product: hetzelfde product mag niet in het ene recept per stuk en in het andere per gewicht staan.
 const productNaam = it => (it.p || it.n.replace(/\s*\(.*?\)/g, '').split(',')[0]).trim().toLowerCase();
 const eenheden = new Map();

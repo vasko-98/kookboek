@@ -8,4 +8,4 @@
 - Push naar `main`; GitHub Actions publiceert de site.
 - Geen dependencies of frameworks toevoegen zonder overleg.
 - Ingrediënten: groepeer per onderdeel van het gerecht in volgorde van gebruik, geef elk ingrediënt een `s` (soort voor het boodschappenlijstje) en eventueel een `p`; zie README.md.
-- Eén standaardeenheid per product: grote groenten (paprika, courgette, prei, ui) in stuks, producten als aardappel, sperziebonen en cherrytomaatjes per gewicht. De build controleert dit.
+- Eén standaardeenheid per product: grote groenten (paprika, courgette, prei, ui, winterpeen enz.) in stuks, aardappel, sperziebonen, cherrytomaatjes en dergelijke per gewicht. De lijsten staan bovenin scripts/build.mjs en de build controleert ze.
