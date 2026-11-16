@@ -1,0 +1,57 @@
+{
+  "id": "preischotel",
+  "titel": "Preischotel (champignon-walnoot)",
+  "status": "Wil ik maken",
+  "statusNoot": "nog niet in deze vega-versie gemaakt",
+  "tijd": 50,
+  "personen": 2,
+  "favoriet": false,
+  "bron": "https://eefkooktzo.nl/preischotel",
+  "tags": [
+    "ovengerecht",
+    "vegetarisch",
+    "champignon",
+    "prei",
+    "aardappel",
+    "vooraf te maken"
+  ],
+  "kleur": "salie",
+  "ingredienten": [
+    {
+      "groep": null,
+      "items": [
+        { "q": 350, "u": "g", "n": "aardappelen (liefst iets kruimig)" },
+        { "q": 1, "u": null, "n": "prei (ca. 135 g), in dunne ringen" },
+        { "q": 0.5, "u": null, "n": "ui, fijn gesnipperd" },
+        { "q": 1, "u": "teen", "n": "knoflook, fijngehakt" },
+        { "q": 200, "u": "g", "n": "champignons, fijngehakt" },
+        { "q": 40, "u": "g", "n": "walnoten, grof gehakt" },
+        { "q": 1, "u": "tl", "n": "sojasaus" },
+        { "q": 0.75, "u": "tl", "n": "paprikapoeder" },
+        { "q": 1, "u": "tl", "n": "uienpoeder (¾ tl bij de champignons, ¼ tl in het roommengsel)" },
+        { "q": 1, "u": "el", "n": "kerriepoeder" },
+        { "q": 65, "u": "g", "n": "crème fraîche voor het roommengsel" },
+        { "q": 1, "u": "el", "n": "crème fraîche voor de puree" },
+        { "q": 35, "u": "ml", "n": "melk voor het roommengsel" },
+        { "q": 0.33, "u": "tl", "n": "knoflookpoeder" },
+        { "q": 0.5, "u": null, "n": "ei, losgeklopt" },
+        { "q": 2, "u": "tl", "n": "verse peterselie, fijngesneden" },
+        { "q": 25, "u": "g", "n": "geraspte oude kaas" },
+        { "q": null, "u": null, "n": "scheut melk voor de puree" },
+        { "q": null, "u": null, "n": "olie, chilivlokken, nootmuskaat, peper en zout" }
+      ]
+    }
+  ],
+  "stappen": [
+    "Verwarm de oven voor op 175°C (boven- en onderwarmte). Kook de aardappelen ca. 20 min in gezouten water en giet af.",
+    "Rooster de walnoten 2–3 min in een droge pan en zet ze apart.",
+    "Bak de champignons droog tot het vocht verdampt is en ze kleuren (ca. 8 min). Zout nog niet.",
+    "Voeg een scheut olie, ui en knoflook toe en bak 3 min mee. Voeg paprikapoeder, ¾ tl uienpoeder, chilivlokken, peper en sojasaus toe.",
+    "Voeg de prei en walnoten toe en laat zachtjes garen. Kruid met kerriepoeder en zout naar smaak. Het mengsel moet vrij droog zijn.",
+    "Meng crème fraîche, melk, ¼ tl uienpoeder, knoflookpoeder, ei, peterselie, peper en zout.",
+    "Stamp de aardappelen met een scheut melk, 1 el crème fraîche, nootmuskaat, peper en zout.",
+    "Schep het champignonmengsel in een ovenschaal van ca. 20 x 15 cm, giet het roommengsel erover, verdeel de puree erop en strooi de kaas erover.",
+    "Bak 20–25 min tot goudbruin."
+  ],
+  "notities": "Eerder gemaakt met gehakt; deze champignon-walnootversie nog niet. Bak de champignons droog en zout pas aan het eind, anders wordt de schotel waterig. Vooraf te maken: stel samen en bak later. Invriezen kan, voor of na het bakken; opwarmen afgedekt met folie, 15 min op 180°C. Het origineel noemt 3 el kerrie voor 6 personen, hier omgerekend naar 1 el. Andere vega-opties voor het gehakt: vega gehakt (1-op-1), linzen (250 g uit blik), kikkererwten of TVP (50 g droog, geweekt)."
+}
