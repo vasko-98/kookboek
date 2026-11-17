@@ -1,0 +1,121 @@
+{
+  "titel": "Leek bake (mushroom and walnut)",
+  "keuken": "Dutch",
+  "ingredienten": [
+    {
+      "groep": "Filling",
+      "items": [
+        {
+          "n": "mushrooms, finely chopped"
+        },
+        {
+          "n": "walnuts, roughly chopped"
+        },
+        {
+          "n": "leek (approx. 135 g), in thin rings"
+        },
+        {
+          "n": "onion, finely chopped"
+        },
+        {
+          "n": "garlic, finely chopped"
+        },
+        {
+          "n": "soy sauce"
+        },
+        {
+          "n": "paprika"
+        },
+        {
+          "n": "onion powder"
+        },
+        {
+          "n": "curry powder"
+        },
+        {
+          "n": "chilli flakes"
+        },
+        {
+          "n": "oil"
+        }
+      ]
+    },
+    {
+      "groep": "Cream mixture",
+      "items": [
+        {
+          "n": "crème fraîche"
+        },
+        {
+          "n": "milk"
+        },
+        {
+          "n": "egg, beaten"
+        },
+        {
+          "n": "fresh parsley, finely chopped"
+        },
+        {
+          "n": "onion powder"
+        },
+        {
+          "n": "garlic powder"
+        }
+      ]
+    },
+    {
+      "groep": "Mash",
+      "items": [
+        {
+          "n": "potatoes (preferably floury)"
+        },
+        {
+          "n": "crème fraîche"
+        },
+        {
+          "n": "splash of milk",
+          "p": "milk"
+        },
+        {
+          "n": "nutmeg"
+        }
+      ]
+    },
+    {
+      "groep": "On top",
+      "items": [
+        {
+          "n": "grated mature cheese",
+          "p": "grated cheese"
+        }
+      ]
+    },
+    {
+      "groep": "Other",
+      "items": [
+        {
+          "n": "pepper"
+        },
+        {
+          "n": "salt"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Preheat the oven to 175 °C (conventional). Boil the potatoes in salted water for about 20 min and drain.",
+    "Toast the walnuts in a dry pan for 2–3 min and set aside.",
+    "Fry the mushrooms until the liquid has evaporated and they start to brown (about 8 min). Do not add salt yet.",
+    "Add a splash of oil, the onion and garlic and fry for 3 min. Add the paprika, ¾ tsp onion powder, chilli flakes, pepper and soy sauce.",
+    "Add the leek and walnuts and cook gently. Season with curry powder and salt to taste. The mixture should be fairly dry.",
+    "Mix the crème fraîche, milk, ¼ tsp onion powder, garlic powder, egg, parsley, salt and pepper.",
+    "Mash the potatoes with a splash of milk, 1 tbsp crème fraîche, nutmeg, salt and pepper.",
+    "Spoon the mushroom mixture into an ovenproof dish of about 20 x 15 cm, pour the cream mixture over it, spread the mash on top and sprinkle with the cheese.",
+    "Bake for 20–25 min until golden brown."
+  ],
+  "tips": [
+    "Fry the mushrooms dry and only add salt at the end, otherwise the bake turns watery.",
+    "Can be made ahead: assemble now and bake later. It freezes well, before or after baking; reheat covered with foil, 15 min at 180 °C.",
+    "Alternatives to the mushroom and walnut filling: vegetarian mince (1 for 1), lentils (250 g from a tin), chickpeas or TVP (50 g dry, soaked)."
+  ]
+}

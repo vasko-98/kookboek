@@ -1,0 +1,80 @@
+{
+  "titel": "Sweet potato mash with goat's cheese",
+  "keuken": "Dutch",
+  "ingredienten": [
+    {
+      "groep": "Mash",
+      "items": [
+        {
+          "n": "sweet potato, peeled and cubed"
+        },
+        {
+          "n": "vegetable stock"
+        }
+      ]
+    },
+    {
+      "groep": "Vegetables",
+      "items": [
+        {
+          "n": "red onion, chopped"
+        },
+        {
+          "n": "garlic, finely chopped"
+        },
+        {
+          "n": "red pepper, diced"
+        },
+        {
+          "n": "olive oil"
+        }
+      ]
+    },
+    {
+      "groep": "Stir in",
+      "items": [
+        {
+          "n": "spinach, roughly chopped"
+        },
+        {
+          "n": "sun-dried tomatoes, chopped"
+        }
+      ]
+    },
+    {
+      "groep": "On top",
+      "items": [
+        {
+          "n": "soft goat's cheese"
+        },
+        {
+          "n": "walnuts"
+        }
+      ]
+    },
+    {
+      "groep": "Other",
+      "items": [
+        {
+          "n": "pepper"
+        },
+        {
+          "n": "salt"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Toast the walnuts in a dry pan for 2–3 min, chop roughly and set aside.",
+    "Boil the sweet potato in water with the stock cube for about 15 min until soft. Keep a cup of the cooking liquid and drain.",
+    "Meanwhile, fry the onion in the oil for 3 min in the pan you used for the walnuts. Add the garlic and pepper and fry for 5 min.",
+    "Roughly mash the sweet potato with a splash of the cooking liquid.",
+    "Stir the vegetables, spinach and sun-dried tomatoes into the mash and let the spinach wilt over a low heat. Season with salt and pepper.",
+    "Divide the mash between the plates and crumble the goat's cheese and walnuts on top."
+  ],
+  "tips": [
+    "Use sun-dried tomatoes in oil and fry the onion in a spoonful of that oil for extra flavour.",
+    "Sweet potato turns mushy quickly: cook it until just tender and mash roughly.",
+    "No goat's cheese? Feta works too."
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "titel": "Thai vegetable curry with chickpeas",
+  "keuken": "Thai",
+  "ingredienten": [
+    {
+      "groep": "Vegetables",
+      "items": [
+        {
+          "n": "waxy potato, 2 cm cubes"
+        },
+        {
+          "n": "red pepper"
+        },
+        {
+          "n": "courgette"
+        },
+        {
+          "n": "chickpeas (drained)"
+        }
+      ]
+    },
+    {
+      "groep": "Base",
+      "items": [
+        {
+          "n": "small onion",
+          "p": "onion"
+        },
+        {
+          "n": "garlic"
+        },
+        {
+          "n": "grated fresh ginger",
+          "p": "fresh ginger"
+        },
+        {
+          "n": "oil"
+        }
+      ]
+    },
+    {
+      "groep": "Curry",
+      "items": [
+        {
+          "n": "curry paste (red or yellow)"
+        },
+        {
+          "n": "coconut milk"
+        },
+        {
+          "n": "water or vegetable stock",
+          "p": "water"
+        }
+      ]
+    },
+    {
+      "groep": "Seasoning",
+      "items": [
+        {
+          "n": "fish sauce or soy sauce"
+        },
+        {
+          "n": "sugar"
+        },
+        {
+          "n": "lime juice"
+        }
+      ]
+    },
+    {
+      "groep": "To serve",
+      "items": [
+        {
+          "n": "fresh coriander",
+          "p": "coriander"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Fry the onion in the oil until translucent (5 min).",
+    "Add the garlic, ginger and curry paste and fry for 1–2 min, stirring.",
+    "Pour in the coconut milk and water, add the potato and bring to the boil. Cover and simmer gently for 10 min.",
+    "Add the pepper and chickpeas and simmer for another 10 min.",
+    "Add the courgette and cook for 5 min until everything is tender.",
+    "Season with fish sauce or soy sauce, sugar and lime juice. Garnish with coriander."
+  ],
+  "tips": [
+    "Goes well with jasmine rice.",
+    "Red is spicier, yellow is milder and sweeter (leave out the sugar with yellow).",
+    "Taste before adding salt, as the curry paste and fish sauce are already salty."
+  ]
+}

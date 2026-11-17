@@ -1,0 +1,65 @@
+{
+  "titel": "Penne with red pesto and vegetables",
+  "keuken": "Italian",
+  "ingredienten": [
+    {
+      "groep": "Pasta",
+      "items": [
+        {
+          "n": "penne"
+        }
+      ]
+    },
+    {
+      "groep": "Vegetables",
+      "items": [
+        {
+          "n": "large carrot, in thin half-moons"
+        },
+        {
+          "n": "red pepper"
+        },
+        {
+          "n": "onion"
+        },
+        {
+          "n": "garlic"
+        },
+        {
+          "n": "cherry tomatoes"
+        }
+      ]
+    },
+    {
+      "groep": "Sauce",
+      "items": [
+        {
+          "n": "red pesto"
+        },
+        {
+          "n": "crème fraîche (1–2 tbsp)"
+        }
+      ]
+    },
+    {
+      "groep": "Other",
+      "items": [
+        {
+          "n": "olive oil",
+          "p": "oil"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Cook the penne until al dente and keep a cup of the pasta water.",
+    "Fry the carrot in the oil for 5 min. Add the onion and garlic and fry for 3 min.",
+    "Add the pepper and cherry tomatoes and fry until the tomatoes break down.",
+    "Take the pan off the heat. Stir in the pesto, the crème fraîche and a few splashes of pasta water.",
+    "Stir in the pasta until the sauce is glossy. Add more pasta water if needed."
+  ],
+  "tips": [
+    "Stir in the pesto and crème fraîche off the heat, otherwise the crème fraîche can split.",
+    "More vegetables? Courgette, mushrooms or spinach work too."
+  ]
+}

@@ -53,6 +53,8 @@
   .chip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
   .chip { display: inline-flex; align-items: center; gap: 6px; }
   a.pill-dark { text-decoration: none; display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; }
+  .top-acties { display: flex; gap: 8px; }
+  a.taal { background: var(--white); color: var(--ink); border: var(--line); }
   .lrecept { background: var(--white); border: var(--line); border-radius: 14px; padding: 10px 14px; margin-bottom: 8px; }
   .lkop { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
   .lrij { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
@@ -155,6 +157,27 @@
 <script>
 (() => {
   const app = document.getElementById('app');
+  // Taal: /en/ is de Engelse versie (gemaakt door scripts/build.mjs). Daar staan de bestanden een map hoger.
+  const EN = document.documentElement.lang === 'en', BASE = EN ? '../' : '', LOC = EN ? 'en-GB' : 'nl';
+  const T = (nl, en) => EN ? en : nl;
+  // Vaste categoriewaarden blijven in de recepten Nederlands; alleen het tonen wordt vertaald. Keuken staat in <id>.en.json.
+  const WAARDEN_EN = {
+    ontbijt: 'breakfast', lunch: 'lunch', diner: 'dinner', vega: 'vegetarian', vlees: 'meat', vis: 'fish',
+    oven: 'oven', 'één pan': 'one pan', 'meerdere pannen': 'multiple pans', BBQ: 'BBQ', 'geen koken': 'no cooking',
+    'weinig werk': 'low effort', gemiddeld: 'medium effort', 'veel werk': 'high effort',
+    weinig: 'low', veel: 'high',
+    'groente & fruit': 'fruit & veg', 'vlees, vis & vega': 'meat, fish & vegetarian', 'zuivel & eieren': 'dairy & eggs',
+    'brood & deeg': 'bread & pastry', 'pasta, rijst & granen': 'pasta, rice & grains', 'conserven & potten': 'tins & jars',
+    'sauzen & olie': 'sauces & oil', 'kruiden & specerijen': 'herbs & spices', 'overig houdbaar': 'other pantry items'
+  };
+  const toon = v => EN ? (WAARDEN_EN[v] || v) : v;
+  // Eenheden [enkelvoud, meervoud]; g en ml blijven zoals ze zijn.
+  const EENHEDEN = EN
+    ? { el: ['tbsp', 'tbsp'], tl: ['tsp', 'tsp'], teentje: ['clove', 'cloves'], rol: ['roll', 'rolls'], zak: ['bag', 'bags'], pakje: ['packet', 'packets'], handje: ['handful', 'handfuls'], blokje: ['cube', 'cubes'] }
+    : { teentje: ['teentje', 'teentjes'], rol: ['rol', 'rollen'], zak: ['zak', 'zakken'], pakje: ['pakje', 'pakjes'], handje: ['handje', 'handjes'], blokje: ['blokje', 'blokjes'] };
+  const eenheidTekst = (u, v) => { const m = EENHEDEN[eenheid(u)]; return m ? m[v > 1 ? 1 : 0] : u; };
+  const pers = n => EN ? n + (n === 1 ? ' person' : ' people') : n + ' pers.';
+  app.innerHTML = `<main class="wrap"><p class="empty">${T('Recepten laden…', 'Loading recipes…')}</p></main>`;
   const KLEUREN = { tomaat: '#E4573D', mosterd: '#F4B740', salie: '#A9C49A', lila: '#C9B6E4', wit: '#FFFFFF' };
   const VOLGORDE = ['tomaat', 'salie', 'mosterd', 'lila', 'wit'];
   let recepten = [];
@@ -177,7 +200,7 @@
 
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const kleur = (r, i) => KLEUREN[r.kleur] || KLEUREN[VOLGORDE[i % VOLGORDE.length]];
-  const icoon = r => `<img src="iconen/${esc(r.id)}.svg" alt="" onerror="this.onerror=null;this.src='iconen/_standaard.svg'">`;
+  const icoon = r => `<img src="${BASE}iconen/${esc(r.id)}.svg" alt="" onerror="this.onerror=null;this.src='${BASE}iconen/_standaard.svg'">`;
   const svg = {
     filter: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>',
     vink: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
@@ -194,7 +217,7 @@
     const heel = Math.floor(x + 1e-9), rest = +(x - heel).toFixed(2);
     if (rest === 0) return String(heel);
     if (breuken[rest]) return (heel || '') + breuken[rest];
-    return x.toLocaleString('nl-NL', { maximumFractionDigits: 1 });
+    return x.toLocaleString(LOC, { maximumFractionDigits: 1 });
   }
   function schaal(q, u, f) {
     if (q == null) return null;
@@ -208,41 +231,34 @@
   function hoeveelheid(it, f) {
     const v = schaal(it.q, it.u, f);
     if (v == null) return '';
-    let unit = it.u ? ' ' + it.u : '';
-    if (it.u && it.u.startsWith('teentje')) unit = v === 1 ? ' teentje' : ' teentjes';
-    else if (it.u === 'rol' && v > 1) unit = ' rollen';
-    else if (it.u === 'zak' && v > 1) unit = ' zakken';
-    else if (it.u === 'pakje' && v > 1) unit = ' pakjes';
-    else if (it.u === 'handje' && v > 1) unit = ' handjes';
-    else if (it.u === 'blokje' && v > 1) unit = ' blokjes';
-    return fmtGetal(v) + unit;
+    return fmtGetal(v) + (it.u ? ' ' + eenheidTekst(it.u, v) : '');
   }
 
   // ---------- Overzicht ----------
   const TIJDEN = ['tot 15', '15-30', '30-45', '45-60', '60+'];
   const MOEITEN = ['weinig werk', 'gemiddeld', 'veel werk'];
-  const tijdLabel = t => t.replace('-', '–') + ' min';
+  const tijdLabel = t => (EN ? t.replace('tot', 'up to') : t).replace('-', '–') + ' min';
   const cap = t => t[0].toUpperCase() + t.slice(1);
   const CATEGORIEEN = [
-    { k: 'keuken', label: 'Keuken', van: r => [r.keuken] },
-    { k: 'maaltijd', label: 'Maaltijd', van: r => r.maaltijd },
-    { k: 'dieet', label: 'Dieet', van: r => [r.dieet] },
-    { k: 'bereiding', label: 'Bereiding', van: r => [r.bereiding] },
-    { k: 'moeite', label: 'Moeite', van: r => [r.moeite], volgorde: MOEITEN },
-    { k: 'tijd', label: 'Tijd', van: r => [r.tijd], volgorde: TIJDEN, toon: tijdLabel },
+    { k: 'keuken', label: T('Keuken', 'Cuisine'), van: r => [r.keuken] },
+    { k: 'maaltijd', label: T('Maaltijd', 'Meal'), van: r => r.maaltijd },
+    { k: 'dieet', label: T('Dieet', 'Diet'), van: r => [r.dieet] },
+    { k: 'bereiding', label: T('Bereiding', 'Cooking'), van: r => [r.bereiding] },
+    { k: 'moeite', label: T('Moeite', 'Effort'), van: r => [r.moeite], volgorde: MOEITEN },
+    { k: 'tijd', label: T('Tijd', 'Time'), van: r => [r.tijd], volgorde: TIJDEN, toon: tijdLabel },
   ];
   function waarden(c) {
     const set = new Set();
     recepten.forEach(r => c.van(r).forEach(v => set.add(v)));
-    return c.volgorde ? c.volgorde.filter(v => set.has(v)) : [...set].sort((a, b) => a.localeCompare(b, 'nl'));
+    return c.volgorde ? c.volgorde.filter(v => set.has(v)) : [...set].sort((a, b) => toon(a).localeCompare(toon(b), LOC));
   }
-  const zoekTekst = r => [r.titel, r.omschrijving || '', r.keuken, ...r.maaltijd, r.dieet, r.bereiding, ...r.ingredienten.flatMap(g => g.items.map(i => i.n))].join(' ').toLowerCase();
-  const meta = r => [tijdLabel(r.tijd), r.moeite, r.keuken].join(' · ');
+  const zoekTekst = r => [r.titel, r.omschrijving || '', r.keuken, ...[...r.maaltijd, r.dieet, r.bereiding].map(toon), ...r.ingredienten.flatMap(g => g.items.map(i => i.n))].join(' ').toLowerCase();
+  const meta = r => [tijdLabel(r.tijd), toon(r.moeite), r.keuken].join(' · ');
   const tijdIdx = r => TIJDEN.indexOf(r.tijd);
   function sorteer(lijst) {
     const s = lijst.slice();
-    if (sort === 'snel') s.sort((a, b) => tijdIdx(a) - tijdIdx(b) || a.titel.localeCompare(b.titel, 'nl'));
-    if (sort === 'lang') s.sort((a, b) => tijdIdx(b) - tijdIdx(a) || a.titel.localeCompare(b.titel, 'nl'));
+    if (sort === 'snel') s.sort((a, b) => tijdIdx(a) - tijdIdx(b) || a.titel.localeCompare(b.titel, LOC));
+    if (sort === 'lang') s.sort((a, b) => tijdIdx(b) - tijdIdx(a) || a.titel.localeCompare(b.titel, LOC));
     if (sort === 'fav') s.sort((a, b) => (!!b.favoriet - !!a.favoriet) || tijdIdx(a) - tijdIdx(b));
     return s;
   }
@@ -258,39 +274,42 @@
     const favs = recepten.filter(r => r.favoriet);
     const favoriet = favs.length ? favs[Math.floor(Date.now() / 864e5) % favs.length] : null;
     const toonFav = favoriet && !actief && !zoek;
-    const sorts = [['snel', 'Snelst'], ['lang', 'Langst'], ['fav', 'Favoriet']];
+    const sorts = [['snel', T('Snelst', 'Quickest')], ['lang', T('Langst', 'Longest')], ['fav', T('Favoriet', 'Favourite')]];
     const kaart = r => `
         <a class="card" href="#${esc(r.id)}" style="background:${kleur(r, recepten.indexOf(r))}">
-          <span class="disc">${icoon(r)}${r.favoriet ? `<span class="fav" role="img" aria-label="Favoriet">${svg.hart}</span>` : ''}</span>
+          <span class="disc">${icoon(r)}${r.favoriet ? `<span class="fav" role="img" aria-label="${T('Favoriet', 'Favourite')}">${svg.hart}</span>` : ''}</span>
           <span class="body"><h3>${esc(r.titel)}</h3><span class="meta">${esc(meta(r))}</span></span>
         </a>`;
 
     app.innerHTML = `<main class="wrap">
       <header class="top">
-        <div><span class="kicker">Wat eten we vandaag?</span><h1>Kookboek</h1></div>
-        <a class="pill-dark" href="#boodschappen" aria-label="Boodschappenlijst">${svg.mand}${Object.keys(lijst).length ? ' ' + Object.keys(lijst).length : ''}</a>
+        <div><span class="kicker">${T('Wat eten we vandaag?', 'What are we eating today?')}</span><h1>${T('Kookboek', 'Cookbook')}</h1></div>
+        <div class="top-acties">
+          <a class="pill-dark taal" href="${EN ? '../' : 'en/'}" hreflang="${EN ? 'nl' : 'en'}" lang="${EN ? 'nl' : 'en'}" aria-label="${EN ? 'Nederlands' : 'English'}">${EN ? 'NL' : 'EN'}</a>
+          <a class="pill-dark" href="#boodschappen" aria-label="${T('Boodschappenlijst', 'Shopping list')}">${svg.mand}${Object.keys(lijst).length ? ' ' + Object.keys(lijst).length : ''}</a>
+        </div>
       </header>
-      <label class="search">${svg.zoek}<input id="zoek" type="search" placeholder="Zoek op recept of ingrediënt" aria-label="Zoeken" value="${esc(zoek)}"></label>
+      <label class="search">${svg.zoek}<input id="zoek" type="search" placeholder="${T('Zoek op recept of ingrediënt', 'Search recipes or ingredients')}" aria-label="${T('Zoeken', 'Search')}" value="${esc(zoek)}"></label>
       <div class="balk">
-        ${favs.length ? `<button class="chip hart" data-fav="1" aria-pressed="${favFilter}" aria-label="Alleen favorieten">${svg.hart}<span class="lbl">Favorieten</span></button>` : ''}
+        ${favs.length ? `<button class="chip hart" data-fav="1" aria-pressed="${favFilter}" aria-label="${T('Alleen favorieten', 'Favourites only')}">${svg.hart}<span class="lbl">${T('Favorieten', 'Favourites')}</span></button>` : ''}
         <button class="chip${aantal ? ' aan' : ''}" id="filterknop" aria-expanded="${filtersOpen}" aria-controls="paneel">${svg.filter} Filters${aantal ? ' (' + aantal + ')' : ''}<span class="pijl"></span></button>
-        <select class="sorteer" id="sorteer" aria-label="Sorteren">${sorts.map(([k, l]) => `<option value="${k}"${sort === k ? ' selected' : ''}>${l}</option>`).join('')}</select>
+        <select class="sorteer" id="sorteer" aria-label="${T('Sorteren', 'Sort')}">${sorts.map(([k, l]) => `<option value="${k}"${sort === k ? ' selected' : ''}>${l}</option>`).join('')}</select>
       </div>
       <div class="paneel" id="paneel"${filtersOpen ? '' : ' hidden'}>
         ${CATEGORIEEN.map(c => `<div class="cat"><span class="cat-naam">${c.label}</span>
           <div class="chips" role="group" aria-label="${c.label}">${waarden(c).map(v =>
-            `<button class="chip" data-cat="${c.k}" data-w="${esc(v)}" aria-pressed="${filters[c.k] === v}">${esc(c.toon ? c.toon(v) : cap(v))}</button>`).join('')}</div></div>`).join('')}
+            `<button class="chip" data-cat="${c.k}" data-w="${esc(v)}" aria-pressed="${filters[c.k] === v}">${esc(c.toon ? c.toon(v) : cap(toon(v)))}</button>`).join('')}</div></div>`).join('')}
       </div>
       ${toonFav ? `
       <a class="featured" href="#${esc(favoriet.id)}" style="background:${kleur(favoriet, recepten.indexOf(favoriet))}">
         <span class="disc">${icoon(favoriet)}</span>
-        <span class="body"><span class="label">${svg.hart} ${favs.length > 1 ? 'Favoriet van vandaag' : 'Favoriet'}</span>
+        <span class="body"><span class="label">${svg.hart} ${favs.length > 1 ? T('Favoriet van vandaag', 'Today\'s favourite') : T('Favoriet', 'Favourite')}</span>
           <h2>${esc(favoriet.titel)}</h2>${favoriet.omschrijving ? `<span class="oms-kort">${esc(favoriet.omschrijving)}</span>` : ''}<span class="meta">${esc(meta(favoriet))}</span></span>
       </a>` : ''}
       ${actief || zoek
-        ? `<h2 class="lijstkop">${zichtbaar.length} ${zichtbaar.length === 1 ? 'recept' : 'recepten'}<button id="wisfilters">Wis filters</button></h2>`
-        : `<h2 class="sr">Alle recepten (${recepten.length})</h2>`}
-      ${zichtbaar.length ? `<div class="grid">${zichtbaar.map(kaart).join('')}</div>` : '<p class="empty">Geen recepten gevonden.</p>'}
+        ? `<h2 class="lijstkop">${zichtbaar.length} ${zichtbaar.length === 1 ? T('recept', 'recipe') : T('recepten', 'recipes')}<button id="wisfilters">${T('Wis filters', 'Clear filters')}</button></h2>`
+        : `<h2 class="sr">${T('Alle recepten', 'All recipes')} (${recepten.length})</h2>`}
+      ${zichtbaar.length ? `<div class="grid">${zichtbaar.map(kaart).join('')}</div>` : `<p class="empty">${T('Geen recepten gevonden.', 'No recipes found.')}</p>`}
     </main>`;
 
     const z = document.getElementById('zoek');
@@ -353,22 +372,23 @@
       <div class="r-band" style="background:${bg}">
         <div class="wrap">
           <div class="r-bar">
-            <a class="round" href="#" aria-label="Terug naar overzicht">${svg.terug}</a>
+            <a class="round" href="#" aria-label="${T('Terug naar overzicht', 'Back to overview')}">${svg.terug}</a>
             <div class="r-acties">
               <button class="btn" id="lijstbtn"></button>
-              <button class="btn" id="wake" aria-pressed="${wilWake}">${svg.zon} Scherm aan</button>
+              <button class="btn" id="wake" aria-pressed="${wilWake}">${svg.zon} ${T('Scherm aan', 'Screen on')}</button>
             </div>
           </div>
           <div class="r-title"><span class="disc big">${icoon(r)}</span></div>
           <h1>${esc(r.titel)}</h1>
           ${r.omschrijving ? `<p class="oms">${esc(r.omschrijving)}</p>` : ''}
+          ${r.nl ? '<p class="oms">This recipe is only available in Dutch for now.</p>' : ''}
           <div class="chips-static">
             <span>${tijdLabel(r.tijd)}</span>
-            ${r.moeite ? `<span>${esc(r.moeite)}</span>` : ''}
-            ${r.favoriet ? `<span>${svg.hart} Favoriet</span>` : ''}
-            ${[r.keuken, ...r.maaltijd, r.dieet, r.bereiding].map(t => `<span>${esc(t)}</span>`).join('')}
+            ${r.moeite ? `<span>${esc(toon(r.moeite))}</span>` : ''}
+            ${r.favoriet ? `<span>${svg.hart} ${T('Favoriet', 'Favourite')}</span>` : ''}
+            ${[r.keuken, ...[...r.maaltijd, r.dieet, r.bereiding].map(toon)].map(t => `<span>${esc(t)}</span>`).join('')}
           </div>
-          ${r.werk ? `<div class="werk">${[['snijwerk', 'Snijwerk'], ['pan', 'Aan de pan'], ['afwas', 'Afwas']].map(([k, l]) => `<span>${l} <b aria-label="${esc(r.werk[k])}">${'●'.repeat(['weinig', 'gemiddeld', 'veel'].indexOf(r.werk[k]) + 1)}<i>${'●'.repeat(2 - ['weinig', 'gemiddeld', 'veel'].indexOf(r.werk[k]))}</i></b></span>`).join('')}</div>` : ''}
+          ${r.werk ? `<div class="werk">${[['snijwerk', T('Snijwerk', 'Chopping')], ['pan', T('Aan de pan', 'At the stove')], ['afwas', T('Afwas', 'Washing up')]].map(([k, l]) => `<span>${l} <b aria-label="${esc(toon(r.werk[k]))}">${'●'.repeat(['weinig', 'gemiddeld', 'veel'].indexOf(r.werk[k]) + 1)}<i>${'●'.repeat(2 - ['weinig', 'gemiddeld', 'veel'].indexOf(r.werk[k]))}</i></b></span>`).join('')}</div>` : ''}
           <span class="msg" id="msg" aria-live="polite"></span>
         </div>
       </div>
@@ -376,21 +396,21 @@
         <main class="wrap">
           <section class="ingr">
             <div class="sec-head">
-              <h2>Ingrediënten</h2>
+              <h2>${T('Ingrediënten', 'Ingredients')}</h2>
               <div class="stepper">
-                <button id="min" aria-label="Minder personen">−</button>
-                <output>${s.personen} pers.</output>
-                <button id="plus" aria-label="Meer personen">+</button>
+                <button id="min" aria-label="${T('Minder personen', 'Fewer people')}">−</button>
+                <output>${pers(s.personen)}</output>
+                <button id="plus" aria-label="${T('Meer personen', 'More people')}">+</button>
               </div>
             </div>
-            ${r.hoeveelhedenGeschat ? '<p class="note">Hoeveelheden zijn geschat.</p>' : ''}
-            ${f !== 1 ? '<p class="note">Omgerekend en afgerond, proef en pas aan.</p>' : ''}
+            ${r.hoeveelhedenGeschat ? `<p class="note">${T('Hoeveelheden zijn geschat.', 'Quantities are estimates.')}</p>` : ''}
+            ${f !== 1 ? `<p class="note">${T('Omgerekend en afgerond, proef en pas aan.', 'Scaled and rounded, so taste and adjust.')}</p>` : ''}
             ${ingr}
           </section>
           <div>
             <section class="steps" style="--hl:${hl}">
-              <div class="sec-head"><h2>Bereiding</h2><button class="btn" id="reset">Opnieuw</button></div>
-              <p class="hint">Tik op een stap als hij klaar is. Je voortgang blijft bewaard.</p>
+              <div class="sec-head"><h2>${T('Bereiding', 'Method')}</h2><button class="btn" id="reset">${T('Opnieuw', 'Reset')}</button></div>
+              <p class="hint">${T('Tik op een stap als hij klaar is. Je voortgang blijft bewaard.', 'Tap a step when it is done. Your progress is saved.')}</p>
               <ol>${r.stappen.map((st, i) => `
                 <li class="${s.stap.has(i) ? 'done' : ''} ${i === huidige ? 'current' : ''}">
                   <button data-s="${i}" aria-pressed="${s.stap.has(i)}"><span class="num">${i + 1}</span><span>${esc(st)}</span></button>
@@ -414,15 +434,15 @@
     // Eerste tik zet het recept op het lijstje en blijft hier; daarna opent de knop het lijstje.
     const lb = document.getElementById('lijstbtn');
     const toonLijstKnop = () => {
-      lb.innerHTML = lijst[r.id] ? svg.vink + ' Op lijstje' : svg.mand + ' Boodschappen';
-      lb.setAttribute('aria-label', lijst[r.id] ? 'Op je lijstje, open boodschappenlijst' : 'Zet op boodschappenlijst');
+      lb.innerHTML = lijst[r.id] ? svg.vink + T(' Op lijstje', ' On list') : svg.mand + T(' Boodschappen', ' Shopping');
+      lb.setAttribute('aria-label', lijst[r.id] ? T('Op je lijstje, open boodschappenlijst', 'On your list, open shopping list') : T('Zet op boodschappenlijst', 'Add to shopping list'));
     };
     toonLijstKnop();
     lb.onclick = () => {
       if (lijst[r.id]) { location.hash = '#boodschappen'; return; }
       lijst[r.id] = { p: s.personen, k: {} };
       bewaarLijst(); toonLijstKnop();
-      document.getElementById('msg').innerHTML = `Op je lijstje gezet (${s.personen} pers.). <a href="#boodschappen">Bekijk lijstje</a>`;
+      document.getElementById('msg').innerHTML = T(`Op je lijstje gezet (${pers(s.personen)}). <a href="#boodschappen">Bekijk lijstje</a>`, `Added to your list (${pers(s.personen)}). <a href="#boodschappen">View list</a>`);
     };
     app.querySelectorAll('.ingr input').forEach(cb => cb.onchange = () => {
       const i = +cb.dataset.i; cb.checked ? s.ingr.add(i) : s.ingr.delete(i);
@@ -439,9 +459,10 @@
   // ---------- Boodschappenlijst ----------
   const SOORTEN = ['groente & fruit', 'vlees, vis & vega', 'zuivel & eieren', 'brood & deeg', 'pasta, rijst & granen', 'conserven & potten', 'sauzen & olie', 'kruiden & specerijen', 'overig houdbaar'];
   const productNaam = it => (it.p || it.n.replace(/\s*\(.*?\)/g, '').split(',')[0]).trim().toLowerCase();
-  const MEERVOUD = { teentje: 'teentjes', rol: 'rollen', zak: 'zakken', pakje: 'pakjes', handje: 'handjes' };
   const eenheid = u => (u && u.startsWith('teentje') ? 'teentje' : (u || ''));
-  const optioneel = (g, it) => /optioneel/i.test(g.groep || '') || /optioneel/i.test(it.n);
+  const optioneel = (g, it) => /optioneel|optional/i.test(g.groep || '') || /optioneel|optional/i.test(it.n);
+  // Naam van een keuze (bijv. Saus) om te tonen; de Nederlandse naam is de sleutel in het lijstje.
+  const keuzeNaam = (r, k) => (r.ingredienten.find(g => g.keuze === k) || {}).keuzeNaam || k;
 
   // Per recept: welke groep van een keuze (bijv. saus A of B) is gekozen
   function opties(r) {
@@ -459,7 +480,8 @@
         if (g.keuze && o[g.keuze][(st.k && st.k[g.keuze]) || 0] !== g.groep) return;
         g.items.forEach(it => {
           if (it.s == null) return;
-          const naam = productNaam(it), opt = optioneel(g, it), key = it.s + '|' + naam + '|' + opt;
+          // Sleutel met de Nederlandse productnaam (k in de Engelse versie), zodat vinkjes in beide talen gelden.
+          const naam = productNaam(it), opt = optioneel(g, it), key = it.s + '|' + (it.k || naam) + '|' + opt;
           const e = m.get(key) || { key, naam, s: it.s, opt, delen: new Map() };
           if (it.huis === false) e.huis = false; else if (it.huis === true && e.huis !== false) e.huis = true;
           const v = schaal(it.q, it.u, f);
@@ -468,7 +490,7 @@
         });
       });
     }
-    const alle = [...m.values()].sort((a, b) => a.naam.localeCompare(b.naam, 'nl'));
+    const alle = [...m.values()].sort((a, b) => a.naam.localeCompare(b.naam, LOC));
     return {
       groepen: SOORTEN.map(s => ({ soort: s, regels: alle.filter(e => e.s === s && !inHuis(e)) })).filter(g => g.regels.length),
       huis: alle.filter(inHuis)
@@ -489,9 +511,9 @@
     for (const [u, v] of d) {
       if (['g', 'ml', 'el', 'tl'].includes(u)) continue;
       const n = Math.ceil(v - 1e-9);
-      delen.push(n + (u ? ' ' + (n > 1 && MEERVOUD[u] ? MEERVOUD[u] : u) : ''));
+      delen.push(n + (u ? ' ' + eenheidTekst(u, n) : ''));
     }
-    return [delen.join(' + '), e.naam].filter(Boolean).join(' ') + (e.opt ? ' (optioneel)' : '');
+    return [delen.join(' + '), e.naam].filter(Boolean).join(' ') + (e.opt ? T(' (optioneel)', ' (optional)') : '');
   }
   // Eén item per regel, zonder streepjes of lege regels: in Keep (+ > Checkboxes) of Notities (checklist)
   // wordt elke regel dan een afvinkbaar item. Alleen wat nog niet is afgevinkt.
@@ -501,24 +523,24 @@
     SOORTEN.forEach(soort => {
       const g = groepen.find(x => x.soort === soort);
       const open = [...(g ? g.regels.filter(e => !afgevinkt.has(e.key)) : []), ...huis.filter(e => e.s === soort && nodig.has(e.key))];
-      if (open.length) uit.push(soort.toUpperCase(), ...open.map(regelTekst));
+      if (open.length) uit.push(toon(soort).toUpperCase(), ...open.map(regelTekst));
     });
     return uit.join('\n');
   }
   // Deelt via het deelmenu (Keep, Notities, ...); anders downloaden als .txt
   async function deelLijst() {
     const namen = Object.keys(lijst).map(id => (recepten.find(x => x.id === id) || {}).titel).filter(Boolean);
-    const tekst = lijstTekst(), titel = 'Boodschappen' + (namen.length ? ': ' + namen.join(', ') : '');
+    const tekst = lijstTekst(), titel = T('Boodschappen', 'Shopping') + (namen.length ? ': ' + namen.join(', ') : '');
     if (navigator.share) {
       try { await navigator.share({ title: titel, text: tekst }); return ''; }
       catch (e) { if (e && e.name === 'AbortError') return ''; }
     }
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([tekst], { type: 'text/plain;charset=utf-8' }));
-    a.download = 'Boodschappen.txt';
+    a.download = T('Boodschappen.txt', 'Shopping.txt');
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    return 'Lijst gedownload (.txt).';
+    return T('Lijst gedownload (.txt).', 'List downloaded (.txt).');
   }
 
   let wisBevestig = false;
@@ -528,38 +550,38 @@
     const terug = recepten.some(r => r.id === vorigRecept) ? vorigRecept : '';
     app.innerHTML = `<main class="wrap">
       <div class="r-bar" style="margin-bottom:16px">
-        <a class="round" href="#${esc(terug)}" aria-label="${terug ? 'Terug naar recept' : 'Terug naar overzicht'}">${svg.terug}</a>
+        <a class="round" href="#${esc(terug)}" aria-label="${terug ? T('Terug naar recept', 'Back to recipe') : T('Terug naar overzicht', 'Back to overview')}">${svg.terug}</a>
       </div>
       <header class="top">
-        <div><span class="kicker">Wat hebben we nodig?</span><h1>Boodschappen</h1></div>
+        <div><span class="kicker">${T('Wat hebben we nodig?', 'What do we need?')}</span><h1>${T('Boodschappen', 'Shopping')}</h1></div>
       </header>
       ${ids.length ? `
       ${ids.map(id => {
         const r = recepten.find(x => x.id === id), st = lijst[id], o = opties(r);
         return `<div class="lrecept" data-id="${esc(id)}">
-          <div class="lkop"><span class="lnaam">${esc(r.titel)}</span><button class="btn" data-act="del" aria-label="Verwijder van lijstje">✕</button></div>
+          <div class="lkop"><span class="lnaam">${esc(r.titel)}</span><button class="btn" data-act="del" aria-label="${T('Verwijder van lijstje', 'Remove from list')}">✕</button></div>
           <div class="lrij">
-            <div class="stepper"><button data-act="min" aria-label="Minder personen">−</button><output>${st.p} pers.</output><button data-act="plus" aria-label="Meer personen">+</button></div>
-            ${Object.entries(o).map(([label, namen]) => `<button class="btn" data-keuze="${esc(label)}" title="Wissel">${esc(label)}: ${esc(namen[(st.k && st.k[label]) || 0])} ⇄</button>`).join('')}
+            <div class="stepper"><button data-act="min" aria-label="${T('Minder personen', 'Fewer people')}">−</button><output>${pers(st.p)}</output><button data-act="plus" aria-label="${T('Meer personen', 'More people')}">+</button></div>
+            ${Object.entries(o).map(([label, namen]) => `<button class="btn" data-keuze="${esc(label)}" title="${T('Wissel', 'Switch')}">${esc(keuzeNaam(r, label))}: ${esc(namen[(st.k && st.k[label]) || 0])} ⇄</button>`).join('')}
           </div>
         </div>`;
       }).join('')}
       <div class="lacties">
-        <button class="btn" id="deel">Exporteren</button>
-        <button class="btn" id="kopieer">Kopieer</button>
-        <button class="btn" id="wis">${wisBevestig ? 'Zeker weten?' : 'Leegmaken'}</button>
+        <button class="btn" id="deel">${T('Exporteren', 'Export')}</button>
+        <button class="btn" id="kopieer">${T('Kopieer', 'Copy')}</button>
+        <button class="btn" id="wis">${wisBevestig ? T('Zeker weten?', 'Are you sure?') : T('Leegmaken', 'Clear list')}</button>
       </div>
       <span class="msg" id="lmsg" aria-live="polite"></span>
       <section class="ingr">
-        ${groepen.map(g => `<div class="group">${esc(cap(g.soort))}</div>
+        ${groepen.map(g => `<div class="group">${esc(cap(toon(g.soort)))}</div>
           <ul>${g.regels.map(e => `<li class="${afgevinkt.has(e.key) ? 'done' : ''}"><label>
             <input type="checkbox" data-k="${esc(e.key)}" ${afgevinkt.has(e.key) ? 'checked' : ''}>
             <span class="txt">${esc(regelTekst(e))}</span></label></li>`).join('')}</ul>`).join('')}
-        ${huis.length ? `<div class="group">Waarschijnlijk in huis</div>
-          <p class="hint">Tik aan wat je toch moet kopen; dat gaat mee bij exporteren en kopiëren.</p>
-          <div class="huis" role="group" aria-label="Waarschijnlijk in huis">${huis.map(e =>
+        ${huis.length ? `<div class="group">${T('Waarschijnlijk in huis', 'Probably at home')}</div>
+          <p class="hint">${T('Tik aan wat je toch moet kopen; dat gaat mee bij exporteren en kopiëren.', 'Tap what you still need to buy; it is included when you export or copy.')}</p>
+          <div class="huis" role="group" aria-label="${T('Waarschijnlijk in huis', 'Probably at home')}">${huis.map(e =>
             `<button class="chip" data-nodig="${esc(e.key)}" aria-pressed="${nodig.has(e.key)}">${nodig.has(e.key) ? svg.mand : ''}${esc(e.naam)}</button>`).join('')}</div>` : ''}
-      </section>` : '<p class="empty">Nog niets op je lijstje. Open een recept en tik op "Boodschappen".</p>'}
+      </section>` : `<p class="empty">${T('Nog niets op je lijstje. Open een recept en tik op "Boodschappen".', 'Nothing on your list yet. Open a recipe and tap "Shopping".')}</p>`}
     </main>`;
     if (!ids.length) return;
     const msg = t => { document.getElementById('lmsg').textContent = t; };
@@ -589,10 +611,10 @@
     });
     document.getElementById('kopieer').onclick = async () => {
       const t = lijstTekst();
-      try { await navigator.clipboard.writeText(t); msg('Gekopieerd.'); }
+      try { await navigator.clipboard.writeText(t); msg(T('Gekopieerd.', 'Copied.')); }
       catch {
         const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); msg('Gekopieerd.'); } catch { msg('Kopiëren lukt niet in deze browser.'); }
+        try { document.execCommand('copy'); msg(T('Gekopieerd.', 'Copied.')); } catch { msg(T('Kopiëren lukt niet in deze browser.', 'Copying does not work in this browser.')); }
         ta.remove();
       }
     };
@@ -610,10 +632,10 @@
       if (!('wakeLock' in navigator)) throw new Error();
       wakeLock = await navigator.wakeLock.request('screen'); wilWake = true;
       wakeLock.addEventListener('release', () => { wakeLock = null; });
-      btn.setAttribute('aria-pressed', 'true'); msg.textContent = 'Scherm blijft aan.';
+      btn.setAttribute('aria-pressed', 'true'); msg.textContent = T('Scherm blijft aan.', 'Screen stays on.');
     } catch {
       wakeLock = null; wilWake = false; btn.setAttribute('aria-pressed', 'false');
-      msg.textContent = 'Scherm aan houden werkt niet in deze browser.';
+      msg.textContent = T('Scherm aan houden werkt niet in deze browser.', 'Keeping the screen on does not work in this browser.');
     }
   }
   // Wake lock vervalt als de tab verborgen wordt; vraag hem opnieuw aan bij terugkeer.
@@ -633,13 +655,14 @@
     opOverzicht = !r && id !== 'boodschappen';
     vorigRecept = huidigRecept; huidigRecept = r ? r.id : '';
     wisBevestig = false;
-    if (id === 'boodschappen') document.title = 'Boodschappen · Kookboek';
-    else document.title = r ? r.titel + ' · Kookboek' : 'Kookboek';
+    const naam = T('Kookboek', 'Cookbook');
+    if (id === 'boodschappen') document.title = T('Boodschappen', 'Shopping') + ' · ' + naam;
+    else document.title = r ? r.titel + ' · ' + naam : naam;
     id === 'boodschappen' ? renderLijst() : r ? renderRecept(r) : renderOverzicht();
     window.scrollTo(0, opOverzicht ? overzichtY : 0);
   }
 
-  fetch('recepten.json', { cache: 'no-cache' })
+  fetch(BASE + T('recepten.json', 'recepten.en.json'), { cache: 'no-cache' })
     .then(res => { if (!res.ok) throw new Error(res.status); return res.json(); })
     .then(data => {
       recepten = data.recepten; route(); window.addEventListener('hashchange', route);
@@ -647,10 +670,10 @@
       const r = recepten.find(x => x.id === huidigRecept);
       if (r && getStaat(r).stap.size) { const li = app.querySelector('.steps li.current'); if (li) li.scrollIntoView({ block: 'center' }); }
     })
-    .catch(() => { app.innerHTML = '<main class="wrap"><p class="empty">De recepten konden niet geladen worden.</p></main>'; });
+    .catch(() => { app.innerHTML = `<main class="wrap"><p class="empty">${T('De recepten konden niet geladen worden.', 'The recipes could not be loaded.')}</p></main>`; });
 
   // Offline: de service worker bewaart de site en de recepten op het toestel.
-  if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register(BASE + 'sw.js').catch(() => {}));
 })();
 </script>
 </body>

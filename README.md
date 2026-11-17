@@ -4,10 +4,10 @@ Mijn persoonlijke receptenverzameling als kleine website, gehost op GitHub Pages
 
 ## Opbouw
 
-- `recepten/` – één JSON-bestand per recept. De bestandsnaam is het `id` en het anker in de URL (`#plaattaart-rode-pesto`).
+- `recepten/` – één JSON-bestand per recept. De bestandsnaam is het `id` en het anker in de URL (`#plaattaart-rode-pesto`). Daarnaast `<id>.en.json` met de Engelse tekst (zie Engelse versie).
 - `site/` – de website zelf (`index.html`) en `site/iconen/` met één icoon per recept (zie ICONEN.md).
 - `site/manifest.webmanifest`, `site/sw.js` en `site/app/` – maken de site installeerbaar als app en offline bruikbaar (zie hieronder).
-- `scripts/build.mjs` – controleert de recepten en voegt ze samen tot `_site/recepten.json`.
+- `scripts/build.mjs` – controleert de recepten en voegt ze samen tot `_site/recepten.json`, en voor de Engelse site tot `_site/recepten.en.json` en `_site/en/`.
 - `.github/workflows/pages.yml` – bouwt en publiceert bij elke push naar `main`.
 
 ## Lokaal bekijken
@@ -50,6 +50,35 @@ npx serve _site
 `omschrijving` is optioneel: 1–2 zinnen over het gerecht en wanneer het past. Op de receptpagina staat hij onder de titel, bij "Favoriet van vandaag" als één regel, en het zoekveld zoekt erin. Is hij leeg of ontbreekt hij, dan wordt niets getoond.
 
 Eén hoeveelheid per regel: `q` is een getal (of `null`), `u` de eenheid, `n` de omschrijving. Zo kan de site omrekenen naar meer of minder personen.
+
+`u` is een van `g`, `ml`, `el`, `tl`, `teentje`, `rol`, `zak`, `pakje`, `handje`, `blokje`, of `null` (stuks of geen hoeveelheid). De site vertaalt deze eenheden; een nieuwe eenheid moet ook in `EENHEDEN` in `site/index.html` en `scripts/build.mjs`.
+
+## Engelse versie
+
+De site is ook in het Engels: `/en/` (bijv. `/en/#plaattaart-rode-pesto`). Bovenaan het overzicht wisselt de knop EN/NL van taal. Het boodschappenlijstje, de vinkjes en de voortgang zijn in beide talen hetzelfde.
+
+Per recept staat naast `<id>.json` een bestand `<id>.en.json` met alleen de Engelse tekst, in precies dezelfde opbouw (zelfde groepen, ingrediënten in dezelfde volgorde, zelfde aantal stappen en tips). Hoeveelheden, eenheden, categorieën, kleur en `s` komen uit het Nederlandse bestand.
+
+```json
+{
+  "titel": "Puff pastry tart with red pesto, roasted vegetables and feta",
+  "omschrijving": "…",               // alleen als het Nederlandse recept er een heeft
+  "keuken": "Italian",               // dezelfde Nederlandse keuken heeft overal dezelfde Engelse naam
+  "ingredienten": [
+    { "groep": "Base", "items": [ { "n": "puff pastry (approx. 275 g)" } ] },
+    { "groep": "Sauce A (homemade)", "keuze": "Sauce", "items": [ { "n": "small onion", "p": "onion" } ] }
+  ],
+  "stappen": ["Preheat the oven to 200 °C (fan oven 180 °C).", "…"],
+  "tips": ["…"]
+}
+```
+
+- Brits Engels, metrische eenheden. Eenheden staan niet in de tekst van `n` (die komen uit `u`); in stappen en tips gebruik je tbsp en tsp.
+- `groep` is `null` waar de Nederlandse groep `null` is; `keuze` alleen waar het Nederlandse recept er een heeft.
+- `p` (optioneel) is de naam op het boodschappenlijstje, zoals in het Nederlands.
+- Staat er "optioneel" in de Nederlandse groep of omschrijving, dan moet er "optional" in de Engelse staan (en andersom).
+- `node scripts/build.mjs` controleert dit. Ontbreekt `<id>.en.json`, dan geeft de build een waarschuwing en toont de Engelse site het recept in het Nederlands.
+- De Engelse namen van de vaste categorieën (maaltijd, dieet, bereiding, moeite, tijd, soort) staan in `WAARDEN_EN` in `site/index.html`.
 
 ## Categorieën
 
@@ -99,7 +128,7 @@ Onderaan staat "Waarschijnlijk in huis": kruiden & specerijen, sauzen & olie en 
 
 ## Overzicht
 
-- Bovenaan een zoekveld (zoekt ook in de omschrijving), daaronder één regel met favorieten (hartje), Filters (klapt de categorieën open) en sorteren (Snelst, Langst, Favoriet). De filters worden automatisch opgebouwd uit de categorieën in de recepten. Met een filter of zoekterm staat er "n recepten · Wis filters".
+- Rechtsboven de taalknop (EN/NL) en het boodschappenlijstje. Daaronder een zoekveld (zoekt ook in de omschrijving), daaronder één regel met favorieten (hartje), Filters (klapt de categorieën open) en sorteren (Snelst, Langst, Favoriet). De filters worden automatisch opgebouwd uit de categorieën in de recepten. Met een filter of zoekterm staat er "n recepten · Wis filters".
 - "Favoriet van vandaag" is een lage kaart boven de lijst; hij wisselt per dag en verdwijnt bij filteren of zoeken.
 - Receptkaartjes zijn liggend: icoon links, titel en tijd · moeite · keuken rechts. Eén per regel op de telefoon, twee naast elkaar op een breed scherm. Favorieten hebben een hartje op het icoon.
 
@@ -107,5 +136,5 @@ Onderaan staat "Waarschijnlijk in huis": kruiden & specerijen, sauzen & olie en 
 
 - De site is te installeren op het startscherm (Chrome op Android: menu > "App installeren" of "Toevoegen aan startscherm"). Het app-icoon staat in `site/app/` (`icoon.svg` is de bron van de png's).
 - `site/sw.js` is de service worker. De build vult daarin de lijst met bestanden en een versie in; bij elke wijziging aan de site of de recepten verandert die versie en wordt alles opnieuw opgehaald. Nieuwe bestanden in `site/` gaan vanzelf mee.
-- Pagina en recepten komen eerst van het netwerk; na 3 seconden of zonder verbinding uit de opslag op het toestel. Iconen en het lettertype komen altijd uit die opslag.
+- Beide talen worden bewaard (`./` en `en/`, met `recepten.json` en `recepten.en.json`). Pagina en recepten komen eerst van het netwerk; na 3 seconden of zonder verbinding uit de opslag op het toestel. Iconen en het lettertype komen altijd uit die opslag.
 - Voortgang: het aantal personen en de afgevinkte ingrediënten en stappen per recept worden in de browser bewaard. De vinkjes vervallen na 12 uur, het aantal personen blijft.

@@ -10,6 +10,7 @@ Er zijn twee werkplekken:
 
 - Noem nergens een bron (geen website, auteur of link), ook niet in tips, stappen of commentaar. Als iets uit een link komt, neem alleen de inhoud over.
 - Recepten toevoegen of wijzigen: alleen in `recepten/<id>.json`, volgens het formaat in README.md. Nederlands, metrische eenheden, standaard 2 personen.
+- Schrijf bij elk nieuw of gewijzigd recept ook de Engelse versie `recepten/<id>.en.json` (zie "Engelse versie" in README.md) en houd die gelijk aan het Nederlandse recept.
 - Kies een `kleur` en wissel die af met de bestaande recepten.
 - Tips: een korte lijst (maximaal 4) met praktische tips voor wie het recept maakt. Geen persoonlijke opmerkingen ("nog niet gemaakt", "heel lekker"), want de site wordt gedeeld.
 - Vul bij elk recept `werk` in (snijwerk, pan, afwas) en laat `moeite` daarbij passen (zie README.md).

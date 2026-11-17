@@ -1,0 +1,115 @@
+{
+  "titel": "Smoky wraps with vegetarian mince and vegetables",
+  "keuken": "Mexican",
+  "ingredienten": [
+    {
+      "groep": "Vegetables",
+      "items": [
+        {
+          "n": "sweet potato, 1 cm cubes"
+        },
+        {
+          "n": "small onion",
+          "p": "onion"
+        },
+        {
+          "n": "garlic"
+        },
+        {
+          "n": "small leek (approx. 100 g)",
+          "p": "leek"
+        },
+        {
+          "n": "red pepper"
+        },
+        {
+          "n": "green beans"
+        }
+      ]
+    },
+    {
+      "groep": "Filling",
+      "items": [
+        {
+          "n": "vegetarian mince"
+        },
+        {
+          "n": "tomato purée"
+        },
+        {
+          "n": "passata"
+        },
+        {
+          "n": "kidney beans"
+        },
+        {
+          "n": "sweetcorn"
+        }
+      ]
+    },
+    {
+      "groep": "Seasoning",
+      "items": [
+        {
+          "n": "smoked paprika"
+        },
+        {
+          "n": "cumin"
+        },
+        {
+          "n": "oregano"
+        },
+        {
+          "n": "brown sugar"
+        },
+        {
+          "n": "lime juice"
+        },
+        {
+          "n": "salt"
+        }
+      ]
+    },
+    {
+      "groep": "Wraps",
+      "items": [
+        {
+          "n": "tortilla wraps"
+        }
+      ]
+    },
+    {
+      "groep": "Topping",
+      "items": [
+        {
+          "n": "crème fraîche"
+        },
+        {
+          "n": "chipotle, finely diced",
+          "p": "chipotle"
+        }
+      ]
+    },
+    {
+      "groep": "Other",
+      "items": [
+        {
+          "n": "oil"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Fry the sweet potato in 2 tbsp oil for 12–15 min with the lid on, over medium-high heat. Stir regularly. Set aside.",
+    "Fry the onion, leek, pepper and green beans in 1 tbsp oil (8 min). Add the garlic for the last minute.",
+    "Push the vegetables to one side and fry the mince. Add the tomato purée and spices and fry until the mince browns.",
+    "Stir in the passata and sugar. Simmer uncovered until the sauce is thick.",
+    "Stir in the kidney beans, sweetcorn and sweet potato and heat for 3 min. Season with lime juice and salt.",
+    "Warm the wraps briefly. Top with the filling, a spoonful of crème fraîche and chipotle. Roll up."
+  ],
+  "tips": [
+    "Keep the sauce mild, as the chipotle already adds heat and smokiness.",
+    "More depth: add a splash of adobo sauce from the chipotle tin to the sauce.",
+    "Leftover filling keeps for 3 days in the fridge and can be frozen."
+  ]
+}

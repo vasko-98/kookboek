@@ -1,0 +1,119 @@
+{
+  "titel": "Mexican bake with nachos and cheese",
+  "keuken": "Mexican",
+  "ingredienten": [
+    {
+      "groep": "Filling",
+      "items": [
+        {
+          "n": "beef mince"
+        },
+        {
+          "n": "sweet potato, 1 cm cubes"
+        },
+        {
+          "n": "small onion",
+          "p": "onion"
+        },
+        {
+          "n": "garlic"
+        },
+        {
+          "n": "red pepper"
+        },
+        {
+          "n": "courgette"
+        },
+        {
+          "n": "sweetcorn"
+        },
+        {
+          "n": "kidney beans (drained)"
+        },
+        {
+          "n": "olive oil",
+          "p": "oil"
+        }
+      ]
+    },
+    {
+      "groep": "Sauce A (homemade)",
+      "keuze": "Sauce",
+      "items": [
+        {
+          "n": "passata"
+        },
+        {
+          "n": "tomato purée"
+        },
+        {
+          "n": "cumin"
+        },
+        {
+          "n": "smoked paprika"
+        },
+        {
+          "n": "chilli powder"
+        },
+        {
+          "n": "oregano"
+        },
+        {
+          "n": "salt"
+        },
+        {
+          "n": "water"
+        }
+      ]
+    },
+    {
+      "groep": "Sauce B (ready-made)",
+      "keuze": "Sauce",
+      "items": [
+        {
+          "n": "tomato salsa or taco sauce"
+        },
+        {
+          "n": "taco seasoning (optional)"
+        }
+      ]
+    },
+    {
+      "groep": "On top",
+      "items": [
+        {
+          "n": "nachos"
+        },
+        {
+          "n": "grated cheese (cheddar or mature Gouda)"
+        }
+      ]
+    },
+    {
+      "groep": "To serve",
+      "items": [
+        {
+          "n": "sour cream"
+        },
+        {
+          "n": "coriander or spring onion"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Preheat the oven to 200 °C. Chop the vegetables.",
+    "Brown the mince in the oil. Add the onion and garlic and fry for 2 min.",
+    "Add the sweet potato, pepper and courgette and fry for 3 min.",
+    "For sauce A: first stir in the spices (1 min), then add the passata, tomato purée and water. For sauce B: add the salsa with a splash of water.",
+    "Cover and simmer for 12 min until the sweet potato is almost tender.",
+    "Stir in the sweetcorn and beans and heat for 2 min. Season with salt and pepper.",
+    "Spoon everything into an ovenproof dish, scatter the nachos over the top and sprinkle with the cheese.",
+    "Bake for 10–12 min until the cheese has melted. Leave to rest for 3 min and serve with sour cream and coriander."
+  ],
+  "tips": [
+    "Choose sauce A or B, not both.",
+    "Vegetarian: replace the mince with extra beans and sweetcorn. Spicier: add jalapeños or chipotle.",
+    "Make sure the nachos do not burn."
+  ]
+}

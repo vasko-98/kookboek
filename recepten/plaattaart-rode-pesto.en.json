@@ -1,0 +1,65 @@
+{
+  "titel": "Puff pastry tart with red pesto, roasted vegetables and feta",
+  "keuken": "Italian",
+  "ingredienten": [
+    {
+      "groep": "Base",
+      "items": [
+        {
+          "n": "puff pastry (approx. 275 g)"
+        }
+      ]
+    },
+    {
+      "groep": "Vegetables",
+      "items": [
+        {
+          "n": "roasting vegetables (sweet potato, broccoli, pepper)"
+        },
+        {
+          "n": "olive oil",
+          "p": "oil"
+        },
+        {
+          "n": "pepper"
+        },
+        {
+          "n": "chilli flakes (if you like)"
+        }
+      ]
+    },
+    {
+      "groep": "Topping",
+      "items": [
+        {
+          "n": "red pesto"
+        },
+        {
+          "n": "feta"
+        }
+      ]
+    },
+    {
+      "groep": "Garnish (optional)",
+      "items": [
+        {
+          "n": "rocket"
+        },
+        {
+          "n": "pine nuts"
+        }
+      ]
+    }
+  ],
+  "stappen": [
+    "Preheat the oven to 200 °C (fan oven 180 °C).",
+    "Toss the vegetables with the oil and pepper. Roast them on a baking tray for 10 min.",
+    "Unroll the puff pastry onto baking paper and prick it all over with a fork. Leave a 2 cm border.",
+    "Spread the pesto over the pastry, inside the border.",
+    "Spread the vegetables over the pesto and crumble the feta on top.",
+    "Bake for 20–25 min until the edge is golden brown. Garnish with rocket and pine nuts."
+  ],
+  "tips": [
+    "Roast the vegetables first, so the base does not go soggy."
+  ]
+}
