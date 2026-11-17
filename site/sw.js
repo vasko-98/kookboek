@@ -46,7 +46,9 @@ self.addEventListener('fetch', e => {
   const url = new URL(req.url);
   if (/^fonts\.(googleapis|gstatic)\.com$/.test(url.hostname)) { e.respondWith(cacheEerst(req, FONTS)); return; }
   if (url.origin !== location.origin) return;
-  if (req.mode === 'navigate') e.respondWith(netwerkEerst(req, './'));
-  else if (url.pathname.endsWith('/recepten.json')) e.respondWith(netwerkEerst(req, 'recepten.json'));
+  // Twee talen: ./ (Nederlands) en en/ (Engels), elk met een eigen receptenbestand.
+  const en = /\/en\/(index\.html)?$/.test(url.pathname);
+  if (req.mode === 'navigate') e.respondWith(netwerkEerst(req, en ? 'en/' : './'));
+  else if (/\/recepten(\.en)?\.json$/.test(url.pathname)) e.respondWith(netwerkEerst(req, url.pathname.endsWith('.en.json') ? 'recepten.en.json' : 'recepten.json'));
   else e.respondWith(cacheEerst(req, CACHE));
 });
