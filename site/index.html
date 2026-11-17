@@ -139,16 +139,56 @@
   .ingr input { width: 20px; height: 20px; accent-color: var(--ink); flex: none; margin: 0; }
   .ingr li.done label { background: var(--salie); }
   .ingr li.done .txt { text-decoration: line-through; }
-  .steps li button { width: 100%; text-align: left; display: flex; gap: 14px; align-items: flex-start; padding: 12px; border: 2px solid transparent; border-radius: 16px; background: transparent; font-size: 17px; line-height: 1.5; }
+  .steps li > button { width: 100%; text-align: left; display: flex; gap: 14px; align-items: flex-start; padding: 12px; border: 2px solid transparent; border-radius: 16px; background: transparent; font-size: 17px; line-height: 1.5; }
   .num { flex: none; width: 36px; height: 36px; border-radius: 50%; border: var(--line); display: grid; place-items: center; font-weight: 800; }
-  .steps li.current button { background: var(--hl, var(--mosterd)); border-color: var(--ink); }
+  .steps li.current > button { background: var(--hl, var(--mosterd)); border-color: var(--ink); }
   .steps li.current .num { background: var(--ink); color: var(--cream); }
-  .steps li.done button { opacity: .5; }
+  .steps li.done > button { opacity: .5; }
   .steps li.done .num { background: var(--ink); color: var(--cream); }
   .hint { font-size: 14px; color: var(--muted); margin: -4px 0 10px; }
   .tip { margin-top: 20px; background: var(--lila); border: var(--line); border-radius: 18px; padding: 16px; font-size: 16px; line-height: 1.5; }
   .tip strong { display: block; margin-bottom: 6px; }
   .tip ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+  .btn.donker { background: var(--ink); color: var(--cream); }
+  .kookknop { text-decoration: none; width: 100%; justify-content: center; min-height: 52px; font-size: 17px; margin-bottom: 12px; }
+
+  /* ---------- Timers ---------- */
+  body { padding-bottom: var(--tb, 0px); }
+  .tchips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .steps li .tchips { padding: 0 12px 8px 62px; }
+  .tchip { min-height: 40px; border-radius: 999px; border: var(--line); background: var(--white); padding: 0 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
+  .tchip[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+  .tchip.klaar { background: var(--tomaat); color: var(--ink); }
+  .timers { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: var(--ink); color: var(--cream); border-radius: 20px 20px 0 0; padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); }
+  .timers[hidden] { display: none; }
+  .t-rijen { display: flex; flex-direction: column; gap: 6px; max-width: 720px; margin: 0 auto; }
+  .timer { display: flex; align-items: center; gap: 8px; border-radius: 14px; padding: 2px 0 2px 4px; }
+  .t-naam { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .t-tijd { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .timer button { flex: none; min-width: 40px; height: 40px; border-radius: 999px; border: 2px solid currentColor; background: transparent; display: grid; place-items: center; font-weight: 800; font-size: 14px; padding: 0 8px; }
+  .timer.klaar { background: var(--tomaat); color: var(--ink); padding: 4px 4px 4px 12px; animation: knipper .8s ease-in-out infinite alternate; }
+  @keyframes knipper { to { background: var(--mosterd); } }
+  @media (prefers-reduced-motion: reduce) { .timer.klaar { animation: none; } }
+
+  /* ---------- Kookmodus ---------- */
+  .kook { height: calc(100vh - var(--tb, 0px)); height: calc(100dvh - var(--tb, 0px)); display: flex; }
+  .k-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 720px; margin: 0 auto; padding: 16px; }
+  .k-bar { display: flex; align-items: center; gap: 10px; }
+  .k-titel { flex: 1; min-width: 0; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .k-voortgang { display: flex; gap: 4px; }
+  .k-voortgang span { flex: 1; height: 8px; border-radius: 4px; border: 2px solid var(--ink); background: var(--cream); }
+  .k-voortgang .af { background: var(--ink); }
+  .k-voortgang .nu { background: var(--hl, var(--mosterd)); }
+  .k-kaart { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; background: var(--cream); border: var(--line); border-radius: 24px; box-shadow: 3px 3px 0 var(--ink); padding: 20px; }
+  .k-nr { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+  .k-nr .num { background: var(--ink); color: var(--cream); }
+  .k-tekst { margin: 0; font-size: clamp(22px, 5.6vw, 30px); line-height: 1.35; font-weight: 600; letter-spacing: -0.01em; }
+  .k-kaart .tchip { min-height: 52px; font-size: 18px; padding: 0 16px; }
+  .k-kaart.ingr { gap: 0; }
+  .k-kaart.ingr h2 { font-size: 22px; margin-bottom: 4px; }
+  .k-nav { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+  .k-nav .btn { min-height: 60px; justify-content: center; font-size: 18px; }
+  .k-nav .btn:disabled { opacity: .35; cursor: default; }
 </style>
 </head>
 <body>
@@ -196,7 +236,8 @@
     nodig = new Set([...nodig].filter(k => hkeys.has(k)));
     bewaar('kookboek-lijst', lijst); bewaar('kookboek-afgevinkt', [...afgevinkt]); bewaar('kookboek-nodig', [...nodig]);
   };
-  let wakeLock = null, wilWake = false;
+  // Scherm aan: wilWake = knop "Scherm aan", kookWake = kookmodus. Het slot blijft zolang een van beide aan staat.
+  let wakeLock = null, wilWake = false, kookWake = false;
 
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const kleur = (r, i) => KLEUREN[r.kleur] || KLEUREN[VOLGORDE[i % VOLGORDE.length]];
@@ -208,7 +249,12 @@
     zoek: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
     terug: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
     hart: '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 4.3 2.4h2c.7-1.2 2.2-2.4 4.3-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>',
-    zon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
+    zon: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+    timer: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5M10 2.5h4M18.5 6.5L20 5"/></svg>',
+    speel: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg>',
+    pauze: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
+    verder: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>',
+    kruis: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'
   };
 
   // ---------- Hoeveelheden omrekenen ----------
@@ -353,20 +399,35 @@
     bewaar('kookboek-voortgang', voortgang);
   }
 
-  function renderRecept(r) {
-    const s = getStaat(r);
+  // Ingrediëntenlijst met vinkjes; ook gebruikt in de kookmodus.
+  function ingrLijst(r, s) {
     const f = s.personen / r.personen;
-    const bg = kleur(r, recepten.indexOf(r));
-    const hl = r.kleur === 'mosterd' ? '#C9B6E4' : '#F4B740';
-    const huidige = r.stappen.findIndex((_, i) => !s.stap.has(i));
     let idx = 0;
-    const ingr = r.ingredienten.map(g => `
+    return r.ingredienten.map(g => `
       ${g.groep ? `<div class="group">${esc(g.groep)}</div>` : ''}
       <ul>${g.items.map(it => { const i = idx++; const h = hoeveelheid(it, f); return `
         <li class="${s.ingr.has(i) ? 'done' : ''}"><label>
           <input type="checkbox" data-i="${i}" ${s.ingr.has(i) ? 'checked' : ''}>
           <span class="txt">${h ? `<strong>${esc(h)}</strong> ` : ''}${esc(it.n)}</span>
         </label></li>`; }).join('')}</ul>`).join('');
+  }
+  function bindIngr(r, s) {
+    app.querySelectorAll('.ingr input').forEach(cb => cb.onchange = () => {
+      const i = +cb.dataset.i; cb.checked ? s.ingr.add(i) : s.ingr.delete(i);
+      cb.closest('li').classList.toggle('done', cb.checked);
+      bewaarStaat(r);
+    });
+  }
+  const hlKleur = r => r.kleur === 'mosterd' ? '#C9B6E4' : '#F4B740';
+
+  function renderRecept(r) {
+    const s = getStaat(r);
+    const f = s.personen / r.personen;
+    const bg = kleur(r, recepten.indexOf(r));
+    const hl = hlKleur(r);
+    const huidige = r.stappen.findIndex((_, i) => !s.stap.has(i));
+    const metTimers = r.stappen.some(st => tijden(st).length);
+    const ingr = ingrLijst(r, s);
 
     app.innerHTML = `
       <div class="r-band" style="background:${bg}">
@@ -410,10 +471,14 @@
           <div>
             <section class="steps" style="--hl:${hl}">
               <div class="sec-head"><h2>${T('Bereiding', 'Method')}</h2><button class="btn" id="reset">${T('Opnieuw', 'Reset')}</button></div>
-              <p class="hint">${T('Tik op een stap als hij klaar is. Je voortgang blijft bewaard.', 'Tap a step when it is done. Your progress is saved.')}</p>
+              <a class="btn donker kookknop" href="#${esc(r.id)}/koken">${svg.speel} ${huidige > 0 ? T(`Verder in kookmodus (stap ${huidige + 1})`, `Continue in cook mode (step ${huidige + 1})`) : T('Start kookmodus', 'Start cook mode')}</a>
+              <p class="hint">${metTimers
+                ? T('Tik op een stap als hij klaar is, of op een tijd voor een timer. Je voortgang blijft bewaard.', 'Tap a step when it is done, or a time to start a timer. Your progress is saved.')
+                : T('Tik op een stap als hij klaar is. Je voortgang blijft bewaard.', 'Tap a step when it is done. Your progress is saved.')}</p>
               <ol>${r.stappen.map((st, i) => `
                 <li class="${s.stap.has(i) ? 'done' : ''} ${i === huidige ? 'current' : ''}">
                   <button data-s="${i}" aria-pressed="${s.stap.has(i)}"><span class="num">${i + 1}</span><span>${esc(st)}</span></button>
+                  ${timerChips(r, i)}
                 </li>`).join('')}</ol>
             </section>
             ${r.tips && r.tips.length ? `<aside class="tip"><strong>Tips</strong><ul>${r.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul></aside>` : ''}
@@ -444,16 +509,216 @@
       bewaarLijst(); toonLijstKnop();
       document.getElementById('msg').innerHTML = T(`Op je lijstje gezet (${pers(s.personen)}). <a href="#boodschappen">Bekijk lijstje</a>`, `Added to your list (${pers(s.personen)}). <a href="#boodschappen">View list</a>`);
     };
-    app.querySelectorAll('.ingr input').forEach(cb => cb.onchange = () => {
-      const i = +cb.dataset.i; cb.checked ? s.ingr.add(i) : s.ingr.delete(i);
-      cb.closest('li').classList.toggle('done', cb.checked);
-      bewaarStaat(r);
-    });
+    bindIngr(r, s);
+    bindChips(r);
     app.querySelectorAll('[data-s]').forEach(b => b.onclick = () => {
       const i = +b.dataset.s; s.stap.has(i) ? s.stap.delete(i) : s.stap.add(i);
       bewaarStaat(r);
       const y = window.scrollY; renderRecept(r); window.scrollTo(0, y);
     });
+  }
+
+  // ---------- Kookmodus ----------
+  // #<id>/koken: één stap per scherm, groot, met vorige/volgende (ook vegen en pijltjestoetsen). Het scherm blijft aan.
+  // "Volgende" vinkt de stap af, "Vorige" haalt het vinkje van de vorige stap weg; zo loopt het gelijk met de receptpagina.
+  let kook = null;   // { id, i: huidige stap, ingr: ingrediënten open, terug: kwam van de receptpagina }
+  function renderKoken(r) {
+    const s = getStaat(r), n = r.stappen.length, i = kook.i;
+    const laatste = i === n - 1;
+    app.innerHTML = `
+      <div class="kook" style="background:${kleur(r, recepten.indexOf(r))};--hl:${hlKleur(r)}">
+        <div class="k-wrap">
+          <div class="k-bar">
+            <a class="round" id="ksluit" href="#${esc(r.id)}" aria-label="${T('Sluit kookmodus', 'Close cook mode')}">${svg.kruis}</a>
+            <span class="k-titel">${esc(r.titel)}</span>
+            <button class="btn" id="kingr" aria-pressed="${kook.ingr}">${T('Ingrediënten', 'Ingredients')}</button>
+          </div>
+          <div class="k-voortgang" aria-hidden="true">${r.stappen.map((_, j) => `<span class="${j === i ? 'nu' : s.stap.has(j) ? 'af' : ''}"></span>`).join('')}</div>
+          ${kook.ingr ? `
+          <section class="k-kaart ingr">
+            <h2>${T('Ingrediënten', 'Ingredients')}</h2>
+            <p class="note">${pers(s.personen)}</p>
+            ${ingrLijst(r, s)}
+          </section>` : `
+          <section class="k-kaart" aria-live="polite">
+            <span class="k-nr"><span class="num">${i + 1}</span>${T(`Stap ${i + 1} van ${n}`, `Step ${i + 1} of ${n}`)}</span>
+            <p class="k-tekst">${esc(r.stappen[i])}</p>
+            ${timerChips(r, i)}
+          </section>`}
+          <div class="k-nav">
+            <button class="btn" id="kvorige" ${i === 0 ? 'disabled' : ''}>${svg.terug} ${T('Vorige', 'Back')}</button>
+            <button class="btn donker" id="kvolgende">${laatste ? svg.vink + ' ' + T('Klaar', 'Done') : T('Volgende', 'Next') + ' ' + svg.verder}</button>
+          </div>
+        </div>
+      </div>`;
+    document.getElementById('ksluit').onclick = e => { e.preventDefault(); sluitKoken(r); };
+    document.getElementById('kingr').onclick = () => { kook.ingr = !kook.ingr; renderKoken(r); };
+    document.getElementById('kvorige').onclick = () => kookStap(r, -1);
+    document.getElementById('kvolgende').onclick = () => kookStap(r, 1);
+    bindIngr(r, s);
+    bindChips(r);
+    // Vegen: naar links is volgende, naar rechts is vorige.
+    const k = app.querySelector('.kook');
+    let x0 = null, y0 = 0;
+    k.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+    k.addEventListener('touchend', e => {
+      if (x0 == null) return;
+      const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+      if (Math.abs(dx) > 60 && Math.abs(dx) > 1.5 * Math.abs(dy)) kookStap(r, dx < 0 ? 1 : -1);
+    }, { passive: true });
+  }
+  function kookStap(r, d) {
+    const s = getStaat(r);
+    if (d > 0) {
+      s.stap.add(kook.i);
+      if (kook.i === r.stappen.length - 1) { bewaarStaat(r); sluitKoken(r); return; }
+      kook.i++;
+    } else {
+      if (kook.i === 0) return;
+      kook.i--; s.stap.delete(kook.i);
+    }
+    kook.ingr = false;
+    bewaarStaat(r); renderKoken(r);
+  }
+  // Terug naar het recept zonder een extra stap in de geschiedenis (de terugknop van Android sluit de kookmodus ook).
+  function sluitKoken(r) {
+    if (kook && kook.terug) history.back(); else location.replace('#' + r.id);
+  }
+  document.addEventListener('keydown', e => {
+    if (!kook || e.altKey || e.ctrlKey || e.metaKey) return;
+    const r = recepten.find(x => x.id === kook.id);
+    if (e.key === 'ArrowRight') kookStap(r, 1);
+    else if (e.key === 'ArrowLeft') kookStap(r, -1);
+    else if (e.key === 'Escape') sluitKoken(r);
+  });
+
+  // ---------- Timers ----------
+  // Tijden in een stap ("8 min", "20–25 min", "1 uur") worden een timerknop. Bij een range loopt de timer tot de kortste tijd,
+  // zodat je op tijd kunt kijken. Timers lopen door op andere pagina's en na herladen; onderaan staat een balk met alle timers.
+  const TIJD_RE = /(\d+(?:[.,]\d+)?)(?:\s*(?:–|-|tot|to)\s*(\d+(?:[.,]\d+)?))?\s*(minuten|minuut|minutes|minute|mins|min|uur|hours|hour|hrs|hr|seconden|seconds|secs|sec)\b/gi;
+  function tijden(tekst) {
+    return [...tekst.matchAll(TIJD_RE)].map(m => {
+      const u = m[3].toLowerCase(), sec = /^(uur|hour|hr)/.test(u) ? 3600 : /^sec/.test(u) ? 1 : 60;
+      const a = parseFloat(m[1].replace(',', '.'));
+      const eenh = sec === 60 ? 'min' : sec === 1 ? 'sec' : EN ? (a === 1 && !m[2] ? 'hour' : 'hours') : 'uur';
+      return { ms: Math.round(a * sec) * 1000, label: m[1] + (m[2] ? '–' + m[2] : '') + ' ' + eenh };
+    }).filter(t => t.ms > 0);
+  }
+  let timers = laad('kookboek-timers', []).filter(t => t && t.k && Date.now() - t.t0 < VERS);
+  const bewaarTimers = () => bewaar('kookboek-timers', timers);
+  const resterend = t => t.eind == null ? t.rest : t.eind - Date.now();
+  function fmtTijd(ms) {
+    const s = Math.max(0, Math.ceil(ms / 1000)), h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60, ss = String(s % 60).padStart(2, '0');
+    return h ? `${h}:${String(m).padStart(2, '0')}:${ss}` : `${m}:${ss}`;
+  }
+  function timerChips(r, i) {
+    const ts = tijden(r.stappen[i]);
+    return ts.length ? `<div class="tchips">${ts.map((t, j) =>
+      `<button class="tchip" data-tk="${esc(r.id + '|' + i + '|' + j)}" data-ms="${t.ms}" data-label="${esc(t.label)}" title="${T('Timer', 'Timer')} ${esc(t.label)}">${svg.timer}<span>${esc(t.label)}</span></button>`).join('')}</div>` : '';
+  }
+  // Tik op een tijd: timer start. Loopt hij al, dan doet de knop niets; is hij klaar, dan stopt het alarm.
+  function bindChips(r) {
+    app.querySelectorAll('[data-tk]').forEach(b => b.onclick = () => {
+      const k = b.dataset.tk, t = timers.find(x => x.k === k);
+      if (t) { if (t.klaar) stopTimer(k); return; }
+      geluidKlaar(); vraagMelding();
+      timers.push({ k, r: r.id, stap: +k.split('|')[1], label: b.dataset.label, eind: Date.now() + +b.dataset.ms, t0: Date.now() });
+      bewaarTimers(); renderTimers();
+    });
+    werkTijdenBij();
+  }
+  function stopTimer(k) { timers = timers.filter(t => t.k !== k); bewaarTimers(); renderTimers(); }
+
+  const timerBalk = document.createElement('div');
+  timerBalk.className = 'timers'; timerBalk.hidden = true;
+  timerBalk.innerHTML = '<div class="t-rijen"></div><span class="sr" role="status"></span>';
+  document.body.appendChild(timerBalk);
+  const tRijen = timerBalk.firstChild, tStatus = timerBalk.lastChild;
+  let tikker = null, laatstePiep = 0;
+  function renderTimers() {
+    if (timers.length && !tikker) tikker = setInterval(tick, 500);
+    if (!timers.length && tikker) { clearInterval(tikker); tikker = null; }
+    timerBalk.hidden = !timers.length;
+    const hier = huidigRecept;
+    tRijen.innerHTML = timers.map(t => {
+      const r = recepten.find(x => x.id === t.r);
+      const naam = (r && t.r !== hier ? r.titel + ' · ' + T('stap', 'step') : T('Stap', 'Step')) + ` ${t.stap + 1} · ${t.label}`;
+      return `<div class="timer${t.klaar ? ' klaar' : ''}" data-t="${esc(t.k)}">
+        <span class="t-naam">${esc(naam)}</span>
+        <span class="t-tijd" data-tijd="${esc(t.k)}"></span>
+        ${t.klaar ? '' : `<button data-a="pauze" aria-label="${t.eind == null ? T('Hervat', 'Resume') : T('Pauzeer', 'Pause')}">${t.eind == null ? svg.speel : svg.pauze}</button>`}
+        <button data-a="plus" aria-label="${T('1 minuut erbij', 'Add 1 minute')}">+1</button>
+        <button data-a="stop" aria-label="${T('Stop timer', 'Stop timer')}">${t.klaar ? 'Stop' : svg.kruis}</button>
+      </div>`;
+    }).join('');
+    tRijen.querySelectorAll('[data-a]').forEach(b => b.onclick = () => {
+      const k = b.closest('[data-t]').dataset.t, t = timers.find(x => x.k === k), nu = Date.now();
+      if (!t) return;
+      geluidKlaar();
+      if (b.dataset.a === 'stop') { stopTimer(k); return; }
+      if (b.dataset.a === 'pauze') { if (t.eind == null) { t.eind = nu + t.rest; delete t.rest; } else { t.rest = t.eind - nu; t.eind = null; } }
+      if (b.dataset.a === 'plus') {
+        if (t.klaar) { t.klaar = false; delete t.klaarOp; t.eind = nu + 6e4; }
+        else if (t.eind == null) t.rest += 6e4; else t.eind += 6e4;
+      }
+      bewaarTimers(); renderTimers();
+    });
+    document.documentElement.style.setProperty('--tb', (timers.length ? timerBalk.offsetHeight : 0) + 'px');
+    werkTijdenBij();
+  }
+  // Werkt de resterende tijd bij in de balk en op de timerknoppen in de stappen.
+  function werkTijdenBij() {
+    timerBalk.querySelectorAll('[data-tijd]').forEach(el => {
+      const t = timers.find(x => x.k === el.dataset.tijd);
+      if (t) el.textContent = t.klaar ? T('Klaar!', 'Done!') : fmtTijd(resterend(t));
+    });
+    app.querySelectorAll('[data-tk]').forEach(b => {
+      const t = timers.find(x => x.k === b.dataset.tk);
+      b.setAttribute('aria-pressed', !!t);
+      b.classList.toggle('klaar', !!(t && t.klaar));
+      b.lastChild.textContent = t ? (t.klaar ? T('Klaar!', 'Done!') : fmtTijd(resterend(t))) : b.dataset.label;
+    });
+  }
+  function tick() {
+    const nu = Date.now(); let klaar = null;
+    for (const t of timers) if (!t.klaar && t.eind != null && t.eind <= nu) { t.klaar = true; t.klaarOp = t.eind; klaar = t; }
+    if (klaar) {
+      bewaarTimers(); renderTimers();
+      const r = recepten.find(x => x.id === klaar.r);
+      tStatus.textContent = T(`Timer klaar: stap ${klaar.stap + 1}, ${klaar.label}`, `Timer done: step ${klaar.stap + 1}, ${klaar.label}`);
+      if (nu - klaar.klaarOp < 12e4) { try { navigator.vibrate && navigator.vibrate([400, 200, 400, 200, 400]); } catch {} melding(klaar, r); }
+    } else werkTijdenBij();
+    // Piept elke 2,5 seconde tot je stopt, maximaal 2 minuten na het aflopen.
+    if (timers.some(t => t.klaar && nu - t.klaarOp < 12e4) && nu - laatstePiep > 2500) { laatstePiep = nu; piep(); }
+  }
+  // Geluid via Web Audio; moet eerst bij een tik aangezet worden (browsers spelen anders niets af).
+  let audio = null;
+  function geluidKlaar() {
+    try { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); if (audio.state === 'suspended') audio.resume(); } catch {}
+  }
+  function piep() {
+    if (!audio || audio.state !== 'running') return;
+    const t0 = audio.currentTime;
+    [0, 0.25, 0.5].forEach(d => {
+      const o = audio.createOscillator(), g = audio.createGain();
+      o.frequency.value = 880; o.connect(g); g.connect(audio.destination);
+      g.gain.setValueAtTime(0.0001, t0 + d);
+      g.gain.exponentialRampToValueAtTime(0.5, t0 + d + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + d + 0.18);
+      o.start(t0 + d); o.stop(t0 + d + 0.2);
+    });
+  }
+  document.addEventListener('pointerdown', () => { if (timers.length) geluidKlaar(); });
+  // Melding als de site niet in beeld is (andere app open). Toestemming wordt gevraagd bij de eerste timer.
+  function vraagMelding() {
+    try { if ('Notification' in window && Notification.permission === 'default') { const p = Notification.requestPermission(); if (p && p.catch) p.catch(() => {}); } } catch {}
+  }
+  function melding(t, r) {
+    if (!document.hidden || !('Notification' in window) || Notification.permission !== 'granted' || !navigator.serviceWorker) return;
+    navigator.serviceWorker.ready.then(reg => reg.showNotification(T('Timer klaar', 'Timer done'), {
+      body: `${r ? r.titel + ' · ' : ''}${T('stap', 'step')} ${t.stap + 1} · ${t.label}`,
+      tag: t.k, renotify: true, requireInteraction: true, vibrate: [400, 200, 400], icon: BASE + 'app/icoon-192.png'
+    })).catch(() => {});
   }
 
   // ---------- Boodschappenlijst ----------
@@ -625,32 +890,44 @@
     };
   }
 
+  async function vraagWake() {
+    if (wakeLock) return true;
+    try {
+      const w = await navigator.wakeLock.request('screen');
+      wakeLock = w; w.addEventListener('release', () => { if (wakeLock === w) wakeLock = null; });
+      return true;
+    } catch { return false; }
+  }
+  async function laatWake() {
+    if (!wakeLock || wilWake || kookWake) return;
+    const w = wakeLock; wakeLock = null;
+    try { await w.release(); } catch {}
+  }
   async function toggleWake() {
     const btn = document.getElementById('wake'), msg = document.getElementById('msg');
-    try {
-      if (wilWake) { wilWake = false; if (wakeLock) await wakeLock.release(); wakeLock = null; btn.setAttribute('aria-pressed', 'false'); msg.textContent = ''; return; }
-      if (!('wakeLock' in navigator)) throw new Error();
-      wakeLock = await navigator.wakeLock.request('screen'); wilWake = true;
-      wakeLock.addEventListener('release', () => { wakeLock = null; });
-      btn.setAttribute('aria-pressed', 'true'); msg.textContent = T('Scherm blijft aan.', 'Screen stays on.');
-    } catch {
-      wakeLock = null; wilWake = false; btn.setAttribute('aria-pressed', 'false');
+    if (wilWake) { wilWake = false; await laatWake(); btn.setAttribute('aria-pressed', 'false'); msg.textContent = ''; return; }
+    wilWake = true;
+    if (await vraagWake()) { btn.setAttribute('aria-pressed', 'true'); msg.textContent = T('Scherm blijft aan.', 'Screen stays on.'); }
+    else {
+      wilWake = false; btn.setAttribute('aria-pressed', 'false');
       msg.textContent = T('Scherm aan houden werkt niet in deze browser.', 'Keeping the screen on does not work in this browser.');
     }
   }
-  // Wake lock vervalt als de tab verborgen wordt; vraag hem opnieuw aan bij terugkeer.
-  document.addEventListener('visibilitychange', async () => {
-    if (document.visibilityState === 'visible' && wilWake && !wakeLock) {
-      try { wakeLock = await navigator.wakeLock.request('screen'); } catch {}
-    }
+  // Wake lock vervalt als de tab verborgen wordt; vraag hem opnieuw aan bij terugkeer. Timers direct bijwerken.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') return;
+    if ((wilWake || kookWake) && !wakeLock) vraagWake();
+    if (timers.length) tick();
   });
 
   // Onthoudt waar je in het overzicht was, zodat je na een recept op dezelfde plek terugkomt.
   let opOverzicht = false, overzichtY = 0, vorigRecept = '', huidigRecept = '';
   try { history.scrollRestoration = 'manual'; } catch {}
+  let vorigeHash = '';
   function route() {
-    const id = decodeURIComponent(location.hash.slice(1));
+    const [id, sub] = decodeURIComponent(location.hash.slice(1)).split('/');
     const r = recepten.find(x => x.id === id);
+    const koken = !!r && sub === 'koken', uitKook = kook && r && kook.id === r.id && !koken;
     if (opOverzicht) overzichtY = window.scrollY;
     opOverzicht = !r && id !== 'boodschappen';
     vorigRecept = huidigRecept; huidigRecept = r ? r.id : '';
@@ -658,8 +935,24 @@
     const naam = T('Kookboek', 'Cookbook');
     if (id === 'boodschappen') document.title = T('Boodschappen', 'Shopping') + ' · ' + naam;
     else document.title = r ? r.titel + ' · ' + naam : naam;
-    id === 'boodschappen' ? renderLijst() : r ? renderRecept(r) : renderOverzicht();
+    if (koken) {
+      // Begin bij de eerste stap die nog niet af is; is alles af, dan begin je opnieuw.
+      const s = getStaat(r);
+      let i = r.stappen.findIndex((_, j) => !s.stap.has(j));
+      if (i < 0) { i = 0; s.stap.clear(); bewaarStaat(r); }
+      if (!kook || kook.id !== r.id) kook = { id: r.id, i, ingr: false, terug: vorigeHash === '#' + r.id };
+      kookWake = true; vraagWake();
+      renderKoken(r);
+    } else {
+      kook = null;
+      if (kookWake) { kookWake = false; laatWake(); }
+      id === 'boodschappen' ? renderLijst() : r ? renderRecept(r) : renderOverzicht();
+    }
+    vorigeHash = location.hash;
+    renderTimers();
     window.scrollTo(0, opOverzicht ? overzichtY : 0);
+    // Terug uit de kookmodus: naar de stap waar je bent.
+    if (uitKook) { const li = app.querySelector('.steps li.current'); if (li) li.scrollIntoView({ block: 'center' }); }
   }
 
   fetch(BASE + T('recepten.json', 'recepten.en.json'), { cache: 'no-cache' })

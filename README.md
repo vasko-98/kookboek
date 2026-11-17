@@ -49,6 +49,8 @@ npx serve _site
 
 `omschrijving` is optioneel: 1–2 zinnen over het gerecht en wanneer het past. Op de receptpagina staat hij onder de titel, bij "Favoriet van vandaag" als één regel, en het zoekveld zoekt erin. Is hij leeg of ontbreekt hij, dan wordt niets getoond.
 
+**Tijden in stappen** worden op de site een timerknop. Schrijf ze als getal plus eenheid: "8 min", "20–25 min", "1 uur" (Engels: "8 min", "1 hour"). Bij een range loopt de timer tot de kortste tijd. De build controleert dat elke Nederlandse stap dezelfde tijden heeft als de Engelse.
+
 Eén hoeveelheid per regel: `q` is een getal (of `null`), `u` de eenheid, `n` de omschrijving. Zo kan de site omrekenen naar meer of minder personen.
 
 `u` is een van `g`, `ml`, `el`, `tl`, `teentje`, `rol`, `zak`, `pakje`, `handje`, `blokje`, of `null` (stuks of geen hoeveelheid). De site vertaalt deze eenheden; een nieuwe eenheid moet ook in `EENHEDEN` in `site/index.html` en `scripts/build.mjs`.
@@ -138,3 +140,11 @@ Onderaan staat "Waarschijnlijk in huis": kruiden & specerijen, sauzen & olie en 
 - `site/sw.js` is de service worker. De build vult daarin de lijst met bestanden en een versie in; bij elke wijziging aan de site of de recepten verandert die versie en wordt alles opnieuw opgehaald. Nieuwe bestanden in `site/` gaan vanzelf mee.
 - Beide talen worden bewaard (`./` en `en/`, met `recepten.json` en `recepten.en.json`). Pagina en recepten komen eerst van het netwerk; na 3 seconden of zonder verbinding uit de opslag op het toestel. Iconen en het lettertype komen altijd uit die opslag.
 - Voortgang: het aantal personen en de afgevinkte ingrediënten en stappen per recept worden in de browser bewaard. De vinkjes vervallen na 12 uur, het aantal personen blijft.
+
+## Kookmodus en timers
+
+- Op de receptpagina start "Start kookmodus" (of "Verder in kookmodus" als je al bezig bent) de kookmodus op `#<id>/koken`: één stap per scherm in grote letters, met Vorige/Volgende, vegen of de pijltjestoetsen. Volgende vinkt de stap af, Vorige haalt het vinkje van de vorige stap weg, zodat de voortgang gelijk loopt met de receptpagina. Zijn alle stappen af, dan begint de kookmodus opnieuw bij stap 1.
+- Het scherm blijft aan zolang de kookmodus open is. De knop Ingrediënten toont de lijst (met vinkjes) zonder de kookmodus te verlaten. Sluiten (✕, Esc of de terugknop van de telefoon) gaat terug naar het recept, bij de stap waar je bent.
+- Tijden in een stap (zie Receptformaat) zijn timerknoppen, op de receptpagina en in de kookmodus. Lopende timers staan in een balk onderaan elke pagina, met pauze, +1 minuut en stop. Ze lopen door na herladen (bewaard in de browser, maximaal 12 uur).
+- Is een timer klaar, dan piept de site (elke paar seconden, maximaal 2 minuten), trilt de telefoon en knippert de balk tot je op Stop tikt. Staat de site niet in beeld, dan komt er een melding (toestemming wordt gevraagd bij de eerste timer). Op de achtergrond kan die melding door de browser tot een minuut later komen.
+
