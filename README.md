@@ -97,6 +97,12 @@ Onderaan staat "Waarschijnlijk in huis": kruiden & specerijen, sauzen & olie en 
 
 "Exporteren" deelt de nog niet afgevinkte items als tekst, met één item per regel zodat het in Google Keep (+ > Checkboxes) of Notities (checklist) met één tik een afvinkbaar lijstje wordt. Op een computer wordt een `.txt` gedownload. "Kopieer" kopieert dezelfde tekst.
 
+## Overzicht
+
+- Bovenaan een zoekveld (zoekt ook in de omschrijving), daaronder één regel met favorieten (hartje), Filters (klapt de categorieën open) en sorteren (Snelst, Langst, Favoriet). De filters worden automatisch opgebouwd uit de categorieën in de recepten. Met een filter of zoekterm staat er "n recepten · Wis filters".
+- "Favoriet van vandaag" is een lage kaart boven de lijst; hij wisselt per dag en verdwijnt bij filteren of zoeken.
+- Receptkaartjes zijn liggend: icoon links, titel en tijd · moeite · keuken rechts. Eén per regel op de telefoon, twee naast elkaar op een breed scherm. Favorieten hebben een hartje op het icoon.
+
 ## App en offline
 
 - De site is te installeren op het startscherm (Chrome op Android: menu > "App installeren" of "Toevoegen aan startscherm"). Het app-icoon staat in `site/app/` (`icoon.svg` is de bron van de png's).
