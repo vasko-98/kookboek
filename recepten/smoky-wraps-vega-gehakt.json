@@ -3,7 +3,8 @@
   "titel": "Smoky wraps met vega gehakt en groenten",
   "tijd": "30-45",
   "personen": 2,
-  "moeite": "gemiddeld",
+  "moeite": "veel werk",
+  "werk": { "snijwerk": "veel", "pan": "veel", "afwas": "gemiddeld" },
   "favoriet": false,
   "keuken": "Mexicaans",
   "maaltijd": [

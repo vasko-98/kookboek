@@ -4,6 +4,7 @@
   "tijd": "15-30",
   "personen": 2,
   "moeite": "gemiddeld",
+  "werk": { "snijwerk": "gemiddeld", "pan": "gemiddeld", "afwas": "gemiddeld" },
   "favoriet": false,
   "hoeveelhedenGeschat": true,
   "keuken": "Italiaans",

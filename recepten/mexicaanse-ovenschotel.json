@@ -3,7 +3,8 @@
   "titel": "Mexicaanse ovenschotel met nacho's en kaas",
   "tijd": "30-45",
   "personen": 2,
-  "moeite": "veel werk",
+  "moeite": "gemiddeld",
+  "werk": { "snijwerk": "veel", "pan": "gemiddeld", "afwas": "gemiddeld" },
   "favoriet": false,
   "keuken": "Mexicaans",
   "maaltijd": [

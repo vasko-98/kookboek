@@ -76,7 +76,7 @@ Moeite gaat over hoeveel werk je aan een recept hebt, niet over hoe moeilijk het
 | `pan` | vooral wachten (koken, oven) | af en toe omscheppen | steeds erbij staan, meerdere dingen tegelijk |
 | `afwas` | één pan of schaal en een snijplank | twee pannen, of pan en schaal | drie of meer pannen, schalen en kommen |
 
-Tel weinig = 1, gemiddeld = 2, veel = 3. Totaal 3–4 = weinig werk, 5–6 = gemiddeld, 7–9 = veel werk. Staat `werk` in het recept, dan controleert de build dat `moeite` hierbij past. De receptpagina toont de drie onderdelen als bolletjes.
+Tel weinig = 1, gemiddeld = 2, veel = 3. Totaal 3–4 = weinig werk, 5–7 = gemiddeld, 8–9 = veel werk. Staat `werk` in het recept, dan controleert de build dat `moeite` hierbij past. De receptpagina toont de drie onderdelen als bolletjes.
 
 ## Ingrediënten: groepen en boodschappen
 

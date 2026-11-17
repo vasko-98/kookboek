@@ -4,6 +4,7 @@
   "tijd": "30-45",
   "personen": 2,
   "moeite": "gemiddeld",
+  "werk": { "snijwerk": "veel", "pan": "weinig", "afwas": "weinig" },
   "favoriet": false,
   "keuken": "Thais",
   "maaltijd": [

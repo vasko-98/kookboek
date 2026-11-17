@@ -4,6 +4,7 @@
   "tijd": "30-45",
   "personen": 2,
   "moeite": "weinig werk",
+  "werk": { "snijwerk": "weinig", "pan": "weinig", "afwas": "weinig" },
   "favoriet": true,
   "keuken": "Italiaans",
   "maaltijd": [

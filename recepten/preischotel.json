@@ -4,6 +4,7 @@
   "tijd": "45-60",
   "personen": 2,
   "moeite": "gemiddeld",
+  "werk": { "snijwerk": "gemiddeld", "pan": "gemiddeld", "afwas": "veel" },
   "favoriet": false,
   "keuken": "Nederlands",
   "maaltijd": [

@@ -4,6 +4,7 @@
   "tijd": "15-30",
   "personen": 2,
   "moeite": "weinig werk",
+  "werk": { "snijwerk": "weinig", "pan": "weinig", "afwas": "gemiddeld" },
   "keuken": "Aziatisch",
   "maaltijd": [
     "diner"

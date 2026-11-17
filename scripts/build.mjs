@@ -28,8 +28,8 @@ function controleer(r, bestand) {
   if (r.werk != null) {
     if (typeof r.werk !== 'object' || Object.keys(r.werk).sort().join() !== [...WERK].sort().join() || !WERK.every(k => NIVEAUS.includes(r.werk[k]))) fout(`werk moet { snijwerk, pan, afwas } zijn, elk ${NIVEAUS.join(' / ')}`);
     const som = WERK.reduce((t, k) => t + NIVEAUS.indexOf(r.werk[k]) + 1, 0);
-    const verwacht = som <= 4 ? 'weinig werk' : som <= 6 ? 'gemiddeld' : 'veel werk';
-    if (r.moeite !== verwacht) fout(`moeite moet "${verwacht}" zijn bij dit werk (weinig = 1, gemiddeld = 2, veel = 3; totaal 3-4 weinig werk, 5-6 gemiddeld, 7-9 veel werk)`);
+    const verwacht = som <= 4 ? 'weinig werk' : som <= 7 ? 'gemiddeld' : 'veel werk';
+    if (r.moeite !== verwacht) fout(`moeite moet "${verwacht}" zijn bij dit werk (weinig = 1, gemiddeld = 2, veel = 3; totaal 3-4 weinig werk, 5-7 gemiddeld, 8-9 veel werk)`);
   }
   if (r.omschrijving != null && (typeof r.omschrijving !== 'string' || r.omschrijving.length > 160)) fout('omschrijving moet een korte tekst zijn (maximaal 160 tekens); laat het veld weg als er geen omschrijving is');
   if (r.favoriet != null && typeof r.favoriet !== 'boolean') fout('favoriet moet true of false zijn');
