@@ -52,3 +52,12 @@ self.addEventListener('fetch', e => {
   else if (/\/recepten(\.en)?\.json$/.test(url.pathname)) e.respondWith(netwerkEerst(req, url.pathname.endsWith('.en.json') ? 'recepten.en.json' : 'recepten.json'));
   else e.respondWith(cacheEerst(req, CACHE));
 });
+
+// Tik op een timermelding: terug naar de open site (of open hem).
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(cs => {
+    const c = cs.find(c => 'focus' in c);
+    return c ? c.focus() : self.clients.openWindow('./');
+  }));
+});

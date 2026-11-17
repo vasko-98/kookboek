@@ -62,6 +62,13 @@ function controleer(r, bestand) {
   if (!Array.isArray(r.stappen) || !r.stappen.length) fout('stappen ontbreekt');
 }
 
+// Tijden in een stap, zoals site/index.html ze als timer herkent (TIJD_RE daar), omgerekend naar seconden.
+const TIJD_RE = /(\d+(?:[.,]\d+)?)(?:\s*(?:–|-|tot|to)\s*(\d+(?:[.,]\d+)?))?\s*(minuten|minuut|minutes|minute|mins|min|uur|hours|hour|hrs|hr|seconden|seconds|secs|sec)\b/gi;
+const tijden = t => [...t.matchAll(TIJD_RE)].map(m => {
+  const u = m[3].toLowerCase(), sec = /^(uur|hour|hr)/.test(u) ? 3600 : /^sec/.test(u) ? 1 : 60;
+  return [m[1], m[2]].filter(Boolean).map(x => Math.round(parseFloat(x.replace(',', '.')) * sec)).join('-') + 's';
+});
+
 // Engelse versie: alleen de teksten, in precies dezelfde opbouw als het Nederlandse recept.
 const EN_VELDEN = ['titel', 'omschrijving', 'keuken', 'ingredienten', 'stappen', 'tips'];
 function controleerEngels(r, e, bestand) {
@@ -101,6 +108,11 @@ function controleerEngels(r, e, bestand) {
     keuzes.set(g.keuze, en);
   });
   if (!Array.isArray(e.stappen) || e.stappen.length !== r.stappen.length || !e.stappen.every(tekst)) fout(`stappen moet ${r.stappen.length} stappen hebben, net als in het Nederlands`);
+  // Tijden in stappen worden op de site een timer; die moeten in beide talen hetzelfde zijn.
+  r.stappen.forEach((st, i) => {
+    const nl = tijden(st).join(', '), en = tijden(e.stappen[i]).join(', ');
+    if (nl !== en) fout(`stappen[${i}]: tijden voor de timer verschillen (Nederlands: ${nl || 'geen'}, Engels: ${en || 'geen'}). Schrijf ze als "8 min", "20–25 min" of "1 uur" / "1 hour"`);
+  });
   const tips = (r.tips || []).length;
   if ((e.tips || []).length !== tips || (e.tips != null && (!Array.isArray(e.tips) || !e.tips.every(tekst)))) fout(`tips moet ${tips} tips hebben, net als in het Nederlands`);
 }
