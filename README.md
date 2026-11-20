@@ -51,6 +51,8 @@ npx serve _site
 
 **Tijden in stappen** worden op de site een timerknop. Schrijf ze als getal plus eenheid: "8 min", "20–25 min", "1 uur" (Engels: "8 min", "1 hour"). Bij een range loopt de timer tot de kortste tijd. De build controleert dat elke Nederlandse stap dezelfde tijden heeft als de Engelse.
 
+**Hoeveelheden in stappen en tips** staan tussen accolades, zodat de site ze meerekent met het aantal personen: "Breng de kokosmelk met {200 ml} water aan de kook", "Bak in {1 el} olie", "{¾ tl} uienpoeder", "{2}" (stuks). Eenheden: `g`, `ml`, `el`, `tl` (Engels: `g`, `ml`, `tbsp`, `tsp`). De afronding is dezelfde als bij de ingrediënten. Noem geen vast aantal borden of personen ("verdeel over de borden", niet "over twee borden"). De build stopt bij een hoeveelheid zonder accolades en controleert dat Nederlands en Engels dezelfde hoeveelheden hebben (el = tbsp, tl = tsp). Maten die niet meeschalen, zoals "20 x 15 cm" of "180 °C", krijgen geen accolades.
+
 Eén hoeveelheid per regel: `q` is een getal (of `null`), `u` de eenheid, `n` de omschrijving. Zo kan de site omrekenen naar meer of minder personen.
 
 `u` is een van `g`, `ml`, `el`, `tl`, `teentje`, `rol`, `zak`, `pakje`, `handje`, `blokje`, of `null` (stuks of geen hoeveelheid). De site vertaalt deze eenheden; een nieuwe eenheid moet ook in `EENHEDEN` in `site/index.html` en `scripts/build.mjs`.
