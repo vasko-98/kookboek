@@ -1,15 +1,19 @@
 {
-  "id": "kokosrijst-met-garnalen",
-  "titel": "Kokosrijst met garnalen",
+  "id": "kokosrijst-met-tempeh",
+  "titel": "Kokosrijst met tempeh",
   "tijd": "15-30",
   "personen": 2,
   "moeite": "weinig werk",
-  "werk": { "snijwerk": "weinig", "pan": "weinig", "afwas": "gemiddeld" },
+  "werk": {
+    "snijwerk": "weinig",
+    "pan": "weinig",
+    "afwas": "gemiddeld"
+  },
   "keuken": "Aziatisch",
   "maaltijd": [
     "diner"
   ],
-  "dieet": "vis",
+  "dieet": "vega",
   "bereiding": "meerdere pannen",
   "favoriet": true,
   "kleur": "tomaat",
@@ -32,19 +36,19 @@
       ]
     },
     {
-      "groep": "Groenten en garnalen",
+      "groep": "Groenten en tempeh",
       "items": [
+        {
+          "q": 200,
+          "u": "g",
+          "n": "tempeh ketjap",
+          "s": "vlees, vis & vega"
+        },
         {
           "q": 200,
           "u": "g",
           "n": "bimi",
           "s": "groente & fruit"
-        },
-        {
-          "q": 200,
-          "u": "g",
-          "n": "garnalen",
-          "s": "vlees, vis & vega"
         },
         {
           "q": 200,
@@ -92,14 +96,14 @@
   "stappen": [
     "Breng de kokosmelk met 200 ml water aan de kook, voeg de rijst toe en laat ca. 8 minuten koken.",
     "Snijd de bimi in stukjes en hak de peterselie grof.",
-    "Bak de bimi ca. 5 minuten in een scheutje olie; voeg de laatste 3 minuten de garnalen toe.",
-    "Meng rijst, bimi, garnalen, doperwten en peterselie. Verwarm ca. 2 minuten en kruid met peper en zout.",
+    "Bak de tempeh ca. 6 minuten goudbruin in een scheutje olie. Voeg de bimi toe en bak ca. 5 minuten mee.",
+    "Meng rijst, tempeh, bimi, doperwten en peterselie. Verwarm ca. 2 minuten en kruid met peper en zout.",
     "Verdeel over twee borden en serveer."
   ],
   "tips": [
     "Meer smaak: bak knoflook, verse gember en rode peper of sambal mee met de bimi, en roer een tl currypasta (geel of rood) of wat citroengras door de kokosmelk.",
-    "Maak af met limoensap en -rasp, eventueel 1 el vissaus of soja.",
+    "Maak af met limoensap en -rasp, eventueel 1 el sojasaus.",
     "Lekker als topping: geroosterde cashewnoten, kokoschips of sesam. Stukjes mango of ananas passen er ook bij.",
-    "Extra groente (paprika, courgette of paksoi) kan erbij, en de garnalen kun je vooraf marineren in knoflook, paprikapoeder en limoen."
+    "Extra groente (paprika, courgette of paksoi) kan erbij. Gewone tempeh kan ook: marineer hem 10-15 minuten in sojasaus, limoensap en knoflook."
   ]
 }
