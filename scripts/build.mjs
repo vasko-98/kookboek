@@ -60,6 +60,7 @@ function controleer(r, bestand) {
     });
   });
   if (!Array.isArray(r.stappen) || !r.stappen.length) fout('stappen ontbreekt');
+  controleerTeksten(r, fout);
 }
 
 // Tijden in een stap, zoals site/index.html ze als timer herkent (TIJD_RE daar), omgerekend naar seconden.
@@ -68,6 +69,21 @@ const tijden = t => [...t.matchAll(TIJD_RE)].map(m => {
   const u = m[3].toLowerCase(), sec = /^(uur|hour|hr)/.test(u) ? 3600 : /^sec/.test(u) ? 1 : 60;
   return [m[1], m[2]].filter(Boolean).map(x => Math.round(parseFloat(x.replace(',', '.')) * sec)).join('-') + 's';
 });
+
+// Hoeveelheden in stappen en tips staan tussen accolades, zodat de site ze omrekent naar het aantal personen
+// (TEKST_Q in site/index.html): "{200 ml} water", "{1 el} olie", "{¾ tl} uienpoeder". Engels: tbsp en tsp.
+const TEKST_Q = /\{(\d*[¼½¾]|\d+(?:[.,]\d+)?)(?:\s*(g|ml|el|tl|tbsp|tsp))?\}/g;
+const LOSSE_Q = /(\d+(?:[.,]\d+)?|[¼½¾])\s*(g|gram|ml|l|liter|el|tl|tbsp|tsp)\b/i;
+const tekstQ = t => [...t.matchAll(TEKST_Q)].map(m => m[1] + ' ' + ({ tbsp: 'el', tsp: 'tl' }[m[2]] || m[2] || 'stuks'));
+function controleerTeksten(r, fout) {
+  for (const [veld, lijst] of [['stappen', r.stappen], ['tips', r.tips || []]]) lijst.forEach((t, i) => {
+    const rest = t.replace(TEKST_Q, '');
+    if (/[{}]/.test(rest)) fout(`${veld}[${i}]: accolades alleen om een hoeveelheid, bijv. "{200 ml}", "{1 el}" of "{2}"`);
+    const los = rest.match(LOSSE_Q);
+    if (los) fout(`${veld}[${i}]: zet "${los[0]}" tussen accolades ("{${los[0]}}") zodat het meeschaalt met het aantal personen`);
+    if (/\b(twee|drie|vier|two|three|four) (borden|plates|personen|people|porties|portions)\b/i.test(rest)) fout(`${veld}[${i}]: noem geen vast aantal borden of personen, schrijf bijv. "over de borden"`);
+  });
+}
 
 // Engelse versie: alleen de teksten, in precies dezelfde opbouw als het Nederlandse recept.
 const EN_VELDEN = ['titel', 'omschrijving', 'keuken', 'ingredienten', 'stappen', 'tips'];
@@ -115,6 +131,12 @@ function controleerEngels(r, e, bestand) {
   });
   const tips = (r.tips || []).length;
   if ((e.tips || []).length !== tips || (e.tips != null && (!Array.isArray(e.tips) || !e.tips.every(tekst)))) fout(`tips moet ${tips} tips hebben, net als in het Nederlands`);
+  controleerTeksten(e, fout);
+  // Hoeveelheden tussen accolades moeten in beide talen hetzelfde zijn.
+  for (const veld of ['stappen', 'tips']) (r[veld] || []).forEach((t, i) => {
+    const nl = tekstQ(t).join(', '), en = tekstQ(e[veld][i]).join(', ');
+    if (nl !== en) fout(`${veld}[${i}]: hoeveelheden tussen accolades verschillen (Nederlands: ${nl || 'geen'}, Engels: ${en || 'geen'}; el = tbsp, tl = tsp)`);
+  });
 }
 
 const dir = path.join(root, 'recepten');

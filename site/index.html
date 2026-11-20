@@ -274,6 +274,13 @@
     else v = Math.max(0.5, Math.round(v * 2) / 2);
     return v;
   }
+  // Hoeveelheden in stappen en tips staan tussen accolades ("{200 ml} water", "{1 el} olie") en schalen mee.
+  const TEKST_Q = /\{(\d*[¼½¾]|\d+(?:[.,]\d+)?)(?:\s*(g|ml|el|tl|tbsp|tsp))?\}/g;
+  const getal = t => [...t].reduce((v, c) => v + ({ '¼': 0.25, '½': 0.5, '¾': 0.75 }[c] ?? 0), parseFloat(t.replace(',', '.').replace(/[¼½¾]/g, '')) || 0);
+  const metHoeveelheden = (t, f) => t.replace(TEKST_Q, (_, q, u) => {
+    const v = schaal(getal(q), { tbsp: 'el', tsp: 'tl' }[u] || u || null, f);
+    return fmtGetal(v) + (u ? ' ' + u : '');
+  });
   function hoeveelheid(it, f) {
     const v = schaal(it.q, it.u, f);
     if (v == null) return '';
@@ -477,11 +484,11 @@
                 : T('Tik op een stap als hij klaar is. Je voortgang blijft bewaard.', 'Tap a step when it is done. Your progress is saved.')}</p>
               <ol>${r.stappen.map((st, i) => `
                 <li class="${s.stap.has(i) ? 'done' : ''} ${i === huidige ? 'current' : ''}">
-                  <button data-s="${i}" aria-pressed="${s.stap.has(i)}"><span class="num">${i + 1}</span><span>${esc(st)}</span></button>
+                  <button data-s="${i}" aria-pressed="${s.stap.has(i)}"><span class="num">${i + 1}</span><span>${esc(metHoeveelheden(st, f))}</span></button>
                   ${timerChips(r, i)}
                 </li>`).join('')}</ol>
             </section>
-            ${r.tips && r.tips.length ? `<aside class="tip"><strong>Tips</strong><ul>${r.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul></aside>` : ''}
+            ${r.tips && r.tips.length ? `<aside class="tip"><strong>Tips</strong><ul>${r.tips.map(t => `<li>${esc(metHoeveelheden(t, f))}</li>`).join('')}</ul></aside>` : ''}
           </div>
         </main>
       </div>`;
@@ -542,7 +549,7 @@
           </section>` : `
           <section class="k-kaart" aria-live="polite">
             <span class="k-nr"><span class="num">${i + 1}</span>${T(`Stap ${i + 1} van ${n}`, `Step ${i + 1} of ${n}`)}</span>
-            <p class="k-tekst">${esc(r.stappen[i])}</p>
+            <p class="k-tekst">${esc(metHoeveelheden(r.stappen[i], s.personen / r.personen))}</p>
             ${timerChips(r, i)}
           </section>`}
           <div class="k-nav">
